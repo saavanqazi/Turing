@@ -2,8 +2,8 @@
  "bundle": "law-b39-l5-tasting-programme-checklist-audit",
  "verdict": "NEEDS_REVIEW",
  "counts": {
-  "NEEDS_REVIEW": 4,
-  "PASS": 25,
+  "NEEDS_REVIEW": 3,
+  "PASS": 26,
   "NOT_APPLICABLE": 14
  },
  "rows": {
@@ -32,8 +32,8 @@
    "evidence": "judgement children await the review round"
   },
   "layer1_realism_leakage__domain_correctness": {
-   "outcome": "NEEDS_REVIEW",
-   "evidence": "challenger question: are the domain figures fictional or exactly cited? (the client resolved h564's against PubMed)"
+   "outcome": "PASS",
+   "evidence": "BR-/AG- identifiers are bundle-local fiction: no jurisdiction, statute or association is named, and the per-section subject tags are a closed-world construct real law does not carry. The phantom citations (BR-298, BR-299, AG-399) sit deliberately outside the live ranges BR-201-211 and AG-301-311. No external source to reconcile against \u2014 correctness is fully determined by the shipped fixtures, and grading never leaves the container."
   },
   "layer1_realism_leakage__authoritative_reference_validity": {
    "outcome": "NOT_APPLICABLE",

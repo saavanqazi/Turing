@@ -1,6 +1,6 @@
 # preflight_local — law-b39-l5-tasting-programme-checklist-audit
 
-Verdict: **NEEDS_REVIEW**  (NEEDS_REVIEW 4, NOT_APPLICABLE 14, PASS 25)
+Verdict: **NEEDS_REVIEW**  (NEEDS_REVIEW 3, NOT_APPLICABLE 14, PASS 26)
 
 | criterion | outcome | evidence |
 |---|---|---|
@@ -10,7 +10,7 @@ Verdict: **NEEDS_REVIEW**  (NEEDS_REVIEW 4, NOT_APPLICABLE 14, PASS 25)
 | layer1_clarity_scope__process_requirement_disclosure | NOT_APPLICABLE | no process requirements in this schema — grading is on delivered files only |
 | layer1_clarity_scope__redaction_readability | NOT_APPLICABLE | no redacted fixtures in this schema |
 | **layer1_realism_leakage** | NEEDS_REVIEW | judgement children await the review round |
-| layer1_realism_leakage__domain_correctness | NEEDS_REVIEW | challenger question: are the domain figures fictional or exactly cited? (the client resolved h564's against PubMed) |
+| layer1_realism_leakage__domain_correctness | PASS | BR-/AG- identifiers are bundle-local fiction: no jurisdiction, statute or association is named, and the per-section subject tags are a closed-world construct real law does not carry. The phantom citations (BR-298, BR-299, AG-399) sit deliberately outside the live ranges BR-201-211 and AG-301-311. No external source to reconcile against — correctness is fully determined by the shipped fixtures, and grading never leaves the container. |
 | layer1_realism_leakage__authoritative_reference_validity | NOT_APPLICABLE | no citations in the instruction |
 | layer1_realism_leakage__workflow_realism | NEEDS_REVIEW | human judgement: would a professional recognise this ask? |
 | layer1_realism_leakage__golden_isolation | PASS | Dockerfile copies input/ only; tests and solution never enter the task image |
