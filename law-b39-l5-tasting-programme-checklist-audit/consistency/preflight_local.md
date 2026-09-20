@@ -1,6 +1,6 @@
 # preflight_local — law-b39-l5-tasting-programme-checklist-audit
 
-Verdict: **NEEDS_REVIEW**  (NEEDS_REVIEW 2, NOT_APPLICABLE 14, PASS 27)
+Verdict: **NEEDS_REVIEW**  (NEEDS_REVIEW 1, NOT_APPLICABLE 14, PASS 28)
 
 | criterion | outcome | evidence |
 |---|---|---|
@@ -9,7 +9,7 @@ Verdict: **NEEDS_REVIEW**  (NEEDS_REVIEW 2, NOT_APPLICABLE 14, PASS 27)
 | layer1_clarity_scope__representation_contract | PASS | 3 rendering-tolerant checks (in_array/approx/compound with abs<=1e-3 numeric cells) against 0 exact numeric pins (leading-zero transcription class) |
 | layer1_clarity_scope__process_requirement_disclosure | NOT_APPLICABLE | no process requirements in this schema — grading is on delivered files only |
 | layer1_clarity_scope__redaction_readability | NOT_APPLICABLE | no redacted fixtures in this schema |
-| **layer1_realism_leakage** | NEEDS_REVIEW | judgement children await the review round |
+| **layer1_realism_leakage** | PASS | all applicable children pass |
 | layer1_realism_leakage__domain_correctness | PASS | BR-/AG- identifiers are bundle-local fiction: no jurisdiction, statute or association is named, and the per-section subject tags are a closed-world construct real law does not carry. The phantom citations (BR-298, BR-299, AG-399) sit deliberately outside the live ranges BR-201-211 and AG-301-311. No external source to reconcile against — correctness is fully determined by the shipped fixtures, and grading never leaves the container. |
 | layer1_realism_leakage__authoritative_reference_validity | NOT_APPLICABLE | no citations in the instruction |
 | layer1_realism_leakage__workflow_realism | PASS | Recognisable ask: trade-guidance drifting from the regulation is a standard beverage-compliance failure mode, and the central conflict — non-employee staff believing the brand's permit covers them, 'the practice for years' — mirrors how real solicitor-permit rules are misread. The deliverable shape (per-item verdict carrying the governing authority) is what a compliance review produces. Scope is narrower than real practice: the three UNADDRESSED items would be escalated as open risk rather than closed, and IT-113's ordinance would actually be checked — accepted as closed-world simplification, not a realism defect. |

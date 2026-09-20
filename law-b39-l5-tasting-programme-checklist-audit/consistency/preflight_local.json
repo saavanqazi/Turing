@@ -2,8 +2,8 @@
  "bundle": "law-b39-l5-tasting-programme-checklist-audit",
  "verdict": "NEEDS_REVIEW",
  "counts": {
-  "NEEDS_REVIEW": 2,
-  "PASS": 27,
+  "NEEDS_REVIEW": 1,
+  "PASS": 28,
   "NOT_APPLICABLE": 14
  },
  "rows": {
@@ -28,8 +28,8 @@
    "evidence": "no redacted fixtures in this schema"
   },
   "layer1_realism_leakage": {
-   "outcome": "NEEDS_REVIEW",
-   "evidence": "judgement children await the review round"
+   "outcome": "PASS",
+   "evidence": "all applicable children pass"
   },
   "layer1_realism_leakage__domain_correctness": {
    "outcome": "PASS",
