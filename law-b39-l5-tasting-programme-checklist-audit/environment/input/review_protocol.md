@@ -5,15 +5,15 @@ and `association_guide.md`.
 
 ## TP-701 Which document governs
 
-The regulation extract governs every subject it addresses. Where the association guide and the regulation take different positions on a subject, the regulation governs and the guide gives way, whatever section the checklist item cites and however long the guide's position has been the trade's practice; an item drafted from a guide note the regulation displaces is judged under the regulation like any other. The governing section of an item on a subject the regulation addresses is the regulation section on that subject, never a guide note (`TP-701`).
+The regulation extract governs every subject it addresses. Where the association guide and the regulation take different positions on a subject, the regulation governs and the guide gives way, whatever section the checklist item cites. The governing section of an item on a subject the regulation addresses is the regulation section on that subject, never a guide note (`TP-701`).
 
 ## TP-702 Subjects the regulation does not address
 
-Where the regulation does not address a subject, the guide note on that subject governs and the item is judged under it. Where neither document addresses the subject — including where the item cites a section that does not exist — nothing governs: the item is UNADDRESSED and the governing section is `NONE`, whatever the draft says (`TP-702`).
+Where the regulation does not address a subject, the guide note on that subject governs and the item is judged under it. Where neither document addresses the subject, nothing governs: the item is UNADDRESSED and the governing section is `NONE`, whatever the draft says (`TP-702`).
 
 ## TP-703 How an item is judged
 
-Under its governing section an item is REQUIRED where the section requires the thing the item describes and NOT_REQUIRED where the section says it is not required. The draft's own position never sets the status: an item the draft marks as not needed is required where its governing section requires the thing, and an item the draft marks as needed is not required where its governing section says so (`TP-703`).
+Under its governing section an item is REQUIRED where the section requires the thing the item describes and NOT_REQUIRED where the section says it is not required. The draft's own position never sets the status (`TP-703`).
 
 ## TP-704 When the draft is wrong
 
