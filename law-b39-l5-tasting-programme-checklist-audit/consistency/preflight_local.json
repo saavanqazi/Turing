@@ -2,8 +2,8 @@
  "bundle": "law-b39-l5-tasting-programme-checklist-audit",
  "verdict": "NEEDS_REVIEW",
  "counts": {
-  "NEEDS_REVIEW": 3,
-  "PASS": 26,
+  "NEEDS_REVIEW": 2,
+  "PASS": 27,
   "NOT_APPLICABLE": 14
  },
  "rows": {
@@ -40,8 +40,8 @@
    "evidence": "no citations in the instruction"
   },
   "layer1_realism_leakage__workflow_realism": {
-   "outcome": "NEEDS_REVIEW",
-   "evidence": "human judgement: would a professional recognise this ask?"
+   "outcome": "PASS",
+   "evidence": "Recognisable ask: trade-guidance drifting from the regulation is a standard beverage-compliance failure mode, and the central conflict \u2014 non-employee staff believing the brand's permit covers them, 'the practice for years' \u2014 mirrors how real solicitor-permit rules are misread. The deliverable shape (per-item verdict carrying the governing authority) is what a compliance review produces. Scope is narrower than real practice: the three UNADDRESSED items would be escalated as open risk rather than closed, and IT-113's ordinance would actually be checked \u2014 accepted as closed-world simplification, not a realism defect."
   },
   "layer1_realism_leakage__golden_isolation": {
    "outcome": "PASS",

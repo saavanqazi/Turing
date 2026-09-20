@@ -1,6 +1,6 @@
 # preflight_local — law-b39-l5-tasting-programme-checklist-audit
 
-Verdict: **NEEDS_REVIEW**  (NEEDS_REVIEW 3, NOT_APPLICABLE 14, PASS 26)
+Verdict: **NEEDS_REVIEW**  (NEEDS_REVIEW 2, NOT_APPLICABLE 14, PASS 27)
 
 | criterion | outcome | evidence |
 |---|---|---|
@@ -12,7 +12,7 @@ Verdict: **NEEDS_REVIEW**  (NEEDS_REVIEW 3, NOT_APPLICABLE 14, PASS 26)
 | **layer1_realism_leakage** | NEEDS_REVIEW | judgement children await the review round |
 | layer1_realism_leakage__domain_correctness | PASS | BR-/AG- identifiers are bundle-local fiction: no jurisdiction, statute or association is named, and the per-section subject tags are a closed-world construct real law does not carry. The phantom citations (BR-298, BR-299, AG-399) sit deliberately outside the live ranges BR-201-211 and AG-301-311. No external source to reconcile against — correctness is fully determined by the shipped fixtures, and grading never leaves the container. |
 | layer1_realism_leakage__authoritative_reference_validity | NOT_APPLICABLE | no citations in the instruction |
-| layer1_realism_leakage__workflow_realism | NEEDS_REVIEW | human judgement: would a professional recognise this ask? |
+| layer1_realism_leakage__workflow_realism | PASS | Recognisable ask: trade-guidance drifting from the regulation is a standard beverage-compliance failure mode, and the central conflict — non-employee staff believing the brand's permit covers them, 'the practice for years' — mirrors how real solicitor-permit rules are misread. The deliverable shape (per-item verdict carrying the governing authority) is what a compliance review produces. Scope is narrower than real practice: the three UNADDRESSED items would be escalated as open risk rather than closed, and IT-113's ordinance would actually be checked — accepted as closed-world simplification, not a realism defect. |
 | layer1_realism_leakage__golden_isolation | PASS | Dockerfile copies input/ only; tests and solution never enter the task image |
 | **layer1_package_consistency** | PASS | all applicable children pass |
 | layer1_package_consistency__manifest_environment_consistency | NOT_APPLICABLE | no manifest in the harbor-cli layout (P2) |
