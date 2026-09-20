@@ -1,0 +1,174 @@
+{
+ "task": "task_law_b39_l5_tasting_programme_checklist_audit",
+ "generated_by": "to_harbor_cli.build_requirements_json",
+ "verifier_total": 10,
+ "census": {
+  "checklist_audit.csv": {
+   "records": 16,
+   "columns": [
+    "governing_section",
+    "status"
+   ],
+   "cell_pins": 32,
+   "row_set": 16
+  }
+ },
+ "scoring": {
+  "policy": "two-tier: any core failure zeroes the reward; incidental failures cost their weight share (tests/score.py)",
+  "core": 8,
+  "incidental": [
+   "answer_wrong_figure",
+   "answer_wrong_figure_exactly_one"
+  ],
+  "sidecar_note": "derived figures are paid once, in results.json; artifact cell pins grade PRIMARY data carried into the deliverable, and cardinality closures pay the count — neither re-pays a derived figure"
+ },
+ "duplicate_payments": [
+  {
+   "value": "7",
+   "checks": [
+    "answer_wrong_figure",
+    "results_figures"
+   ],
+   "core_payers": [
+    "results_figures"
+   ]
+  }
+ ],
+ "requirements": [
+  {
+   "requirement_id": "R1",
+   "ask": "Produce the review and the verdict table with the filenames and header the layout document gives.",
+   "prompt_span": "Header, exactly: `item_id,status,governing_section`",
+   "surface": "checklist_audit.csv",
+   "criticality": "major",
+   "graded_by": [
+    "answer_exists",
+    "register_exists",
+    "register_header"
+   ],
+   "graded_by_count": 3,
+   "tolerance": {
+    "value": "pinned",
+    "numeric_rendering": "tolerant (numeric abs<=0.001 inside table_equals, grouping-normalised; leading-zero ids exact)",
+    "column_order": "free (structural addressing)",
+    "row_order": "pinned (instruction-backed)",
+    "extra_columns": "forbidden (header pinned, instruction-backed)",
+    "extra_keys": "allowed"
+   },
+   "discrimination": null
+  },
+  {
+   "requirement_id": "R2",
+   "ask": "Where the guide and the regulation disagree the regulation governs, so the item drafted from the guide's note on agency staff is required under the regulation's solicitor-permit section, whatever it cites.",
+   "prompt_span": "The regulation extract governs every subject it addresses. Where the association guide and the regulation take different positions on a subject, the regulation governs and the guide gives way, whatever section the checklist item cites and however long the guide's position has been the trade's practice; an item drafted from a guide note the regulation displaces is judged under the regulation like any other. The governing section of an item on a subject the regulation addresses is the regulation section on that subject, never a guide note (`TP-701`).",
+   "surface": "checklist_audit.csv",
+   "criticality": "critical",
+   "graded_by": [
+    "register_table_trap_it102"
+   ],
+   "graded_by_count": 1,
+   "tolerance": {
+    "value": "pinned",
+    "numeric_rendering": "tolerant (numeric abs<=0.001 inside table_equals, grouping-normalised; leading-zero ids exact)",
+    "column_order": "free (structural addressing)",
+    "row_order": "pinned (instruction-backed)",
+    "extra_columns": "forbidden (header pinned, instruction-backed)",
+    "extra_keys": "allowed"
+   },
+   "discrimination": null
+  },
+  {
+   "requirement_id": "R3",
+   "ask": "The remaining items take the status and governing section the protocol assigns them, one verdict row each in numbered order.",
+   "prompt_span": "Under its governing section an item is REQUIRED where the section requires the thing the item describes and NOT_REQUIRED where the section says it is not required. The draft's own position never sets the status: an item the draft marks as not needed is required where its governing section requires the thing, and an item the draft marks as needed is not required where its governing section says so (`TP-703`).",
+   "surface": "checklist_audit.csv",
+   "criticality": "critical",
+   "graded_by": [
+    "register_table",
+    "register_table_trap_it102"
+   ],
+   "graded_by_count": 2,
+   "tolerance": {
+    "value": "pinned",
+    "numeric_rendering": "tolerant (numeric abs<=0.001 inside table_equals, grouping-normalised; leading-zero ids exact)",
+    "column_order": "free (structural addressing)",
+    "row_order": "pinned (instruction-backed)",
+    "extra_columns": "forbidden (header pinned, instruction-backed)",
+    "extra_keys": "allowed"
+   },
+   "discrimination": null
+  },
+  {
+   "requirement_id": "R4",
+   "ask": "Give the four totals (required, not required, unaddressed, draft wrong) in results.json under exactly the listed keys.",
+   "prompt_span": "A JSON object with exactly these keys and nothing else",
+   "surface": "results.json",
+   "criticality": "critical",
+   "graded_by": [
+    "results_exists",
+    "results_figures"
+   ],
+   "graded_by_count": 2,
+   "tolerance": {
+    "value": "pinned",
+    "numeric_rendering": "tolerant (numeric abs<=0.001 per key inside object_equals)",
+    "column_order": "free (structural addressing)",
+    "row_order": "free",
+    "extra_columns": "allowed",
+    "extra_keys": "forbidden (key set closed, instruction-backed)"
+   },
+   "discrimination": "Letting the guide govern the disagreement yields 8 required, 5 not required and 6 wrong in the draft; judging each item by the section it cites yields 8, 5 and 6; disregarding the guide yields 6, 3, 7 unaddressed and 6; reading an unaddressed subject as not required yields 7, 0 and 10; reading it as required yields 12 and 0; reading the regulation's silence as not required yields 6, 7 and 8; reading it as required yields 10 and 3; against 9, 4, 3 and 7."
+  },
+  {
+   "requirement_id": "R5",
+   "ask": "The review carries the draft-wrong count beside its wording as one stated number.",
+   "prompt_span": "`answer.md` states `Checklist items the draft got wrong: <count>` — the figure beside its label, in the sentence that names it. At least sixty words of prose. Each figure stands beside its label once, stated as the finding — not offered as one of two candidates.",
+   "surface": "answer.md",
+   "criticality": "major",
+   "graded_by": [
+    "answer_prose_floor",
+    "answer_wrong_figure",
+    "answer_wrong_figure_exactly_one"
+   ],
+   "graded_by_count": 3,
+   "tolerance": {
+    "value": "pinned",
+    "numeric_rendering": "tolerant (in_array over value-identical renderings)",
+    "column_order": "free (structural addressing)",
+    "row_order": "free",
+    "extra_columns": "allowed",
+    "extra_keys": "allowed"
+   },
+   "discrimination": null
+  }
+ ],
+ "derivation": {
+  "depends_on": {
+   "required_count": [
+    "checklist_items.csv",
+    "regulation_extract.md",
+    "association_guide.md",
+    "review_protocol.md"
+   ],
+   "not_required_count": [
+    "checklist_items.csv",
+    "regulation_extract.md",
+    "association_guide.md",
+    "review_protocol.md"
+   ],
+   "unaddressed_count": [
+    "checklist_items.csv",
+    "regulation_extract.md",
+    "association_guide.md",
+    "review_protocol.md"
+   ],
+   "draft_wrong_count": [
+    "checklist_items.csv",
+    "regulation_extract.md",
+    "association_guide.md",
+    "review_protocol.md"
+   ]
+  },
+  "input_sha256": "7e4f10bb709234438c13595be42578320b58e7ec6d740a34b6eecfc5ec0edfe2"
+ }
+}

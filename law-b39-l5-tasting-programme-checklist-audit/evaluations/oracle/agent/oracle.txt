@@ -1,0 +1,6 @@
+installed gold deliverables into /app:
+answer.md
+checklist_audit.csv
+input
+results.json
+oracle: wrote /logs/agent/trajectory.json (10 steps)

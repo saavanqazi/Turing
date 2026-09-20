@@ -1,0 +1,65 @@
+[
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/association_guide.md"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/checklist_items.csv"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/regulation_extract.md"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/review_protocol.md"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/submission_format.md"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat > answer.md << 'ANSWEREOF'\n# The tasting checklist against the regulation and the guide\n\nChecklist items the draft got wrong: 7\n\nOn most subjects the regulation and the guide agree, and the items on the brand's permit, the store's permit and age verification are required as the draft says. Where the regulation is silent the guide governs, so the sample size limit, the tasting log and the post-event report are required and the training certificate is not. The draft went wrong in both directions: it marks the advance notice, the signage and the post-event report as not needed where the governing section requires them, and it lists the owner's written consent, a brand representative and a permit per store as needed where the regulation says they are not. The identification card, the insurance certificate and the ordinance review cite sections that do not exist and touch subjects neither document addresses.\n\nIT-102 says the agency's tasting staff need no permit of their own because the brand's permit covers them, following guide note AG-302, which does say that. Regulation section BR-202 requires a solicitor permit of anyone conducting a tasting who is not the permit holder's employee, and the regulation governs the disagreement however long the guide's position has been the practice, so the permit is required under BR-202 and the draft has the item wrong.\nANSWEREOF"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat > checklist_audit.csv << 'CHECKLISTAUDITEOF'\nitem_id,status,governing_section\nIT-101,REQUIRED,BR-201\nIT-102,REQUIRED,BR-202\nIT-103,REQUIRED,BR-203\nIT-104,UNADDRESSED,NONE\nIT-105,REQUIRED,BR-204\nIT-106,REQUIRED,AG-305\nIT-107,NOT_REQUIRED,BR-205\nIT-108,REQUIRED,AG-306\nIT-109,NOT_REQUIRED,AG-307\nIT-110,UNADDRESSED,NONE\nIT-111,NOT_REQUIRED,BR-206\nIT-112,REQUIRED,BR-207\nIT-113,UNADDRESSED,NONE\nIT-114,REQUIRED,BR-208\nIT-115,NOT_REQUIRED,BR-209\nIT-116,REQUIRED,AG-310\nCHECKLISTAUDITEOF"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat > results.json << 'RESULTSEOF'\n{\n  \"required_count\": 9,\n  \"not_required_count\": 4,\n  \"unaddressed_count\": 3,\n  \"draft_wrong_count\": 7\n}\nRESULTSEOF"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "ls -la answer.md checklist_audit.csv results.json"
+    }
+  }
+]

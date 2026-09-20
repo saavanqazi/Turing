@@ -1,0 +1,112 @@
+{
+  "task": "task_law_b39_l5_tasting_programme_checklist_audit",
+  "revision_key": "ea959d21c0d3b17ac952b7e102e7779efeb546797603f5ce93c618280898e519",
+  "backend": "glm",
+  "min_divergence": 0.3,
+  "documents": [
+    {
+      "file": "answer.md",
+      "gold_chars": 1348,
+      "protected_tokens": 5,
+      "instructed_anchors": [
+        {
+          "words": [
+            "Checklist items the draft got wrong"
+          ],
+          "figure": "7"
+        }
+      ],
+      "attempts": 1,
+      "api_error": null,
+      "divergence": 0.5985,
+      "missing_facts": [],
+      "missing_fact_count": 0,
+      "missing_anchors": [],
+      "status": "ok"
+    }
+  ],
+  "scoring": {
+    "reward": 1.0,
+    "core_failures": [],
+    "checks": [
+      {
+        "name": "answer_exists",
+        "tag": "core",
+        "passed": true,
+        "weight": 0.1,
+        "detail": ""
+      },
+      {
+        "name": "answer_prose_floor",
+        "tag": "core",
+        "passed": true,
+        "weight": 0.1,
+        "detail": ""
+      },
+      {
+        "name": "register_exists",
+        "tag": "core",
+        "passed": true,
+        "weight": 0.1,
+        "detail": ""
+      },
+      {
+        "name": "register_header",
+        "tag": "core",
+        "passed": true,
+        "weight": 0.1,
+        "detail": ""
+      },
+      {
+        "name": "register_table_trap_it102",
+        "tag": "core",
+        "passed": true,
+        "weight": 0.1,
+        "detail": ""
+      },
+      {
+        "name": "register_table",
+        "tag": "core",
+        "passed": true,
+        "weight": 0.1,
+        "detail": ""
+      },
+      {
+        "name": "results_figures",
+        "tag": "core",
+        "passed": true,
+        "weight": 0.1,
+        "detail": ""
+      },
+      {
+        "name": "answer_wrong_figure",
+        "tag": "incidental",
+        "passed": true,
+        "weight": 0.1,
+        "detail": ""
+      },
+      {
+        "name": "answer_wrong_figure_exactly_one",
+        "tag": "incidental",
+        "passed": true,
+        "weight": 0.1,
+        "detail": ""
+      },
+      {
+        "name": "results_exists",
+        "tag": "core",
+        "passed": true,
+        "weight": 0.1,
+        "detail": ""
+      }
+    ],
+    "passed": 10,
+    "total": 10
+  },
+  "failed_checks": [],
+  "verdict": "pass",
+  "model": "glm-5.2",
+  "family": "glm",
+  "author_family": "claude",
+  "stamped_at": "2026-09-13T02:49:32+01:00"
+}

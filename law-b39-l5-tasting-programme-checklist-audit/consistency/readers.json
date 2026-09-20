@@ -1,0 +1,378 @@
+{
+ "task": "task_law_b39_l5_tasting_programme_checklist_audit",
+ "n": 4,
+ "api_failures": 0,
+ "parsed_families": [
+  "glm"
+ ],
+ "input_surface": [
+  "prompt",
+  "input/association_guide.md",
+  "input/regulation_extract.md",
+  "input/review_protocol.md",
+  "input/submission_format.md"
+ ],
+ "readers": [
+  {
+   "goal": {
+    "deliverables": [
+     {
+      "file": "answer.md",
+      "figures": [
+       {
+        "name": "Checklist items the draft got wrong",
+        "meaning": "The total number of checklist items whose draft position is the opposite of their status under the governing section."
+       }
+      ]
+     },
+     {
+      "file": "checklist_audit.csv",
+      "figures": [
+       {
+        "name": "item_id",
+        "meaning": "The identifier of the checklist item in its numbered order from input/checklist_items.csv."
+       },
+       {
+        "name": "status",
+        "meaning": "The verdict on whether the thing the item describes is REQUIRED, NOT_REQUIRED, or UNADDRESSED under its governing section."
+       },
+       {
+        "name": "governing_section",
+        "meaning": "The identifier of the regulation section or association guide note that governs the item, or NONE where neither document addresses the subject."
+       }
+      ]
+     },
+     {
+      "file": "results.json",
+      "figures": [
+       {
+        "name": "required_count",
+        "meaning": "The total number of checklist items whose status is REQUIRED."
+       },
+       {
+        "name": "not_required_count",
+        "meaning": "The total number of checklist items whose status is NOT_REQUIRED."
+       },
+       {
+        "name": "unaddressed_count",
+        "meaning": "The total number of checklist items whose status is UNADDRESSED."
+       },
+       {
+        "name": "draft_wrong_count",
+        "meaning": "The total number of checklist items the draft got wrong under TP-704."
+       }
+      ]
+     }
+    ]
+   },
+   "method": "## How I'd compute each figure\n\nFor every row in `checklist_items.csv` I'd first read the `subject` and the draft's own position. I haven't been shown the CSV's columns here, so I'd have to decide which column carries the draft's stance and how its values map to \"needed\" vs \"not needed\" — that is the one rule I'd have to settle myself, since `review_protocol.md` assumes a binary draft position but never names the column.\n\n**Status (drives the three count figures).** Following TP‑701/TP‑702 in order: if the regulation has a section tagged with that subject, the regulation governs and the governing section is the `BR-…` id; otherwise, if the association guide has a note on that subject, the guide governs and the governing section is the `AG-…` id; if neither does (or the item cites a non-existent section), the item is UNADDRESSED with `governing_section = NONE`. Then under TP‑703 I'd read the governing section's actual position, ignoring the draft's: a section that says the thing must be done → REQUIRED; a section that says it need not be done → NOT_REQUIRED; no governing section → UNADDRESSED. The clear case where this flips the draft is `agency_staff_solicitor_permit`: BR‑202 requires agency staff to hold their own solicitor permit, while AG‑302 says they don't — TP‑701 makes BR‑202 govern, so the status is REQUIRED regardless of the guide's long-standing practice.\n\n**required_count, not_required_count, unaddressed_count** are then simple tallies of rows whose status is REQUIRED, NOT_REQUIRED, or UNADDRESSED respectively.\n\n**draft_wrong_count** under TP‑704 counts only items where the draft's position is the *opposite* of the status: draft \"not needed\" while status is REQUIRED, or draft \"needed\" while status is NOT_REQUIRED. UNADDRESSED items are never counted as wrong, even if the draft took a position on them. So I'd compare the mapped draft position to the status row by row and increment when they conflict.",
+   "model": "glm-5.2",
+   "family": "glm",
+   "backend": "glm",
+   "author_family": "claude",
+   "revision_key": "ea959d21c0d3b17ac952b7e102e7779efeb546797603f5ce93c618280898e519",
+   "stamped_at": "2026-09-13T01:09:12+01:00"
+  },
+  {
+   "goal": {
+    "deliverables": [
+     {
+      "file": "answer.md",
+      "figures": [
+       {
+        "name": "Checklist items the draft got wrong",
+        "meaning": "The count of checklist items whose draft position is the opposite of their governing status."
+       }
+      ]
+     },
+     {
+      "file": "checklist_audit.csv",
+      "figures": [
+       {
+        "name": "item_id",
+        "meaning": "The identifier of the checklist item being reviewed."
+       },
+       {
+        "name": "status",
+        "meaning": "Whether the thing the item describes is REQUIRED, NOT_REQUIRED, or UNADDRESSED under its governing section."
+       },
+       {
+        "name": "governing_section",
+        "meaning": "The id of the regulation section or guide note that governs the item, or NONE if neither document addresses the subject."
+       }
+      ]
+     },
+     {
+      "file": "results.json",
+      "figures": [
+       {
+        "name": "required_count",
+        "meaning": "The number of checklist items whose status is REQUIRED."
+       },
+       {
+        "name": "not_required_count",
+        "meaning": "The number of checklist items whose status is NOT_REQUIRED."
+       },
+       {
+        "name": "unaddressed_count",
+        "meaning": "The number of checklist items whose status is UNADDRESSED."
+       },
+       {
+        "name": "draft_wrong_count",
+        "meaning": "The number of checklist items the draft got wrong, where its marked position is opposite to the governing status."
+       }
+      ]
+     }
+    ]
+   },
+   "method": "## How I would compute each figure\n\n**Step 1 — read the checklist.** I would open `input/checklist_items.csv` and, for every numbered row, pull two things: the item's `subject` (the column both documents tag their sections by) and the draft's own position. The protocol talks about items the draft \"marks as needed\" or \"marks as not needed,\" so I would identify the column that carries that stance and map whatever wording it uses (e.g., \"Yes/No,\" \"Required/Not required,\" \"Needed/Not needed\") onto the two categories *needed* and *not needed*. That mapping is a rule I would have to settle for myself, since the protocol does not name the column or its values.\n\n**Step 2 — decide which document governs each item, by subject.** Following TP‑701 and TP‑702, I would look the subject up first in the regulation extract. If a regulation section bears that subject tag, the regulation governs and that `BR‑…` id is the `governing_section` — the guide note on the same subject gives way even if it has been trade practice for years (this is the live conflict on `agency_staff_solicitor_permit`, where AG‑302 says no personal permit but BR‑202 requires one). If the regulation does not address the subject but the guide does, the `AG‑…` note governs. If neither document has the subject — including items that cite a section id that does not exist — the item is UNADDRESSED and the governing section is `NONE`, regardless of what the draft claims.\n\n**Step 3 — set the status under the governing section (TP‑703).** I would read the governing section's text and ask whether it requires the thing the item describes or says it is not required, letting the section — never the draft's own mark — decide. Sections that affirmatively prescribe conduct I would read as REQUIRED: a brand/state/store permit must be held (BR‑201, BR‑203), non‑employee servers must hold a solicitor permit (BR‑202), notice must be filed (BR‑204), age must be verified (BR‑207), signage must be posted (BR‑208), hours must be kept (BR‑210), product must arrive sealed (BR‑211), and likewise the guide‑only requirements on sample size (AG‑305), tasting log (AG‑306), and post‑event report (AG‑310). Sections that say something *need not* be done I would read as NOT_REQUIRED: no store‑owner written consent (BR‑205), no brand representative present (BR‑206), no separate permit per store (BR‑209), and no server training certificate (AG‑307). Deciding that an affirmative statement (\"a notice is posted,\" \"product arrives in sealed containers\") counts as a requirement, and that \"no separate permit is issued\" counts as not‑required, is an interpretive rule I would apply consistently rather than case‑by‑case. Anything whose subject is in neither document is UNADDRESSED.\n\n**Step 4 — mark the draft wrong (TP‑704).** An item is draft‑wrong only when the draft's mark is the opposite of the status: draft says *not needed* but status is REQUIRED, or draft says *needed* but status is NOT_REQUIRED. UNADDRESSED items are never counted as wrong, even if the draft opined on them. So the `agency_staff_solicitor_permit` item, drafted from AG‑302 as \"not needed\" while BR‑202 makes it REQUIRED, would be one wrong item.\n\n**Step 5 — tally the four numbers.** `required_count` is the count of rows whose status is REQUIRED; `not_required_count` the count of NOT_REQUIRED rows; `unaddressed_count` the count of UNADDRESSED rows; and `draft_wrong_count` the count from Step 4. These feed `results.json`, the verdicts feed `checklist_audit.csv` in the checklist's numbered order, and the prose review in `answer.md` states the draft‑wrong figure once, beside its label, as the finding.\n\nOne thing I would *not* do: I would not let the section the checklist item itself cites override the governing‑section rule. TP‑701 is explicit that the governing section is the regulation section on the subject, never the guide note the draft may have built the item from, so a guide‑sourced item displaced by the regulation is judged under the regulation like any other.",
+   "model": "glm-5.2",
+   "family": "glm",
+   "backend": "glm",
+   "author_family": "claude",
+   "revision_key": "ea959d21c0d3b17ac952b7e102e7779efeb546797603f5ce93c618280898e519",
+   "stamped_at": "2026-09-13T01:09:12+01:00"
+  },
+  {
+   "goal": {
+    "deliverables": [
+     {
+      "file": "answer.md",
+      "figures": [
+       {
+        "name": "Checklist items the draft got wrong",
+        "meaning": "The count of checklist items whose draft position is the opposite of their governing status."
+       }
+      ]
+     },
+     {
+      "file": "checklist_audit.csv",
+      "figures": [
+       {
+        "name": "item_id",
+        "meaning": "The identifier of the checklist item being audited, in its numbered order."
+       },
+       {
+        "name": "status",
+        "meaning": "Whether the thing the item describes is REQUIRED, NOT_REQUIRED, or UNADDRESSED under its governing document."
+       },
+       {
+        "name": "governing_section",
+        "meaning": "The id of the regulation section or guide note that governs the item, or NONE where neither document addresses the subject."
+       }
+      ]
+     },
+     {
+      "file": "results.json",
+      "figures": [
+       {
+        "name": "required_count",
+        "meaning": "The number of items whose status is REQUIRED."
+       },
+       {
+        "name": "not_required_count",
+        "meaning": "The number of items whose status is NOT_REQUIRED."
+       },
+       {
+        "name": "unaddressed_count",
+        "meaning": "The number of items whose status is UNADDRESSED."
+       },
+       {
+        "name": "draft_wrong_count",
+        "meaning": "The number of items the draft got wrong, where its position is opposite to the governing status."
+       }
+      ]
+     }
+    ]
+   },
+   "method": "## How I would compute each figure\n\n**Read the inputs.** I would load `checklist_items.csv` and, for every numbered row, take its `subject` and its draft position. I would build two lookup tables from the two source documents: one mapping subject → regulation section id (BR-201…BR-211) and one mapping subject → guide note id (AG-301…AG-311), since each section header carries the subject the checklist's `subject` column refers to.\n\n**Decide the governing section (TP-701/TP-702).** For each item I look up its subject in the regulation table first. If the regulation addresses that subject, the governing section is that BR id, full stop — even if the item cites a guide note, and even if the guide has long-standing practice to the contrary (this is the agency_staff_solicitor_permit case, where the guide says staff need no permit of their own but BR-202 requires one). If the regulation does not address the subject, I fall back to the guide table and the governing section is the AG id. If neither document addresses the subject — including where the item cites a section that does not exist — the item is UNADDRESSED and the governing section is `NONE`.\n\n**Decide REQUIRED vs NOT_REQUIRED (TP-703).** I read the governing section's wording, not the draft's. If the section imposes the thing (e.g., BR-201 \"holds a state tasting permit\", BR-208 \"a notice…is posted\", BR-211 \"arrives in sealed containers\"), the item is REQUIRED. If the section says the thing is not required (e.g., BR-205 \"No written consent…need be filed\", BR-206 \"No representative…need be present\", AG-307 \"Servers need no training certificate\"), it is NOT_REQUIRED. The draft's own \"needed/not needed\" label never sets the status; it is only compared against the status later.\n\n**Compute the three status counts.** `required_count` is the number of rows whose status is REQUIRED; `not_required_count` the number NOT_REQUIRED; `unaddressed_count` the number UNADDRESSED. These partition the item set, so they sum to the row count.\n\n**Compute `draft_wrong_count` (TP-704).** I compare the draft position to the status only for REQUIRED and NOT_REQUIRED items: the draft is wrong when it marks \"not needed\" something that is REQUIRED, or \"needed\" something that is NOT_REQUIRED. UNADDRESSED items are never counted as wrong, even if the draft asserts a position on them.\n\n**Write the outputs.** `checklist_audit.csv` gets one row per item in the CSV's numbered order with header `item_id,status,governing_section`, status restricted to the three allowed values, and the governing section as a BR/AG id or `NONE`. `results.json` is exactly the four-key object. `answer.md` states the sentence \"Checklist items the draft got wrong: <count>\" and at least sixty words of prose.\n\n## Rules I would have to decide for myself\n\n1. **The draft-position column and its values.** The format spec names `subject` but not the column that holds the draft's \"needed/not needed\" view. I would inspect the CSV header and treat whatever column encodes the draft's stance as the draft position, mapping its two values onto needed vs. not needed by their wording (a \"rule\" I must infer from the data rather than from the protocol).\n\n2. **What \"requires\" vs \"does not require\" means in a section's prose.** TP-703 leaves it to me to read each section's stance. I would treat an affirmative duty (\"holds\", \"is filed\", \"is posted\", \"arrives in\") as REQUIRED and an explicit \"need not\"/\"No…need\" as NOT_REQUIRED, and I would not invent a third reading.\n\n3. **Subject matching by exact tag.** I would match the `subject` value to the subject tag printed in each section header, treating the tag as authoritative. Any subject that appears in neither table falls to UNADDRESSED under TP-702; I would not try fuzzy matches or synonym mapping.\n\n4. **Treatment of items the draft omits or marks ambiguously.** If the CSV contains an item whose draft position is missing or unclear, I would still assign status from the governing section, and for `draft_wrong_count` I would count it as wrong only where its (best-read) draft position is the opposite of an assigned REQUIRED/NOT_REQUIRED status; an unclear draft position on an UNADDRESSED item is not wrong.\n\n5. **Whether the draft mirrors the guide.** I would not assume the draft position equals the guide's position just because the checklist was built from the guide; I would read each row's stated position independently. This matters for subjects the regulation displaces (notably agency_staff_solicitor_permit): if the draft follows the guide's \"not needed,\" it is wrong against BR-202's REQUIRED, but I confirm that from the row, not from the guide.",
+   "model": "glm-5.2",
+   "family": "glm",
+   "backend": "glm",
+   "author_family": "claude",
+   "revision_key": "ea959d21c0d3b17ac952b7e102e7779efeb546797603f5ce93c618280898e519",
+   "stamped_at": "2026-09-13T01:09:12+01:00"
+  },
+  {
+   "goal": {
+    "deliverables": [
+     {
+      "file": "answer.md",
+      "figures": [
+       {
+        "name": "Checklist items the draft got wrong",
+        "meaning": "The number of checklist items whose draft position is the opposite of their governing status."
+       }
+      ]
+     },
+     {
+      "file": "checklist_audit.csv",
+      "figures": [
+       {
+        "name": "item_id",
+        "meaning": "The identifier of the checklist item from the numbered input."
+       },
+       {
+        "name": "status",
+        "meaning": "Whether the thing the item describes is REQUIRED, NOT_REQUIRED, or UNADDRESSED."
+       },
+       {
+        "name": "governing_section",
+        "meaning": "The id of the regulation section or guide note that governs the item, or NONE where neither document addresses the subject."
+       }
+      ]
+     },
+     {
+      "file": "results.json",
+      "figures": [
+       {
+        "name": "required_count",
+        "meaning": "The number of checklist items whose status is REQUIRED."
+       },
+       {
+        "name": "not_required_count",
+        "meaning": "The number of checklist items whose status is NOT_REQUIRED."
+       },
+       {
+        "name": "unaddressed_count",
+        "meaning": "The number of checklist items whose status is UNADDRESSED."
+       },
+       {
+        "name": "draft_wrong_count",
+        "meaning": "The number of items the draft got wrong because its marked position is opposite to their governing status."
+       }
+      ]
+     }
+    ]
+   },
+   "method": "I'd work item by item from `checklist_items.csv`, then aggregate.\n\n**Per-item method.** For each row I'd take the `subject` value and look it up against the tags in `regulation_extract.md` first. If a `BR-…` section carries that tag, that section governs (TP-701), regardless of which section the draft row itself cites; I'd then read the section's position to set `status`: wording that obliges the holder (\"holds,\" \"is filed,\" \"is verified,\" \"is posted,\" \"arrives in sealed containers\") → `REQUIRED`; wording that dispenses (\"no… need be,\" \"need not,\" \"need no,\" \"no separate permit is issued\") → `NOT_REQUIRED`. Only if no `BR-…` section matches the subject would I consult `association_guide.md` and apply the matching `AG-…` note the same way (TP-702). If neither document has the tag — or the row cites a section id that doesn't exist — `status` is `UNADDRESSED` and `governing_section` is `NONE`. The draft's own \"needed/not needed\" column never sets the status (TP-703).\n\n**Draft-wrong rule (TP-704).** I'd compare the draft's stated position to the governing-section status: draft \"not needed\" but status `REQUIRED`, or draft \"needed\" but status `NOT_REQUIRED`, counts as wrong; `UNADDRESSED` items are never wrong.\n\n**Aggregates.** `required_count`, `not_required_count`, `unaddressed_count` are simple tallies of the per-item statuses; `draft_wrong_count` is the tally from the TP-704 comparison. I'd write rows in the checklist's numbered order into `checklist_audit.csv`, then mirror the four counts into `results.json` and put the draft-wrong figure into `answer.md`.\n\n**Choices I'd have to decide for myself.**\n1. How the checklist encodes the draft position — the CSV isn't shown, so I'd inspect its columns and map whatever labels appear (e.g., \"yes/no,\" \"required/not required,\" \"needed/not needed\") onto the two categories TP-704 uses.\n2. Whether \"subject\" matching is exact string equality on the snake_case tag — I'd assume yes, since the protocol ties the checklist `subject` column to the documents' tags.\n3. How to read neutral-sounding regulation lines — e.g., BR-209 (\"no separate permit per store is issued\") I'd treat as `NOT_REQUIRED` because it negates a requirement; BR-205 (\"no written consent… need be filed\") the same. I'd treat a section's mere existence as not automatically requiring the thing; only affirmative obligation language does.\n4. The status of a subject the regulation addresses but the guide doesn't — under TP-701 the regulation governs, so I'd use the `BR-…` section and an `AG-…` note is irrelevant; I wouldn't mark such items `UNADDRESSED`.\n5. Items whose `subject` appears in neither document but that cite a real section id — TP-702 says cite of a non-existent section yields `UNADDRESSED`; I'd extend that to \"subject matched nowhere,\" treating governing section as `NONE`.",
+   "model": "glm-5.2",
+   "family": "glm",
+   "backend": "glm",
+   "author_family": "claude",
+   "revision_key": "ea959d21c0d3b17ac952b7e102e7779efeb546797603f5ce93c618280898e519",
+   "stamped_at": "2026-09-13T01:09:12+01:00"
+  }
+ ],
+ "agreement": {
+  "deliverable_set": {
+   "consensus": [
+    "answer.md",
+    "checklist_audit.csv",
+    "results.json"
+   ],
+   "agree": 4,
+   "of": 4
+  },
+  "figures": [
+   {
+    "surface": "answer.md",
+    "figure": "checklist items the draft got wrong",
+    "listed_by": 4,
+    "meanings": [
+     "The total number of checklist items whose draft position is the opposite of their status under the governing section.",
+     "The count of checklist items whose draft position is the opposite of their governing status.",
+     "The count of checklist items whose draft position is the opposite of their governing status.",
+     "The number of checklist items whose draft position is the opposite of their governing status."
+    ]
+   },
+   {
+    "surface": "checklist_audit.csv",
+    "figure": "governing_section",
+    "listed_by": 4,
+    "meanings": [
+     "The identifier of the regulation section or association guide note that governs the item, or NONE where neither document addresses the subject.",
+     "The id of the regulation section or guide note that governs the item, or NONE if neither document addresses the subject.",
+     "The id of the regulation section or guide note that governs the item, or NONE where neither document addresses the subject.",
+     "The id of the regulation section or guide note that governs the item, or NONE where neither document addresses the subject."
+    ]
+   },
+   {
+    "surface": "checklist_audit.csv",
+    "figure": "item_id",
+    "listed_by": 4,
+    "meanings": [
+     "The identifier of the checklist item in its numbered order from input/checklist_items.csv.",
+     "The identifier of the checklist item being reviewed.",
+     "The identifier of the checklist item being audited, in its numbered order.",
+     "The identifier of the checklist item from the numbered input."
+    ]
+   },
+   {
+    "surface": "checklist_audit.csv",
+    "figure": "status",
+    "listed_by": 4,
+    "meanings": [
+     "The verdict on whether the thing the item describes is REQUIRED, NOT_REQUIRED, or UNADDRESSED under its governing section.",
+     "Whether the thing the item describes is REQUIRED, NOT_REQUIRED, or UNADDRESSED under its governing section.",
+     "Whether the thing the item describes is REQUIRED, NOT_REQUIRED, or UNADDRESSED under its governing document.",
+     "Whether the thing the item describes is REQUIRED, NOT_REQUIRED, or UNADDRESSED."
+    ]
+   },
+   {
+    "surface": "results.json",
+    "figure": "draft_wrong_count",
+    "listed_by": 4,
+    "meanings": [
+     "The total number of checklist items the draft got wrong under TP-704.",
+     "The number of checklist items the draft got wrong, where its marked position is opposite to the governing status.",
+     "The number of items the draft got wrong, where its position is opposite to the governing status.",
+     "The number of items the draft got wrong because its marked position is opposite to their governing status."
+    ]
+   },
+   {
+    "surface": "results.json",
+    "figure": "not_required_count",
+    "listed_by": 4,
+    "meanings": [
+     "The total number of checklist items whose status is NOT_REQUIRED.",
+     "The number of checklist items whose status is NOT_REQUIRED.",
+     "The number of items whose status is NOT_REQUIRED.",
+     "The number of checklist items whose status is NOT_REQUIRED."
+    ]
+   },
+   {
+    "surface": "results.json",
+    "figure": "required_count",
+    "listed_by": 4,
+    "meanings": [
+     "The total number of checklist items whose status is REQUIRED.",
+     "The number of checklist items whose status is REQUIRED.",
+     "The number of items whose status is REQUIRED.",
+     "The number of checklist items whose status is REQUIRED."
+    ]
+   },
+   {
+    "surface": "results.json",
+    "figure": "unaddressed_count",
+    "listed_by": 4,
+    "meanings": [
+     "The total number of checklist items whose status is UNADDRESSED.",
+     "The number of checklist items whose status is UNADDRESSED.",
+     "The number of items whose status is UNADDRESSED.",
+     "The number of checklist items whose status is UNADDRESSED."
+    ]
+   }
+  ]
+ },
+ "verdict": "pass",
+ "surface_key": "160f9b4ea0fb960cbc6a91fce8ede5c884a241cc24e30bd825157b9620dfeec1",
+ "note": "METHOD divergence is difficulty, never a finding. Fix ladder for ambiguity, cheapest first: accept both readings; move the data so both agree; add motivation; state the rule (last — costs difficulty).",
+ "schema": 2,
+ "model": "glm-5.2",
+ "pool": [
+  {
+   "model": "glm-5.2",
+   "family": "glm",
+   "backend": "glm",
+   "slots": 4
+  }
+ ],
+ "pool_families": [
+  "glm"
+ ],
+ "pool_mode": "single-family",
+ "author_family": "claude",
+ "revision_key": "ea959d21c0d3b17ac952b7e102e7779efeb546797603f5ce93c618280898e519",
+ "stamped_at": "2026-09-13T01:09:12+01:00"
+}
