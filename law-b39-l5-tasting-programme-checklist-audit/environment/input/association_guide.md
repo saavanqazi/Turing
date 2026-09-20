@@ -28,7 +28,7 @@ Keep a log of each tasting: date, store, product, servings.
 
 ## AG-307
 
-Servers need no training certificate for a tasting.
+Servers employed by the permit holder need no training certificate. Agency staff at the table hold a current certificate.
 
 ## AG-308
 

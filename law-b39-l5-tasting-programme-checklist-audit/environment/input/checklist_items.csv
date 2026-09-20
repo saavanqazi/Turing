@@ -1,17 +1,17 @@
-item_id,subject,draft_position,cited_section,item
-IT-101,brand_state_permit,needed,BR-201,The brand holds a state tasting permit for the period.
-IT-102,agency_staff_solicitor_permit,not_needed,AG-302,Our tasting staff need no permit of their own; the brand's permit covers them.
-IT-103,store_tasting_permit,needed,AG-303,The store holds its own tasting permit.
-IT-104,server_id_card,needed,BR-298,Each server carries a state identification card.
-IT-105,advance_notice_filing,not_needed,AG-304,No advance notice of the event is filed with the division.
-IT-106,sample_size_limit,needed,AG-305,Each sample stays within the size limit.
-IT-107,store_owner_written_consent,needed,BR-205,The store owner's written consent is on file.
-IT-108,tasting_log,needed,AG-306,A log of each tasting is kept.
-IT-109,server_training_certificate,not_needed,AG-307,Servers need no training certificate.
-IT-110,insurance_certificate_filed,needed,BR-299,A certificate of insurance is filed with the division.
-IT-111,brand_representative_present,needed,BR-206,A brand representative is present at every tasting.
-IT-112,age_verification,needed,BR-207,Every taster's age is verified before service.
-IT-113,local_ordinance_review,needed,AG-399,The municipality's ordinance is reviewed for each store.
-IT-114,signage_posted,not_needed,BR-208,No signage need be posted at the tasting table.
-IT-115,permit_per_store,needed,BR-209,A separate permit is obtained for each store.
-IT-116,post_event_report,not_needed,AG-310,No report is filed after the event.
+item_id,draft_position,cited_section,item
+IT-101,needed,BR-201,The brand holds a state tasting permit for the period.
+IT-102,not_needed,AG-302,Our tasting staff need no permit of their own; the brand's permit covers them.
+IT-103,needed,AG-303,The store holds its own tasting permit.
+IT-104,needed,BR-298,Each server carries a state identification card.
+IT-105,not_needed,AG-304,No advance notice of the event is filed with the division.
+IT-106,needed,AG-305,Each sample stays within the size limit.
+IT-107,needed,BR-205,The store owner's written consent is on file.
+IT-108,needed,AG-306,A log of each tasting is kept.
+IT-109,not_needed,AG-307,Servers need no training certificate.
+IT-110,needed,BR-299,A certificate of insurance is filed with the division.
+IT-111,needed,BR-206,A brand representative is present at every tasting.
+IT-112,needed,BR-207,Every taster's age is verified before service.
+IT-113,needed,AG-399,The municipality's ordinance is reviewed for each store.
+IT-114,not_needed,BR-208,No signage need be posted at the tasting table.
+IT-115,needed,BR-209,A separate permit is obtained for each store.
+IT-116,not_needed,AG-310,No report is filed after the event.

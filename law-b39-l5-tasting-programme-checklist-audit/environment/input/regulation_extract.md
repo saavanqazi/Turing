@@ -20,11 +20,11 @@ Notice of each tasting is filed with the division before the tasting day.
 
 ## BR-205
 
-No written consent of the store owner need be filed or kept; the store's own permit is its consent.
+No written consent of the store owner need be filed or kept where the store holds a tasting permit in its own name; that permit is its consent. Where the store holds no such permit, the owner's written consent is filed and kept.
 
 ## BR-206
 
-No representative of the brand need be present at a tasting.
+No representative of the brand need be present at a tasting conducted by an employee of the permit holder. At any other tasting a representative of the brand is present.
 
 ## BR-207
 
@@ -32,7 +32,7 @@ The age of every person served is verified before service.
 
 ## BR-208
 
-A notice in the prescribed form is posted at the tasting table.
+A notice in the prescribed form is posted at the tasting table, unless every person serving is an employee of the permit holder.
 
 ## BR-209
 
