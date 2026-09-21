@@ -1,0 +1,11 @@
+# The bundle is built on Windows and graded in a Linux container. Without this,
+# git's autocrlf converts shipped scripts to CRLF on checkout and the Delivery
+# Gate rejects the entrypoint (PF4.crlf_repaired_script).
+* text=auto eol=lf
+*.sh  text eol=lf
+*.py  text eol=lf
+*.csv text eol=lf
+*.md  text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+Dockerfile text eol=lf
