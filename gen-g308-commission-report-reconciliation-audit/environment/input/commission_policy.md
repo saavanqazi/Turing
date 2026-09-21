@@ -37,3 +37,18 @@ not displace the standard rate.
 
 `RATE_MISMATCH`, `UNMATCHED_TO_LEDGER`, `DUPLICATE_LINE`. A line with none of these is
 compliant.
+
+## Reporting the findings
+
+A line carries every finding that applies to it. Where two rules both catch the same
+line it appears once per finding in `commission_findings.csv`, and a line with no
+finding appears in that file not at all.
+
+## Figures
+
+`total_lines` is the number of lines in the consolidated line list.
+
+`rate_mismatch_count`, `unmatched_to_ledger_count` and `duplicate_line_count` are the
+numbers of findings of each code, so a line caught by two rules is counted under both.
+
+`compliant_lines` is the number of lines carrying no finding at all.
