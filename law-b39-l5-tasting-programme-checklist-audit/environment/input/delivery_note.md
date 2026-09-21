@@ -14,4 +14,4 @@ Columns: `district`, `mentions_reported`, `items_reported`, `contexts_attached`.
 Columns: `cited_section`, `record_on_file`, `batch`, `received_on`.
 
 `tasting_context.csv`: the facts recorded for each position by the events team.
-Columns: `context_id`, `staffed_by_agency`, `store_permit_on_file`, `all_servers_employees`, `sample_over_limit`, `notice_posted`, `servers_certified`, `product_sealed_on_arrival`, `within_permit_hours`.
+Columns: `context_id`, `every_server_is_holder_employee`, `store_holds_own_permit`, `tasting_open_to_public`, `event_inside_licensed_area`, `product_sold_at_event`, `brand_products_only`, `containers_sealed_on_arrival`, `inside_permitted_hours`.

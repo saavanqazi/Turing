@@ -42,6 +42,11 @@ record take effect on the same day on the same point, and the regulation governs
 Some items sit in a district where the record on their subject exists only for a
 different district, so nothing governs them at all.
 
+The register states its holdings as the records state them. A holding says
+"unless every person serving is an employee of the permit holder", not the name of
+a column; which recorded fact it turns on is the solver's to work out. No context
+column name appears anywhere in the register.
+
 Measured against the gold: treating the register as undated and taking the newest
 record changes 10 of the 35 rows; applying holdings without reading the context
 changes 5.
@@ -71,6 +76,19 @@ the key set and the two existence checks.
   tag; repinned to the registry's multi-arch index digest.
 - **QC1-2 / D1** — the prose deliverable was graded by a length-only regex. The
   deliverable is gone, so the finding cannot recur.
+
+## Measured
+
+The first battery on this structure returned 0 of 4, and the per-verifier detail
+showed why: every run passed the table — all 105 graded cells, four times over —
+and every figure but one. `distinct_governing_section_count` failed in all four,
+because the protocol defined the table but never defined the figures, so whether
+`NONE` counted was a guess. That is an ambiguity, not difficulty, and it was
+fixed rather than kept: section 7 now defines all eight figures.
+
+The same result showed the chain alone does not trouble GLM-5.2, so the holdings
+were rewritten to name facts in the records' own language rather than naming the
+context columns, which is where the sibling bundle's difficulty actually lives.
 
 ## Open
 

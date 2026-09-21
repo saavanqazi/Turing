@@ -26,33 +26,57 @@ INP  = ROOT / "environment" / "input"
 # unconditional holding. required=True/False gives the unconditional reading.
 # --------------------------------------------------------------------------
 R = [
- # id      district subject               effective     required  condition
- ("BR-201","D-ARD","brand_permit",        "2026-01-05", True,  None),
- ("AG-301","D-ARD","brand_permit",        "2025-11-10", True,  None),
- ("BR-202","D-ARD","server_permit",       "2026-02-02", True,  ("staffed_by_agency","yes")),
- ("AG-302","D-ARD","server_permit",       "2026-02-02", False, None),
- ("BR-203","D-BEL","store_permit",        "2026-01-19", True,  None),
- ("BR-204","D-BEL","advance_notice",      "2026-01-19", True,  None),
- ("AG-304","D-BEL","advance_notice",      "2026-03-16", False, None),
- ("BR-205","D-COR","owner_consent",       "2026-02-09", True,  ("store_permit_on_file","no")),
- ("AG-305","D-COR","sample_size",         "2026-01-26", True,  ("sample_over_limit","yes")),
- ("BR-206","D-ARD","brand_rep_present",   "2026-02-16", False, None),
- ("BR-216","D-ARD","brand_rep_present",   "2026-03-30", True,  ("staffed_by_agency","yes")),
- ("BR-207","D-BEL","age_verification",    "2026-01-12", True,  None),
- ("BR-208","D-BEL","signage",             "2026-02-23", True,  ("all_servers_employees","no")),
- ("AG-308","D-BEL","signage",             "2026-04-13", False, None),
- ("BR-209","D-COR","permit_per_store",    "2026-02-09", False, None),
- ("AG-306","D-COR","tasting_log",         "2026-01-26", True,  None),
- ("AG-307","D-DUN","server_training",     "2026-02-02", True,  ("staffed_by_agency","yes")),
- ("BR-217","D-DUN","server_training",     "2026-04-20", False, None),
- ("AG-310","D-DUN","post_event_report",   "2026-03-02", True,  None),
- ("BR-210","D-DUN","tasting_hours",       "2026-01-12", True,  None),
- ("BR-211","D-COR","sealed_containers",   "2026-03-09", True,  None),
- ("AG-311","D-ARD","tasting_hours",       "2026-02-16", True,  None),
- ("BR-218","D-BEL","store_permit",        "2026-04-27", False, None),
- ("AG-312","D-DUN","insurance_filed",     "2026-05-18", True,  None),   # effective after every event: never governs
+ # id      district subject             effective     required  condition                                  holding
+ ("BR-201","D-ARD","brand_permit",      "2026-01-05", True,  None,
+  "A brand whose products are offered at a tasting holds a state tasting permit for the tasting period."),
+ ("AG-301","D-ARD","brand_permit",      "2025-11-10", True,  None,
+  "The brand needs a state tasting permit covering the dates."),
+ ("BR-202","D-ARD","server_permit",     "2026-02-02", True,  ("every_server_is_holder_employee","no"),
+  "Any person who conducts a tasting and is not an employee of the permit holder holds a solicitor permit of their own; the holder's own employees are covered by the holder's permit."),
+ ("AG-302","D-ARD","server_permit",     "2026-02-02", False, None,
+  "Staff at the table work under the brand's permit and need no permit of their own."),
+ ("BR-203","D-BEL","store_permit",      "2026-01-19", True,  None,
+  "A retail store at which a tasting is held holds its own tasting permit."),
+ ("BR-204","D-BEL","advance_notice",    "2026-01-19", True,  None,
+  "Notice of each tasting is filed with the division before the tasting day."),
+ ("AG-304","D-BEL","advance_notice",    "2026-03-16", False, None,
+  "No advance notice of an event need be filed."),
+ ("BR-205","D-COR","owner_consent",     "2026-02-09", True,  ("store_holds_own_permit","no"),
+  "Where the store holds no tasting permit in its own name, the written consent of the store owner is filed and kept; where it does, that permit stands as its consent."),
+ ("AG-305","D-COR","sample_size",       "2026-01-26", True,  ("tasting_open_to_public","yes"),
+  "At a tasting open to the public every sample is kept within the prescribed size; at a trade-only tasting no size limit applies."),
+ ("BR-206","D-ARD","brand_rep_present", "2026-02-16", False, None,
+  "No representative of the brand need be present at a tasting."),
+ ("BR-216","D-ARD","brand_rep_present", "2026-03-30", True,  ("every_server_is_holder_employee","no"),
+  "A representative of the brand is present at any tasting not conducted by an employee of the permit holder."),
+ ("BR-207","D-BEL","age_verification",  "2026-01-12", True,  None,
+  "The age of every person served is verified before service."),
+ ("BR-208","D-BEL","signage",           "2026-02-23", True,  ("every_server_is_holder_employee","no"),
+  "A notice in the prescribed form is posted at the tasting table, unless every person serving is an employee of the permit holder."),
+ ("AG-308","D-BEL","signage",           "2026-04-13", False, None,
+  "No notice need be posted at the tasting table."),
+ ("BR-209","D-COR","permit_per_store",  "2026-02-09", False, None,
+  "One tasting permit covers every store at which the holder offers tastings in the permit period; no separate permit per store is issued."),
+ ("AG-306","D-COR","tasting_log",       "2026-01-26", True,  None,
+  "Keep a log of each tasting: date, store, product, servings."),
+ ("AG-307","D-DUN","server_training",   "2026-02-02", True,  ("event_inside_licensed_area","no"),
+  "A person serving at a tasting held outside the licensed area holds a current training certificate; inside it, none is needed."),
+ ("BR-217","D-DUN","server_training",   "2026-04-20", False, None,
+  "No training certificate is required of a person serving at a tasting."),
+ ("AG-310","D-DUN","post_event_report", "2026-03-02", True,  None,
+  "File a short report after each event."),
+ ("BR-210","D-DUN","tasting_hours",     "2026-01-12", True,  None,
+  "Tastings are held within the hours the permit states."),
+ ("BR-211","D-COR","sealed_containers", "2026-03-09", True,  None,
+  "Product for a tasting arrives in sealed containers opened at the table."),
+ ("AG-311","D-ARD","tasting_hours",     "2026-02-16", True,  None,
+  "Stay within the hours on the permit."),
+ ("BR-218","D-BEL","store_permit",      "2026-04-27", False, None,
+  "A store at which a tasting is held need not hold a permit of its own."),
+ ("AG-312","D-DUN","insurance_filed",   "2026-05-18", True,  None,
+  "File a certificate of insurance with the division."),
 ]
-REC = {r[0]: dict(zip(("id","district","subject","effective","required","cond"), r)) for r in R}
+REC = {r[0]: dict(zip(("id","district","subject","effective","required","cond","holding"), r)) for r in R}
 
 def governs(district, subject, when):
     """Most recent record on the point effective on or before `when`.
@@ -72,12 +96,13 @@ def governs(district, subject, when):
 # draft: what the checklist asserts — "needed" / "not_needed"
 # cites: the section the draft row cited (may differ from the governing one)
 # --------------------------------------------------------------------------
-CTX_FIELDS = ["staffed_by_agency","store_permit_on_file","all_servers_employees",
-              "sample_over_limit","notice_posted","servers_certified",
-              "product_sealed_on_arrival","within_permit_hours"]
-CTX_DEFAULT = {"staffed_by_agency":"yes","store_permit_on_file":"yes","all_servers_employees":"no",
-               "sample_over_limit":"no","notice_posted":"yes","servers_certified":"no",
-               "product_sealed_on_arrival":"yes","within_permit_hours":"yes"}
+CTX_FIELDS = ["every_server_is_holder_employee","store_holds_own_permit","tasting_open_to_public",
+              "event_inside_licensed_area","product_sold_at_event","brand_products_only",
+              "containers_sealed_on_arrival","inside_permitted_hours"]
+CTX_DEFAULT = {"every_server_is_holder_employee":"no","store_holds_own_permit":"yes",
+               "tasting_open_to_public":"yes","event_inside_licensed_area":"yes",
+               "product_sold_at_event":"no","brand_products_only":"yes",
+               "containers_sealed_on_arrival":"yes","inside_permitted_hours":"yes"}
 
 ITEMS = [
  # --- straightforward, spread over the register's dates ------------------
@@ -103,13 +128,13 @@ ITEMS = [
  ("D-DUN","server_training",   "2026-04-26","not_needed", {}, "AG-307"),   # BR-217 displaces
  ("D-BEL","store_permit",      "2026-05-03","needed",     {}, "AG-303"),   # BR-218 displaces
  # --- context decides ----------------------------------------------------
- ("D-COR","owner_consent",     "2026-03-15","needed",     {"store_permit_on_file":"no"}, "BR-205"),
+ ("D-COR","owner_consent",     "2026-03-15","needed",     {"store_holds_own_permit":"no"}, "BR-205"),
  ("D-COR","owner_consent",     "2026-03-21","needed",     {}, "BR-205"),
- ("D-COR","sample_size",       "2026-03-15","needed",     {"sample_over_limit":"yes"}, "AG-305"),
- ("D-COR","sample_size",       "2026-03-21","needed",     {}, "AG-305"),
- ("D-ARD","server_permit",     "2026-03-28","not_needed", {"staffed_by_agency":"no"}, "AG-302"),
- ("D-BEL","signage",           "2026-03-15","not_needed", {"all_servers_employees":"yes"}, "BR-208"),
- ("D-DUN","server_training",   "2026-03-21","not_needed", {"staffed_by_agency":"no"}, "AG-307"),
+ ("D-COR","sample_size",       "2026-03-15","needed",     {"tasting_open_to_public":"yes"}, "AG-305"),
+ ("D-COR","sample_size",       "2026-03-21","needed",     {"tasting_open_to_public":"no"}, "AG-305"),
+ ("D-ARD","server_permit",     "2026-03-28","not_needed", {"every_server_is_holder_employee":"yes"}, "AG-302"),
+ ("D-BEL","signage",           "2026-03-15","not_needed", {"every_server_is_holder_employee":"yes"}, "BR-208"),
+ ("D-DUN","server_training",   "2026-03-21","not_needed", {"every_server_is_holder_employee":"yes"}, "AG-307"),
  # --- nothing governs: no record on the point, or none yet in force ------
  ("D-DUN","insurance_filed",   "2026-03-14","needed",     {}, "BR-299"),   # AG-312 not yet effective
  ("D-ARD","server_id_card",    "2026-03-07","needed",     {}, "BR-298"),   # no record at all
@@ -237,14 +262,7 @@ for head, pref in (("Regulation","BR-"), ("Association guide","AG-")):
     reg.append(f"## {head}\n")
     for r in sorted((x for x in REC.values() if x["id"].startswith(pref)), key=lambda x: x["effective"]):
         reg.append(f"### {r['id']} — {r['district']}, {r['effective']} — subject `{r['subject']}`\n")
-        what = SUBJ[r["subject"]]
-        if r["cond"] is None:
-            reg.append((f"{what.capitalize()} is required."  if r["required"]
-                        else f"{what.capitalize()} is not required.") + "\n")
-        else:
-            f, v = r["cond"]
-            yes, no = ("required", "not required") if r["required"] else ("not required", "required")
-            reg.append(f"Where `{f}` is `{v}`, {what} is {yes}; otherwise it is {no}.\n")
+        reg.append(r["holding"] + "\n")
 (INP/"source_register.md").write_text("\n".join(reg), encoding="utf-8")
 
 (INP/"delivery_note.md").write_text(f"""# Delivery note: tasting-programme checklist extract
@@ -310,6 +328,21 @@ section cited by its mentions differs from its governing section.
 The table carries one row per checklist item, in the order each `item_id` first
 appears in the mention export. `mention_count` is the number of mention rows
 carrying that `item_id`.
+
+## 7. The figures
+
+`required_count`, `not_required_count` and `unaddressed_count` are the numbers of
+items whose status is each of those; together they are every item.
+
+`draft_wrong_count` is the number of items the draft has wrong under section 4.
+
+`corrected_citation_count` is the number of corrected-citation items under section 5.
+
+`distinct_governing_section_count` counts the different governing sections the
+table carries. `NONE` is not a section and is not counted.
+
+`distinct_item_count` is the number of items, that is the number of rows in the
+table. `checklist_mention_count` is the number of mention rows in the export.
 """, encoding="utf-8")
 
 # --------------------------------------------------------------------------

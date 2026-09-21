@@ -190,7 +190,7 @@
       },
       "IT-117": {
        "mention_count": "1",
-       "status": "REQUIRED",
+       "status": "NOT_REQUIRED",
        "governing_section": "AG-307"
       },
       "IT-118": {
@@ -386,11 +386,11 @@
     "expected": {
      "keys": {
       "required_count": {
-       "value": 15,
+       "value": 14,
        "tolerance": null
       },
       "not_required_count": {
-       "value": 11,
+       "value": 12,
        "tolerance": null
       },
       "unaddressed_count": {
@@ -398,7 +398,7 @@
        "tolerance": null
       },
       "draft_wrong_count": {
-       "value": 10,
+       "value": 9,
        "tolerance": null
       },
       "corrected_citation_count": {
@@ -445,7 +445,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 15,
+    "expected": 14,
     "deterministic": {
      "path": "$.required_count",
      "comparison": "equals"
@@ -471,7 +471,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 11,
+    "expected": 12,
     "deterministic": {
      "path": "$.not_required_count",
      "comparison": "equals"
@@ -523,7 +523,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 10,
+    "expected": 9,
     "deterministic": {
      "path": "$.draft_wrong_count",
      "comparison": "equals"

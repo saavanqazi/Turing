@@ -1,8 +1,8 @@
 {
-  "required_count": 15,
-  "not_required_count": 11,
+  "required_count": 14,
+  "not_required_count": 12,
   "unaddressed_count": 9,
-  "draft_wrong_count": 10,
+  "draft_wrong_count": 9,
   "corrected_citation_count": 10,
   "distinct_governing_section_count": 21,
   "distinct_item_count": 35,

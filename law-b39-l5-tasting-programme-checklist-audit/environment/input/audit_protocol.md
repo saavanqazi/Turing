@@ -42,3 +42,18 @@ section cited by its mentions differs from its governing section.
 The table carries one row per checklist item, in the order each `item_id` first
 appears in the mention export. `mention_count` is the number of mention rows
 carrying that `item_id`.
+
+## 7. The figures
+
+`required_count`, `not_required_count` and `unaddressed_count` are the numbers of
+items whose status is each of those; together they are every item.
+
+`draft_wrong_count` is the number of items the draft has wrong under section 4.
+
+`corrected_citation_count` is the number of corrected-citation items under section 5.
+
+`distinct_governing_section_count` counts the different governing sections the
+table carries. `NONE` is not a section and is not counted.
+
+`distinct_item_count` is the number of items, that is the number of rows in the
+table. `checklist_mention_count` is the number of mention rows in the export.
