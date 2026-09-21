@@ -1,0 +1,380 @@
+{
+ "task_id": "gen-G308-commission-report-reconciliation-audit",
+ "verifiers": [
+  {
+   "name": "findings_exist",
+   "metadata": {
+    "how_justification": "Checks commission_findings.csv is present as a file in the workspace.",
+    "why_justification": "Findings CSV delivered."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "filesystem",
+     "command": "check_path_exists",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": true,
+    "deterministic": {
+     "path": "$.is_file",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "memo_exists",
+   "metadata": {
+    "how_justification": "Checks commission_memo.md is present as a file in the workspace.",
+    "why_justification": "Memo delivered."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "filesystem",
+     "command": "check_path_exists",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": true,
+    "deterministic": {
+     "path": "$.is_file",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "rate_mismatch_present",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv with csv.extract_text and applies regex_match.",
+    "why_justification": "The underpaid new-business line is flagged."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL-03\\x22?\\s*,[^\\n]*RATE_MISMATCH",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "unmatched_present",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv with csv.extract_text and applies regex_match.",
+    "why_justification": "The unmatched renewal line is flagged."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL-04\\x22?\\s*,[^\\n]*UNMATCHED_TO_LEDGER",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "duplicate_present",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv with csv.extract_text and applies regex_match.",
+    "why_justification": "The duplicated deal id is flagged."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL-06\\x22?\\s*,[^\\n]*DUPLICATE_LINE",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "trap_not_flagged",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv with csv.extract_text and applies regex_match.",
+    "why_justification": "The VP-approved override line must not be flagged."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?s)^(?!.*\\bDEAL-07\\b[^\\n]*\\b(?:RATE_MISMATCH|UNMATCHED_TO_LEDGER|DUPLICATE_LINE)\\b).*$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_rate",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match.",
+    "why_justification": "Memo explains the standard rate mapping."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)\\bstandard\\w*\\b.*\\brate",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_trap",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match.",
+    "why_justification": "Memo explains the VP-approved override."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)\\boverride\\w*\\b.*\\bapprov\\w*",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_ledger",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match.",
+    "why_justification": "Memo explains the ledger-matching rule."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)\\bledger\\w*\\b.*\\bmatch",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "results_exists",
+   "metadata": {
+    "how_justification": "Checks results.json is present as a file in the workspace.",
+    "why_justification": "Derived figures delivered."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "filesystem",
+     "command": "check_path_exists",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": true,
+    "deterministic": {
+     "path": "$.is_file",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_total_lines",
+   "metadata": {
+    "how_justification": "Reads results.json with json.read_file and compares $.total_lines.",
+    "why_justification": "Derived figure `total_lines`, recomputed from the delivered artifacts."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 8,
+    "deterministic": {
+     "path": "$.total_lines",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_rate_mismatch_count",
+   "metadata": {
+    "how_justification": "Reads results.json with json.read_file and compares $.rate_mismatch_count.",
+    "why_justification": "Derived figure `rate_mismatch_count`, recomputed from the delivered artifacts."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 1,
+    "deterministic": {
+     "path": "$.rate_mismatch_count",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_unmatched_to_ledger_count",
+   "metadata": {
+    "how_justification": "Reads results.json with json.read_file and compares $.unmatched_to_ledger_count.",
+    "why_justification": "Derived figure `unmatched_to_ledger_count`, recomputed from the delivered artifacts."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 1,
+    "deterministic": {
+     "path": "$.unmatched_to_ledger_count",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_duplicate_line_count",
+   "metadata": {
+    "how_justification": "Reads results.json with json.read_file and compares $.duplicate_line_count.",
+    "why_justification": "Derived figure `duplicate_line_count`, recomputed from the delivered artifacts."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 2,
+    "deterministic": {
+     "path": "$.duplicate_line_count",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_compliant_lines",
+   "metadata": {
+    "how_justification": "Reads results.json with json.read_file and compares $.compliant_lines.",
+    "why_justification": "Derived figure `compliant_lines`, recomputed from the delivered artifacts."
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 4,
+    "deterministic": {
+     "path": "$.compliant_lines",
+     "comparison": "equals"
+    }
+   }
+  }
+ ]
+}

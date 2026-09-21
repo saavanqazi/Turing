@@ -1,0 +1,5 @@
+deal_id,source_report,finding_code
+DEAL-03,PartnerB,RATE_MISMATCH
+DEAL-04,PartnerB,UNMATCHED_TO_LEDGER
+DEAL-06,PartnerA,DUPLICATE_LINE
+DEAL-06,PartnerC,DUPLICATE_LINE

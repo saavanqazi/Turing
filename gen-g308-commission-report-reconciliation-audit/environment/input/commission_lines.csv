@@ -1,0 +1,9 @@
+deal_id,source_report,customer_id,customer_type,reported_rate_pct,revenue_usd,netsuite_matched
+DEAL-01,PartnerA,CUST-01,new,8,50000,yes
+DEAL-02,PartnerA,CUST-02,renewal,4,30000,yes
+DEAL-03,PartnerB,CUST-03,new,6,40000,yes
+DEAL-04,PartnerB,CUST-04,renewal,4,20000,no
+DEAL-05,PartnerC,CUST-05,house,0,15000,yes
+DEAL-06,PartnerA,CUST-06,new,8,60000,yes
+DEAL-06,PartnerC,CUST-06,new,8,60000,yes
+DEAL-07,PartnerB,CUST-07,renewal,6,35000,yes
