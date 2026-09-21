@@ -29,9 +29,9 @@ The same `deal_id` must not appear in more than one source report. A deal that d
 ## R4 — VP-approved rate overrides
 
 A deal named in the commission exceptions register with `status = active` is paid at the
-register's approved rate instead of the standard rate for its end-user type. A line at the
-approved rate is compliant even though it disagrees with the standard mapping, and flagging
-it as a rate mismatch is the commonest false positive in this audit.
+register's approved rate instead of the standard rate for its end-user type. For that deal
+the approved rate is the rate R1 is read against. An exception that is not `active` does
+not displace the standard rate.
 
 ## Finding codes
 
