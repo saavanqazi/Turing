@@ -1,0 +1,5 @@
+Populated on the machine that runs the battery:
+  solvability/r1/            one reward-1.0 run, any non-oracle model
+  difficulty/r1 .. r4/       four independent GLM-5.2 rollouts
+  stability/                 only if real repeats exist; Turing runs this
+No platform/ until the gate accepts it (R17). Nothing loose in here.
