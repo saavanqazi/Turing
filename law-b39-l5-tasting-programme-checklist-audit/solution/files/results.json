@@ -1,6 +1,6 @@
 {
-  "required_count": 11,
-  "not_required_count": 2,
+  "required_count": 12,
+  "not_required_count": 1,
   "unaddressed_count": 3,
-  "draft_wrong_count": 7
+  "draft_wrong_count": 6
 }

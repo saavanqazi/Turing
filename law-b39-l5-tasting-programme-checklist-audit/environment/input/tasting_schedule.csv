@@ -1,0 +1,10 @@
+event_id,store_id,store_name,event_date,staffed_by,store_tasting_permit_on_file
+EV-01,ST-100,Harbour Wine & Spirits,2026-03-07,agency,yes
+EV-02,ST-101,Meridian Fine Wines,2026-03-08,agency,yes
+EV-03,ST-100,Harbour Wine and Spirits,2026-03-14,agency,yes
+EV-04,ST-102,Oakfield Bottle Shop,2026-03-15,agency,no
+EV-05,ST-103,Kingsway Cellars,2026-03-21,agency,yes
+EV-06,ST-101,Meridian Fine Wines,2026-03-22,brand,yes
+EV-07,ST-104,Kingsway Cellar,2026-03-28,agency,yes
+EV-08,ST-100,Harbour Wine & Spirits,2026-04-04,agency,yes
+EV-09,ST-103,Kingsway Cellars,2026-04-05,agency,yes

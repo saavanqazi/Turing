@@ -20,7 +20,7 @@ Notice of each tasting is filed with the division before the tasting day.
 
 ## BR-205
 
-No written consent of the store owner need be filed or kept where the store holds a tasting permit in its own name; that permit is its consent. Where the store holds no such permit, the owner's written consent is filed and kept.
+No written consent of the store owner need be filed or kept where the store holds a tasting permit in its own name; that permit is its consent. Where any store at which a tasting is held holds no such permit, the owner's written consent is filed and kept.
 
 ## BR-206
 
@@ -36,7 +36,7 @@ A notice in the prescribed form is posted at the tasting table, unless every per
 
 ## BR-209
 
-One tasting permit covers every store at which the holder offers tastings in the permit period; no separate permit per store is issued.
+One tasting permit covers every store at which the holder offers tastings in the permit period, up to five stores; no separate permit per store is issued. Where the holder offers tastings at more than five stores in the period, a separate permit is obtained for each store.
 
 ## BR-210
 
