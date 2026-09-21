@@ -8,7 +8,7 @@ Deliver exactly these files, in your working directory:
 
 ## `answer.md`
 
-`answer.md` states `Checklist items the draft got wrong: <count>` — the figure beside its label, in the sentence that names it. At least sixty words of prose. Each figure stands beside its label once, stated as the finding — not offered as one of two candidates.
+`answer.md` states `Checklist items the draft got wrong: <count>` — the figure beside its label, in the sentence that names it. At least sixty words of prose. Name the governing sections the review turns on, by their ids as the documents write them (`BR-…`, `AG-…`) — at least the ones deciding the items the draft got wrong. Each figure stands beside its label once, stated as the finding — not offered as one of two candidates.
 
 ## `checklist_audit.csv`
 

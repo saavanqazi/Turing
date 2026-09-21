@@ -30,8 +30,8 @@
   {
    "name": "answer_prose_floor",
    "metadata": {
-    "how_justification": "Opens answer.md with md.extract_text and applies regex_match: a sixty-word prose floor AND set-membership on the key facts the review must carry \u2014 the displacing regulation section (BR-202), both conditional sections that decide a verdict (BR-206, AG-307), and the employment fact they turn on.",
-    "why_justification": "The review runs to sixty words of sentences at least and states the reasoning that decides the audit; a length-only floor let a keyword-stuffed stub score, so substance is required as well as length (QC1-2 / D1).",
+    "how_justification": "Opens answer.md with md.extract_text and applies regex_match: a sixty-word prose floor, and at least three governing-section citations in BR-/AG- form.",
+    "why_justification": "The review runs to sixty words of sentences at least and cites the sections it turns on, which submission_format.md asks for; a length-only floor let a keyword-stuffed stub score. Matched on the citation form rather than on named sections or phrasing, so any correct review that cites its authorities passes (QC1-2 / D1).",
     "tag": "core"
    },
    "source": {
@@ -46,7 +46,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": "(?is)(?=.*\\bBR-202\\b)(?=.*\\bBR-206\\b)(?=.*\\bAG-307\\b)(?=.*\\bemploye)(?:[A-Za-z]+[^A-Za-z]+){60,}",
+    "expected": "(?is)(?=(?:.*?\\b(?:BR|AG)-\\d{3}\\b){3,})(?:[A-Za-z]+[^A-Za-z]+){60,}",
     "deterministic": {
      "path": "$.text",
      "comparison": "regex_match"
