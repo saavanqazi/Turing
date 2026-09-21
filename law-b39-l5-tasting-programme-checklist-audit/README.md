@@ -31,6 +31,17 @@ was a guess. An ambiguity, not difficulty. It was defined rather than kept.
 **Defining the figures** — 4 of 4. Which settled what the chain is worth on its
 own against GLM-5.2: nothing. The audit was right every time.
 
+**Making the audit a comparison** — each item asserts one of thirty opposed
+positions in its own words, and the status is whether the governing holding, on
+the item's facts, gives that position or its opposite. First battery read 0 of 4,
+and again the detail showed a defect rather than difficulty: the superseded-record
+trap, the unsupported count, the dedup and every join passed, and only the
+supported/contradicted split failed, identically in all four runs. Half the items
+had been written as statements of conduct rather than positions on what the
+register requires, and comparing conduct with a holding is undefined.
+
+**Rewriting the items as legal positions** — 3 of 4, oracle 1.0. In band.
+
 ## Why the task is hard
 
 The difficulty is not the chain. It is that each item asserts a position in its
@@ -77,8 +88,12 @@ verifiers, all core, no LLM judge.
 - **QC1-2 / D1** — the prose deliverable was graded by a length-only regex. The
   deliverable is gone, so the finding cannot recur.
 
-## Open
+## Measured
 
-`evaluations/` is empty pending the oracle run and the four-run battery on this
-version. No `stability/` — Turing runs it — and no `platform/`, which the gate
-does not yet accept.
+Oracle: reward exactly 1.0, repeated, all thirteen verifiers.
+
+GLM-5.2, four runs under terminus-2: **1.0, 1.0, 1.0, 0.0 — 3 of 4 fully
+passing**, inside the accepted band.
+
+No `stability/` is shipped — Turing runs it — and no `platform/`, which the gate
+does not yet accept (R17).
