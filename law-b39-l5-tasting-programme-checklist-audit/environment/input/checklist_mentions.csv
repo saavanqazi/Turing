@@ -1,0 +1,52 @@
+mention_ref,item_id,checklist_section,event_date,district,subject,draft_position,cited_section,context_id
+MR-001,IT-101,Permits,2026-03-07,D-ARD,brand_permit,needed,BR-201,CX-201
+MR-002,IT-101,Staffing,2026-03-07,D-ARD,brand_permit,needed,AG-301,CX-201
+MR-003,IT-102,Staffing,2026-03-08,D-BEL,store_permit,needed,AG-303,CX-202
+MR-004,IT-103,At the table,2026-03-08,D-BEL,age_verification,needed,BR-207,CX-203
+MR-005,IT-103,Records,2026-03-08,D-BEL,age_verification,needed,AG-303,CX-203
+MR-006,IT-104,Records,2026-03-14,D-DUN,tasting_hours,needed,BR-210,CX-204
+MR-007,IT-105,Closing,2026-03-14,D-ARD,tasting_hours,needed,AG-311,CX-205
+MR-008,IT-106,Permits,2026-03-15,D-COR,tasting_log,needed,AG-306,CX-206
+MR-009,IT-106,Staffing,2026-03-15,D-COR,tasting_log,needed,AG-306,CX-206
+MR-010,IT-107,Staffing,2026-03-15,D-COR,permit_per_store,needed,BR-209,CX-207
+MR-011,IT-107,At the table,2026-03-15,D-COR,permit_per_store,needed,BR-209,CX-207
+MR-012,IT-108,At the table,2026-03-21,D-COR,sealed_containers,needed,BR-211,CX-208
+MR-013,IT-109,Records,2026-03-07,D-ARD,server_permit,not_needed,AG-302,CX-209
+MR-014,IT-109,Closing,2026-03-07,D-ARD,server_permit,not_needed,AG-302,CX-209
+MR-015,IT-109,Permits,2026-03-07,D-ARD,server_permit,not_needed,BR-202,CX-209
+MR-016,IT-110,Closing,2026-02-01,D-ARD,server_permit,not_needed,AG-302,CX-210
+MR-017,IT-111,Permits,2026-03-01,D-ARD,brand_rep_present,needed,BR-206,CX-211
+MR-018,IT-112,Staffing,2026-04-05,D-ARD,brand_rep_present,needed,BR-206,CX-212
+MR-019,IT-112,At the table,2026-04-05,D-ARD,brand_rep_present,needed,BR-216,CX-212
+MR-020,IT-113,At the table,2026-03-01,D-BEL,advance_notice,not_needed,AG-304,CX-213
+MR-021,IT-114,Records,2026-03-22,D-BEL,advance_notice,not_needed,AG-304,CX-214
+MR-022,IT-114,Closing,2026-03-22,D-BEL,advance_notice,not_needed,AG-304,CX-214
+MR-023,IT-115,Closing,2026-03-08,D-BEL,signage,not_needed,BR-208,CX-215
+MR-024,IT-116,Permits,2026-04-19,D-BEL,signage,not_needed,BR-208,CX-216
+MR-025,IT-116,Staffing,2026-04-19,D-BEL,signage,not_needed,AG-308,CX-216
+MR-026,IT-117,Staffing,2026-03-14,D-DUN,server_training,not_needed,AG-307,CX-217
+MR-027,IT-118,At the table,2026-04-26,D-DUN,server_training,not_needed,AG-307,CX-218
+MR-028,IT-118,Records,2026-04-26,D-DUN,server_training,not_needed,BR-217,CX-218
+MR-029,IT-119,Records,2026-05-03,D-BEL,store_permit,needed,AG-303,CX-219
+MR-030,IT-120,Closing,2026-03-15,D-COR,owner_consent,needed,BR-205,CX-220
+MR-031,IT-120,Permits,2026-03-15,D-COR,owner_consent,needed,BR-205,CX-220
+MR-032,IT-121,Permits,2026-03-21,D-COR,owner_consent,needed,BR-205,CX-221
+MR-033,IT-122,Staffing,2026-03-15,D-COR,sample_size,needed,AG-305,CX-222
+MR-034,IT-123,At the table,2026-03-21,D-COR,sample_size,needed,AG-305,CX-223
+MR-035,IT-123,Records,2026-03-21,D-COR,sample_size,needed,AG-305,CX-223
+MR-036,IT-124,Records,2026-03-28,D-ARD,server_permit,not_needed,AG-302,CX-224
+MR-037,IT-125,Closing,2026-03-15,D-BEL,signage,not_needed,BR-208,CX-225
+MR-038,IT-126,Permits,2026-03-21,D-DUN,server_training,not_needed,AG-307,CX-226
+MR-039,IT-127,Staffing,2026-03-14,D-DUN,insurance_filed,needed,BR-299,CX-227
+MR-040,IT-127,At the table,2026-03-14,D-DUN,insurance_filed,needed,BR-299,CX-227
+MR-041,IT-128,At the table,2026-03-07,D-ARD,server_id_card,needed,BR-298,CX-228
+MR-042,IT-129,Records,2026-03-15,D-COR,local_ordinance,needed,AG-399,CX-229
+MR-043,IT-129,Closing,2026-03-15,D-COR,local_ordinance,needed,AG-399,CX-229
+MR-044,IT-130,Closing,2026-03-08,D-BEL,insurance_filed,needed,BR-299,CX-230
+MR-045,IT-131,Permits,2026-03-07,D-ARD,post_event_report,not_needed,AG-310,CX-231
+MR-046,IT-132,Staffing,2026-03-14,D-DUN,post_event_report,not_needed,AG-310,CX-232
+MR-047,IT-132,At the table,2026-03-14,D-DUN,post_event_report,not_needed,AG-310,CX-232
+MR-048,IT-133,At the table,2026-02-20,D-DUN,post_event_report,not_needed,AG-310,CX-233
+MR-049,IT-134,Records,2026-03-21,D-COR,brand_permit,needed,BR-201,CX-234
+MR-050,IT-134,Closing,2026-03-21,D-COR,brand_permit,needed,BR-201,CX-234
+MR-051,IT-135,Closing,2026-03-08,D-BEL,tasting_log,needed,AG-306,CX-235

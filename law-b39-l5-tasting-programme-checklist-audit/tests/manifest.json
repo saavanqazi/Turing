@@ -2,62 +2,10 @@
  "task_id": "law-b39_l5-tasting-programme-checklist-audit",
  "verifiers": [
   {
-   "name": "answer_exists",
-   "metadata": {
-    "how_justification": "Checks answer.md is present as a file in the workspace.",
-    "why_justification": "The review is in the submission.",
-    "tag": "core"
-   },
-   "source": {
-    "type": "file",
-    "file": {
-     "type": "filesystem",
-     "command": "check_path_exists",
-     "arguments": {
-      "path": "answer.md"
-     }
-    }
-   },
-   "assertion": {
-    "type": "deterministic",
-    "expected": true,
-    "deterministic": {
-     "path": "$.is_file",
-     "comparison": "equals"
-    }
-   }
-  },
-  {
-   "name": "answer_prose_floor",
-   "metadata": {
-    "how_justification": "Opens answer.md with md.extract_text and applies regex_match: a sixty-word prose floor, and at least three governing-section citations in BR-/AG- form.",
-    "why_justification": "The review runs to sixty words of sentences at least and cites the sections it turns on, which submission_format.md asks for; a length-only floor let a keyword-stuffed stub score. Matched on the citation form rather than on named sections or phrasing, so any correct review that cites its authorities passes (QC1-2 / D1).",
-    "tag": "core"
-   },
-   "source": {
-    "type": "file",
-    "file": {
-     "type": "md",
-     "command": "extract_text",
-     "arguments": {
-      "path": "answer.md"
-     }
-    }
-   },
-   "assertion": {
-    "type": "deterministic",
-    "expected": "(?is)(?=(?:.*?\\b(?:BR|AG)-\\d{3}\\b){3,})(?:[A-Za-z]+[^A-Za-z]+){60,}",
-    "deterministic": {
-     "path": "$.text",
-     "comparison": "regex_match"
-    }
-   }
-  },
-  {
    "name": "register_exists",
    "metadata": {
-    "how_justification": "Checks checklist_audit.csv is present as a file in the workspace.",
-    "why_justification": "The verdict table is in the submission.",
+    "how_justification": "Checks checklist_audit.csv is present as a file.",
+    "why_justification": "The audit table is in the submission.",
     "tag": "core"
    },
    "source": {
@@ -83,7 +31,7 @@
    "name": "register_header",
    "metadata": {
     "how_justification": "Opens checklist_audit.csv with csv.extract_text and applies regex_match.",
-    "why_justification": "The layout document spells the header out and it is matched exactly. Entailed by: \"Header, exactly: `item_id,status,governing_section`\"",
+    "why_justification": "The layout names the header and it is matched exactly.",
     "tag": "core"
    },
    "source": {
@@ -98,7 +46,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": "(?i)\\A\\x22?item_id\\x22?[ \\t]*,[ \\t]*\\x22?status\\x22?[ \\t]*,[ \\t]*\\x22?governing_section\\x22?[ \\t]*\\r?\\n",
+    "expected": "(?i)\\A\\x22?item_id\\x22?[ \\t]*,[ \\t]*\\x22?mention_count\\x22?[ \\t]*,[ \\t]*\\x22?status\\x22?[ \\t]*,[ \\t]*\\x22?governing_section\\x22?[ \\t]*\\r?\\n",
     "deterministic": {
      "path": "$.text",
      "comparison": "regex_match"
@@ -106,10 +54,10 @@
    }
   },
   {
-   "name": "register_table_trap_it102",
+   "name": "register_table_trap_superseded",
    "metadata": {
-    "how_justification": "Parses checklist_audit.csv with csv.read_rows and applies table_equals to every graded cell of the IT-102 row (matched by 'item_id'); a failure names the exact cell.",
-    "why_justification": "One verdict row per item in numbered order, with the status and the governing section each compared cell by cell. Entailed by: \"Keep the items of `input/checklist_items.csv` in their numbered order, one verdict row each, carrying the status and the governing section (`BR-\u2026` or `AG-\u2026`; `NONE` where neither document addresses the subject).\"",
+    "how_justification": "Parses checklist_audit.csv and applies table_equals to the trap row.",
+    "why_justification": "The item whose governing record was displaced by a later one, graded cell by cell.",
     "tag": "core"
    },
    "source": {
@@ -127,9 +75,10 @@
     "expected": {
      "id_column": "item_id",
      "rows": {
-      "IT-102": {
+      "IT-112": {
+       "mention_count": "2",
        "status": "REQUIRED",
-       "governing_section": "BR-202"
+       "governing_section": "BR-216"
       }
      },
      "cell_types": {
@@ -145,8 +94,8 @@
   {
    "name": "register_table",
    "metadata": {
-    "how_justification": "Parses checklist_audit.csv with csv.read_rows and applies table_equals: every graded cell of 15 rows plus the full 16-row population as a row_set lock (duplicate-row and cross-product dumps fail the lock; a duplicated graded id is rejected outright), the delivered row order equal to the stated order, and the delivered column set closed to the stated header, with declared cell types {'governing_section': 'id'} normalised on both sides. A failure names the exact row and column.",
-    "why_justification": "One verdict row per item in numbered order, with the status and the governing section each compared cell by cell. Entailed by: \"Keep the items of `input/checklist_items.csv` in their numbered order, one verdict row each, carrying the status and the governing section (`BR-\u2026` or `AG-\u2026`; `NONE` where neither document addresses the subject).\"",
+    "how_justification": "Parses checklist_audit.csv and applies table_equals to every graded cell.",
+    "why_justification": "One row per item in first-appearance order, every graded cell compared.",
     "tag": "core"
    },
    "source": {
@@ -165,64 +114,174 @@
      "id_column": "item_id",
      "rows": {
       "IT-101": {
+       "mention_count": "2",
        "status": "REQUIRED",
        "governing_section": "BR-201"
       },
-      "IT-103": {
+      "IT-102": {
+       "mention_count": "1",
        "status": "REQUIRED",
        "governing_section": "BR-203"
       },
+      "IT-103": {
+       "mention_count": "2",
+       "status": "REQUIRED",
+       "governing_section": "BR-207"
+      },
       "IT-104": {
-       "status": "UNADDRESSED",
-       "governing_section": "NONE"
+       "mention_count": "1",
+       "status": "REQUIRED",
+       "governing_section": "BR-210"
       },
       "IT-105": {
+       "mention_count": "1",
        "status": "REQUIRED",
-       "governing_section": "BR-204"
+       "governing_section": "AG-311"
       },
       "IT-106": {
-       "status": "REQUIRED",
-       "governing_section": "AG-305"
-      },
-      "IT-107": {
-       "status": "REQUIRED",
-       "governing_section": "BR-205"
-      },
-      "IT-108": {
+       "mention_count": "2",
        "status": "REQUIRED",
        "governing_section": "AG-306"
       },
-      "IT-109": {
+      "IT-107": {
+       "mention_count": "2",
+       "status": "NOT_REQUIRED",
+       "governing_section": "BR-209"
+      },
+      "IT-108": {
+       "mention_count": "1",
        "status": "REQUIRED",
-       "governing_section": "AG-307"
+       "governing_section": "BR-211"
+      },
+      "IT-109": {
+       "mention_count": "3",
+       "status": "REQUIRED",
+       "governing_section": "BR-202"
       },
       "IT-110": {
+       "mention_count": "1",
        "status": "UNADDRESSED",
        "governing_section": "NONE"
       },
       "IT-111": {
-       "status": "REQUIRED",
+       "mention_count": "1",
+       "status": "NOT_REQUIRED",
        "governing_section": "BR-206"
       },
-      "IT-112": {
-       "status": "REQUIRED",
-       "governing_section": "BR-207"
-      },
       "IT-113": {
-       "status": "UNADDRESSED",
-       "governing_section": "NONE"
+       "mention_count": "1",
+       "status": "REQUIRED",
+       "governing_section": "BR-204"
       },
       "IT-114": {
+       "mention_count": "2",
+       "status": "NOT_REQUIRED",
+       "governing_section": "AG-304"
+      },
+      "IT-115": {
+       "mention_count": "1",
        "status": "REQUIRED",
        "governing_section": "BR-208"
       },
-      "IT-115": {
-       "status": "NOT_REQUIRED",
-       "governing_section": "BR-209"
-      },
       "IT-116": {
+       "mention_count": "2",
+       "status": "NOT_REQUIRED",
+       "governing_section": "AG-308"
+      },
+      "IT-117": {
+       "mention_count": "1",
+       "status": "REQUIRED",
+       "governing_section": "AG-307"
+      },
+      "IT-118": {
+       "mention_count": "2",
+       "status": "NOT_REQUIRED",
+       "governing_section": "BR-217"
+      },
+      "IT-119": {
+       "mention_count": "1",
+       "status": "NOT_REQUIRED",
+       "governing_section": "BR-218"
+      },
+      "IT-120": {
+       "mention_count": "2",
+       "status": "REQUIRED",
+       "governing_section": "BR-205"
+      },
+      "IT-121": {
+       "mention_count": "1",
+       "status": "NOT_REQUIRED",
+       "governing_section": "BR-205"
+      },
+      "IT-122": {
+       "mention_count": "1",
+       "status": "REQUIRED",
+       "governing_section": "AG-305"
+      },
+      "IT-123": {
+       "mention_count": "2",
+       "status": "NOT_REQUIRED",
+       "governing_section": "AG-305"
+      },
+      "IT-124": {
+       "mention_count": "1",
+       "status": "NOT_REQUIRED",
+       "governing_section": "BR-202"
+      },
+      "IT-125": {
+       "mention_count": "1",
+       "status": "NOT_REQUIRED",
+       "governing_section": "BR-208"
+      },
+      "IT-126": {
+       "mention_count": "1",
+       "status": "NOT_REQUIRED",
+       "governing_section": "AG-307"
+      },
+      "IT-127": {
+       "mention_count": "2",
+       "status": "UNADDRESSED",
+       "governing_section": "NONE"
+      },
+      "IT-128": {
+       "mention_count": "1",
+       "status": "UNADDRESSED",
+       "governing_section": "NONE"
+      },
+      "IT-129": {
+       "mention_count": "2",
+       "status": "UNADDRESSED",
+       "governing_section": "NONE"
+      },
+      "IT-130": {
+       "mention_count": "1",
+       "status": "UNADDRESSED",
+       "governing_section": "NONE"
+      },
+      "IT-131": {
+       "mention_count": "1",
+       "status": "UNADDRESSED",
+       "governing_section": "NONE"
+      },
+      "IT-132": {
+       "mention_count": "2",
        "status": "REQUIRED",
        "governing_section": "AG-310"
+      },
+      "IT-133": {
+       "mention_count": "1",
+       "status": "UNADDRESSED",
+       "governing_section": "NONE"
+      },
+      "IT-134": {
+       "mention_count": "2",
+       "status": "UNADDRESSED",
+       "governing_section": "NONE"
+      },
+      "IT-135": {
+       "mention_count": "1",
+       "status": "UNADDRESSED",
+       "governing_section": "NONE"
       }
      },
      "row_set": [
@@ -241,11 +300,31 @@
       "IT-113",
       "IT-114",
       "IT-115",
-      "IT-116"
+      "IT-116",
+      "IT-117",
+      "IT-118",
+      "IT-119",
+      "IT-120",
+      "IT-121",
+      "IT-122",
+      "IT-123",
+      "IT-124",
+      "IT-125",
+      "IT-126",
+      "IT-127",
+      "IT-128",
+      "IT-129",
+      "IT-130",
+      "IT-131",
+      "IT-132",
+      "IT-133",
+      "IT-134",
+      "IT-135"
      ],
      "row_set_ordered": true,
      "columns": [
       "item_id",
+      "mention_count",
       "status",
       "governing_section"
      ],
@@ -260,108 +339,10 @@
    }
   },
   {
-   "name": "results_figures",
-   "metadata": {
-    "how_justification": "Reads results.json with json.read_file and applies object_equals over the 4 graded keys with the key set closed; numeric keys compare within an absolute tolerance and a failure names the exact key.",
-    "why_justification": "The four totals are re-derived from the verdict table, and the key set is closed by the layout document.",
-    "tag": "core"
-   },
-   "source": {
-    "type": "file",
-    "file": {
-     "type": "json",
-     "command": "read_file",
-     "arguments": {
-      "path": "results.json"
-     }
-    }
-   },
-   "assertion": {
-    "type": "deterministic",
-    "expected": {
-     "keys": {
-      "required_count": {
-       "value": 12,
-       "tolerance": null
-      },
-      "not_required_count": {
-       "value": 1,
-       "tolerance": null
-      },
-      "unaddressed_count": {
-       "value": 3,
-       "tolerance": null
-      },
-      "draft_wrong_count": {
-       "value": 6,
-       "tolerance": null
-      }
-     },
-     "closed": true
-    },
-    "deterministic": {
-     "path": "$",
-     "comparison": "object_equals"
-    }
-   }
-  },
-  {
-   "name": "answer_wrong_figure",
-   "metadata": {
-    "how_justification": "Opens answer.md with md.extract_text and applies regex_match.",
-    "why_justification": "The draft-wrong count sits beside its wording as a single stated number, given as the finding.",
-    "tag": "incidental"
-   },
-   "source": {
-    "type": "file",
-    "file": {
-     "type": "md",
-     "command": "extract_text",
-     "arguments": {
-      "path": "answer.md"
-     }
-    }
-   },
-   "assertion": {
-    "type": "deterministic",
-    "expected": "(?is)(?:\\bC[-_ ]?h[-_ ]?e[-_ ]?c[-_ ]?k[-_ ]?l[-_ ]?i[-_ ]?s[-_ ]?t[-_\\s]*i[-_ ]?t[-_ ]?e[-_ ]?m[-_ ]?s[-_\\s]*t[-_ ]?h[-_ ]?e[-_\\s]*d[-_ ]?r[-_ ]?a[-_ ]?f[-_ ]?t[-_\\s]*g[-_ ]?o[-_ ]?t[-_\\s]*w[-_ ]?r[-_ ]?o[-_ ]?n[-_ ]?g\\w*\\b(?:(?![.!?](?:\\s|$)|\\n).){0,70}?(?<![\\d.])(?:6|6\\.0|6\\.00|\\bsix\\b)(?!\\d)(?!\\.\\d)|(?<![\\d.])(?:6|6\\.0|6\\.00|\\bsix\\b)(?!\\d)(?!\\.\\d)(?:(?![.!?](?:\\s|$)|\\n).){0,70}?\\bC[-_ ]?h[-_ ]?e[-_ ]?c[-_ ]?k[-_ ]?l[-_ ]?i[-_ ]?s[-_ ]?t[-_\\s]*i[-_ ]?t[-_ ]?e[-_ ]?m[-_ ]?s[-_\\s]*t[-_ ]?h[-_ ]?e[-_\\s]*d[-_ ]?r[-_ ]?a[-_ ]?f[-_ ]?t[-_\\s]*g[-_ ]?o[-_ ]?t[-_\\s]*w[-_ ]?r[-_ ]?o[-_ ]?n[-_ ]?g\\w*\\b)",
-    "deterministic": {
-     "path": "$.text",
-     "comparison": "regex_match"
-    }
-   }
-  },
-  {
-   "name": "answer_wrong_figure_exactly_one",
-   "metadata": {
-    "how_justification": "Opens answer.md with md.extract_text and applies not_regex_match.",
-    "why_justification": "A hedge is not an answer: the Checklist items the draft got wrong figure may not be offered as one of several candidates in its own sentence. The draft-wrong count sits beside its wording as a single stated number, given as the finding.",
-    "tag": "incidental"
-   },
-   "source": {
-    "type": "file",
-    "file": {
-     "type": "md",
-     "command": "extract_text",
-     "arguments": {
-      "path": "answer.md"
-     }
-    }
-   },
-   "assertion": {
-    "type": "deterministic",
-    "expected": "(?is)(?:\\bC[-_ ]?h[-_ ]?e[-_ ]?c[-_ ]?k[-_ ]?l[-_ ]?i[-_ ]?s[-_ ]?t[-_\\s]*i[-_ ]?t[-_ ]?e[-_ ]?m[-_ ]?s[-_\\s]*t[-_ ]?h[-_ ]?e[-_\\s]*d[-_ ]?r[-_ ]?a[-_ ]?f[-_ ]?t[-_\\s]*g[-_ ]?o[-_ ]?t[-_\\s]*w[-_ ]?r[-_ ]?o[-_ ]?n[-_ ]?g\\w*\\b(?:(?![.!?](?:\\s|$)|\\n).){0,70}?(?:(?<![\\d.])\\d[\\d,]*(?:\\.\\d+)?(?!\\d)(?!\\.\\d)|\\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\\b)[^\\w\\n;.|/]*(?:\\b(?:or|alternatively|possibly|either|maybe|perhaps)\\b|\\s/\\s)[^\\w\\n;.|/]*(?:(?<![\\d.])\\d[\\d,]*(?:\\.\\d+)?(?!\\d)(?!\\.\\d)|\\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\\b)(?!\\s*(?:raw|total|vs|versus)\\b)|(?:(?<![\\d.])\\d[\\d,]*(?:\\.\\d+)?(?!\\d)(?!\\.\\d)|\\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\\b)[^\\w\\n;.|/]*(?:\\b(?:or|alternatively|possibly|either|maybe|perhaps)\\b|\\s/\\s)[^\\w\\n;.|/]*(?:(?<![\\d.])\\d[\\d,]*(?:\\.\\d+)?(?!\\d)(?!\\.\\d)|\\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\\b)(?!\\s*(?:raw|total|vs|versus)\\b)(?:(?![.!?](?:\\s|$)|\\n).){0,70}?\\bC[-_ ]?h[-_ ]?e[-_ ]?c[-_ ]?k[-_ ]?l[-_ ]?i[-_ ]?s[-_ ]?t[-_\\s]*i[-_ ]?t[-_ ]?e[-_ ]?m[-_ ]?s[-_\\s]*t[-_ ]?h[-_ ]?e[-_\\s]*d[-_ ]?r[-_ ]?a[-_ ]?f[-_ ]?t[-_\\s]*g[-_ ]?o[-_ ]?t[-_\\s]*w[-_ ]?r[-_ ]?o[-_ ]?n[-_ ]?g\\w*\\b)",
-    "deterministic": {
-     "path": "$.text",
-     "comparison": "not_regex_match"
-    }
-   }
-  },
-  {
    "name": "results_exists",
    "metadata": {
-    "how_justification": "Checks results.json is present as a file in the workspace.",
-    "why_justification": "Derived figures delivered.",
+    "how_justification": "Checks results.json is present as a file.",
+    "why_justification": "The figures file is in the submission.",
     "tag": "core"
    },
    "source": {
@@ -379,6 +360,276 @@
     "expected": true,
     "deterministic": {
      "path": "$.is_file",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "results_shape",
+   "metadata": {
+    "how_justification": "Reads results.json and applies object_equals over the key set.",
+    "why_justification": "The object carries exactly the listed keys and nothing else.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": {
+     "keys": {
+      "required_count": {
+       "value": 15,
+       "tolerance": null
+      },
+      "not_required_count": {
+       "value": 11,
+       "tolerance": null
+      },
+      "unaddressed_count": {
+       "value": 9,
+       "tolerance": null
+      },
+      "draft_wrong_count": {
+       "value": 10,
+       "tolerance": null
+      },
+      "corrected_citation_count": {
+       "value": 10,
+       "tolerance": null
+      },
+      "distinct_governing_section_count": {
+       "value": 21,
+       "tolerance": null
+      },
+      "distinct_item_count": {
+       "value": 35,
+       "tolerance": null
+      },
+      "checklist_mention_count": {
+       "value": 51,
+       "tolerance": null
+      }
+     },
+     "closed": true
+    },
+    "deterministic": {
+     "path": "$",
+     "comparison": "object_equals"
+    }
+   }
+  },
+  {
+   "name": "result_required_count",
+   "metadata": {
+    "how_justification": "Reads results.json and compares $.required_count.",
+    "why_justification": "`required_count` is stated as the figure the policy defines.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 15,
+    "deterministic": {
+     "path": "$.required_count",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_not_required_count",
+   "metadata": {
+    "how_justification": "Reads results.json and compares $.not_required_count.",
+    "why_justification": "`not_required_count` is stated as the figure the policy defines.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 11,
+    "deterministic": {
+     "path": "$.not_required_count",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_unaddressed_count",
+   "metadata": {
+    "how_justification": "Reads results.json and compares $.unaddressed_count.",
+    "why_justification": "`unaddressed_count` is stated as the figure the policy defines.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 9,
+    "deterministic": {
+     "path": "$.unaddressed_count",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_draft_wrong_count",
+   "metadata": {
+    "how_justification": "Reads results.json and compares $.draft_wrong_count.",
+    "why_justification": "`draft_wrong_count` is stated as the figure the policy defines.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 10,
+    "deterministic": {
+     "path": "$.draft_wrong_count",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_corrected_citation_count",
+   "metadata": {
+    "how_justification": "Reads results.json and compares $.corrected_citation_count.",
+    "why_justification": "`corrected_citation_count` is stated as the figure the policy defines.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 10,
+    "deterministic": {
+     "path": "$.corrected_citation_count",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_distinct_governing_section_count",
+   "metadata": {
+    "how_justification": "Reads results.json and compares $.distinct_governing_section_count.",
+    "why_justification": "`distinct_governing_section_count` is stated as the figure the policy defines.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 21,
+    "deterministic": {
+     "path": "$.distinct_governing_section_count",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_distinct_item_count",
+   "metadata": {
+    "how_justification": "Reads results.json and compares $.distinct_item_count.",
+    "why_justification": "`distinct_item_count` is stated as the figure the policy defines.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 35,
+    "deterministic": {
+     "path": "$.distinct_item_count",
+     "comparison": "equals"
+    }
+   }
+  },
+  {
+   "name": "result_checklist_mention_count",
+   "metadata": {
+    "how_justification": "Reads results.json and compares $.checklist_mention_count.",
+    "why_justification": "`checklist_mention_count` is stated as the figure the policy defines.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "json",
+     "command": "read_file",
+     "arguments": {
+      "path": "results.json"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": 51,
+    "deterministic": {
+     "path": "$.checklist_mention_count",
      "comparison": "equals"
     }
    }

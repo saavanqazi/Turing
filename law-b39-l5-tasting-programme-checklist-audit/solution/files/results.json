@@ -1,6 +1,10 @@
 {
-  "required_count": 12,
-  "not_required_count": 1,
-  "unaddressed_count": 3,
-  "draft_wrong_count": 6
+  "required_count": 15,
+  "not_required_count": 11,
+  "unaddressed_count": 9,
+  "draft_wrong_count": 10,
+  "corrected_citation_count": 10,
+  "distinct_governing_section_count": 21,
+  "distinct_item_count": 35,
+  "checklist_mention_count": 51
 }
