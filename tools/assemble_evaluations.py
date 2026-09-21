@@ -59,7 +59,9 @@ ap.add_argument("--solvability", type=Path, help="job folder holding a reward-1.
 ap.add_argument("--model", default="GLM-5.2")
 a = ap.parse_args()
 
-root = Path(__file__).resolve().parent / "evaluations"
+root = Path(__file__).resolve().parent.parent / "law-b39-l5-tasting-programme-checklist-audit" / "evaluations"
+root.mkdir(parents=True, exist_ok=True)
+(root / ".gitkeep").unlink(missing_ok=True)   # nothing may sit loose under evaluations/
 for sub in ("difficulty", "solvability"):
     shutil.rmtree(root / sub, ignore_errors=True)
 
