@@ -48,15 +48,21 @@ It writes `commission_findings.csv` (one row per finding), `commission_memo.md`
 
 ## Verification
 
-The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 286
+The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 291
 checks). Every line carries one check per finding code, required where the code
 applies and forbidden where it does not, so a missed finding and a false positive
 are each caught on the line that caused them. The remaining checks are the CSV
-header, the five figures, four memo checks and three existence checks.
+header, the five figures, nine memo checks and three existence checks.
+
+The memo checks pin facts, not vocabulary. Each is a single token matched with no
+wildcard between anchors: the three finding codes the instruction names, and, for
+each of the three lines that disagree with their standard rate and are compliant
+anyway, that line and the register entry that makes it so. A memo of stock
+reconciliation prose that names no deal and cites no register entry fails all nine.
 
 The reward is **graded**, not binary: `tests/test.sh` writes
 `reward = passed / (passed + failed)`, with `1.0` only when every check passes.
-A run that misclassifies one line scores 0.9965 rather than collapsing to 0.0,
+A run that misclassifies one line scores 0.9966 rather than collapsing to 0.0,
 which is what makes a near-miss legible as a near-miss.
 
 `build_task.py` declares the line list and the exceptions register, implements
@@ -79,7 +85,9 @@ so the gold cannot drift from the data it describes.
   what all five figures mean, neither of which the policy said.
 - **Scaled from 8 lines to 91**, with the edge cases above built from the rules
   already in the policy.
-- **15 checks to 286**, and the binary reward replaced with the graded one.
+- **15 checks to 291**, and the binary reward replaced with the graded one.
+- **The base image is pinned by digest**, not by the mutable `python:3.12-slim-bookworm`
+  tag, so the image the grader runs on cannot drift under the tag.
 
 ## Evaluation structure
 

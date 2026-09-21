@@ -245,13 +245,38 @@ for k, v in RESULTS.items():
     vs.append(V(f"result_{k}", f"Reads results.json and compares $.{k}.",
                 f"`{k}` is stated as the figures section of the policy defines it.",
                 RES, det(f"$.{k}", "equals", v)))
-for nm, pat, why in [
- ("memo_rate", r"(?is)\bstandard\w*\b.*\brate", "The memo explains the standard-rate rule."),
- ("memo_ledger", r"(?is)\bledger\w*\b.*\bmatch", "The memo explains the ledger-match rule."),
- ("memo_duplicate", r"(?is)\bduplicat\w*\b.*\bsource\b", "The memo explains the duplicate rule."),
- ("memo_override", r"(?is)\bapprov\w*\b.*\b(?:override|instead|exception)\w*", "The memo explains the approved-rate override."),
-]:
-    vs.append(V(nm, "Opens commission_memo.md with md.extract_text and applies regex_match.", why, MEMO,
+# The memo checks pin facts the instruction asks the memo to carry. Each pattern
+# is a single token with no `.*` between anchors, so a memo cannot satisfy one by
+# putting two stock words on either side of a page of unrelated prose: the fact is
+# either stated or it is not. Two groups, both taken straight from the instruction
+# -- the three finding codes it names ("explaining each finding"), and, for every
+# line that disagrees with its standard rate and is compliant anyway, that line and
+# the register entry that makes it so ("with the rule that makes it so").
+memo_facts = [
+ ("memo_code_rate_mismatch", r"(?i)rate[\s_\-]?mismatch",
+  "RATE_MISMATCH is one of the three codes the instruction names, and the memo explains each finding."),
+ ("memo_code_unmatched_to_ledger", r"(?i)unmatched[\s_\-]?to[\s_\-]?ledger",
+  "UNMATCHED_TO_LEDGER is one of the three codes the instruction names, and the memo explains each finding."),
+ ("memo_code_duplicate_line", r"(?i)duplicate[\s_\-]?line",
+  "DUPLICATE_LINE is one of the three codes the instruction names, and the memo explains each finding."),
+]
+for code, deal, rate, status in EX:
+    if status != "active" or not any(x[0] == deal for x in L):
+        continue
+    ln = next(x for x in L if x[0] == deal)
+    if rate == STANDARD[ln[2]] or findings_for(ln):
+        continue                       # not a line that looks wrong and is not
+    memo_facts += [
+     (f"memo_compliant_{deal.lower().replace('-','_')}", r"(?i)\b" + re.escape(deal) + r"\b",
+      f"{deal} is paid at {rate}% against a standard {STANDARD[ln[2]]}%, so it is a line the "
+      f"instruction requires the memo to account for by name."),
+     (f"memo_rule_{code.lower().replace('-','_')}", r"(?i)\b" + re.escape(code) + r"\b",
+      f"{code} is the register entry that makes {deal} compliant, and the instruction asks for "
+      f"the rule that makes it so."),
+    ]
+for nm, pat, why in memo_facts:
+    vs.append(V(nm, "Opens commission_memo.md with md.extract_text and applies regex_match "
+                    "to a single token, with no wildcard between anchors.", why, MEMO,
                 det("$.text","regex_match",pat)))
 
 spec = OrderedDict(task_id="gen-g308-commission-report-reconciliation-audit", verifiers=vs)

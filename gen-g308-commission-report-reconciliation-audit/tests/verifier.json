@@ -7334,10 +7334,10 @@
    }
   },
   {
-   "name": "memo_rate",
+   "name": "memo_code_rate_mismatch",
    "metadata": {
-    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match.",
-    "why_justification": "The memo explains the standard-rate rule.",
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "RATE_MISMATCH is one of the three codes the instruction names, and the memo explains each finding.",
     "tag": "core"
    },
    "source": {
@@ -7352,7 +7352,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": "(?is)\\bstandard\\w*\\b.*\\brate",
+    "expected": "(?i)rate[\\s_\\-]?mismatch",
     "deterministic": {
      "path": "$.text",
      "comparison": "regex_match"
@@ -7360,10 +7360,10 @@
    }
   },
   {
-   "name": "memo_ledger",
+   "name": "memo_code_unmatched_to_ledger",
    "metadata": {
-    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match.",
-    "why_justification": "The memo explains the ledger-match rule.",
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "UNMATCHED_TO_LEDGER is one of the three codes the instruction names, and the memo explains each finding.",
     "tag": "core"
    },
    "source": {
@@ -7378,7 +7378,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": "(?is)\\bledger\\w*\\b.*\\bmatch",
+    "expected": "(?i)unmatched[\\s_\\-]?to[\\s_\\-]?ledger",
     "deterministic": {
      "path": "$.text",
      "comparison": "regex_match"
@@ -7386,10 +7386,10 @@
    }
   },
   {
-   "name": "memo_duplicate",
+   "name": "memo_code_duplicate_line",
    "metadata": {
-    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match.",
-    "why_justification": "The memo explains the duplicate rule.",
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DUPLICATE_LINE is one of the three codes the instruction names, and the memo explains each finding.",
     "tag": "core"
    },
    "source": {
@@ -7404,7 +7404,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": "(?is)\\bduplicat\\w*\\b.*\\bsource\\b",
+    "expected": "(?i)duplicate[\\s_\\-]?line",
     "deterministic": {
      "path": "$.text",
      "comparison": "regex_match"
@@ -7412,10 +7412,10 @@
    }
   },
   {
-   "name": "memo_override",
+   "name": "memo_compliant_deal_080",
    "metadata": {
-    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match.",
-    "why_justification": "The memo explains the approved-rate override.",
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-080 is paid at 6% against a standard 4%, so it is a line the instruction requires the memo to account for by name.",
     "tag": "core"
    },
    "source": {
@@ -7430,7 +7430,137 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": "(?is)\\bapprov\\w*\\b.*\\b(?:override|instead|exception)\\w*",
+    "expected": "(?i)\\bDEAL\\-080\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_rule_exc_vp_02",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "EXC-VP-02 is the register entry that makes DEAL-080 compliant, and the instruction asks for the rule that makes it so.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bEXC\\-VP\\-02\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_compliant_deal_081",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-081 is paid at 12% against a standard 8%, so it is a line the instruction requires the memo to account for by name.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-081\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_rule_exc_vp_07",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "EXC-VP-07 is the register entry that makes DEAL-081 compliant, and the instruction asks for the rule that makes it so.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bEXC\\-VP\\-07\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_compliant_deal_085",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-085 is paid at 3% against a standard 0%, so it is a line the instruction requires the memo to account for by name.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-085\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_rule_exc_vp_18",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "EXC-VP-18 is the register entry that makes DEAL-085 compliant, and the instruction asks for the rule that makes it so.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bEXC\\-VP\\-18\\b",
     "deterministic": {
      "path": "$.text",
      "comparison": "regex_match"
