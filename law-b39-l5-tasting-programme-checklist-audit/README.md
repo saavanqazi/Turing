@@ -95,5 +95,12 @@ Oracle: reward exactly 1.0, repeated, all thirteen verifiers.
 GLM-5.2, four runs under terminus-2: **1.0, 1.0, 1.0, 0.0 — 3 of 4 fully
 passing**, inside the accepted band.
 
+The failing run is a MODEL failure. It passed the header, the superseded-record
+trap row, both existence checks, `mention_count`, both distinct counts and the
+citation figure, and failed only `register_table` with `supported_count` and
+`contradicted_count` — the comparison step — while the other three runs got that
+same comparison right. An ambiguity fails all four runs the same way, which is
+what the preceding battery did; one run in four erring is the model.
+
 No `stability/` is shipped — Turing runs it — and no `platform/`, which the gate
 does not yet accept (R17).
