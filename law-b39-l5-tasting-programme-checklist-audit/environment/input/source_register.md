@@ -1,9 +1,9 @@
 # Source register — tastings at retail
 
-Every record the programme holds. A record carries the licensing district it
-applies in, the subject it speaks to, and the date it took effect; the holding is
-what the record holds. `BR-` records are the beverage-control regulation, `AG-`
-records the trade association's guide.
+Every record the programme holds. A record carries the licensing district it applies
+in, the subject it speaks to and the date it took effect; the holding is what the
+record holds. `BR-` records are the beverage-control regulation, `AG-` records the
+trade association's guide.
 
 ## Regulation
 
@@ -11,7 +11,7 @@ records the trade association's guide.
 
 A brand whose products are offered at a tasting holds a state tasting permit for the tasting period.
 
-### BR-207 — D-BEL, 2026-01-12 — subject `age_verification`
+### BR-207 — D-BEL, 2026-01-12 — subject `age_check`
 
 The age of every person served is verified before service.
 
@@ -35,11 +35,11 @@ Any person who conducts a tasting and is not an employee of the permit holder ho
 
 Where the store holds no tasting permit in its own name, the written consent of the store owner is filed and kept; where it does, that permit stands as its consent.
 
-### BR-209 — D-COR, 2026-02-09 — subject `permit_per_store`
+### BR-209 — D-COR, 2026-02-09 — subject `permit_scope`
 
 One tasting permit covers every store at which the holder offers tastings in the permit period; no separate permit per store is issued.
 
-### BR-206 — D-ARD, 2026-02-16 — subject `brand_rep_present`
+### BR-206 — D-ARD, 2026-02-16 — subject `brand_rep`
 
 No representative of the brand need be present at a tasting.
 
@@ -47,11 +47,11 @@ No representative of the brand need be present at a tasting.
 
 A notice in the prescribed form is posted at the tasting table, unless every person serving is an employee of the permit holder.
 
-### BR-211 — D-COR, 2026-03-09 — subject `sealed_containers`
+### BR-211 — D-COR, 2026-03-09 — subject `sealed_product`
 
 Product for a tasting arrives in sealed containers opened at the table.
 
-### BR-216 — D-ARD, 2026-03-30 — subject `brand_rep_present`
+### BR-216 — D-ARD, 2026-03-30 — subject `brand_rep`
 
 A representative of the brand is present at any tasting not conducted by an employee of the permit holder.
 
@@ -101,6 +101,6 @@ No advance notice of an event need be filed.
 
 No notice need be posted at the tasting table.
 
-### AG-312 — D-DUN, 2026-05-18 — subject `insurance_filed`
+### AG-312 — D-DUN, 2026-05-18 — subject `insurance`
 
 File a certificate of insurance with the division.

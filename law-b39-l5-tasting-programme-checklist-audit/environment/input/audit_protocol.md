@@ -1,6 +1,6 @@
-# Tasting-programme checklist audit policy (TP-8)
+# Tasting-programme checklist audit policy (TP-9)
 
-This is revision 8 of the reference for whether a checklist position complies with
+This is revision 9 of the reference for whether a checklist position complies with
 the source register before the season opens.
 
 ## 0. What is audited
@@ -16,44 +16,48 @@ early, and a newer record displaces an older record on the same point. Where a
 regulation record and a guide record take effect on the same day for the same point,
 the regulation governs.
 
-## 2. Items nothing governs
+## 2. Items that say no record exists
 
-Where no record governs an item, its status is `UNADDRESSED` and its governing
-section is `NONE`, whatever the checklist cites.
+A checklist item that says no record exists is `SUPPORTED` where no record governs
+and `CONTRADICTED` where a record governs. An item asserting anything else for which
+no record governs is `UNSUPPORTED`.
 
 ## 3. How an item is judged
 
-The governing record's holding is applied to the context recorded for the item. An
-item is `REQUIRED` where the holding requires the thing on those facts and
-`NOT_REQUIRED` where it does not. The draft's own position never sets the status.
+The governing record's holding is applied to the facts recorded for the item. An item
+asserting the position that holding gives on those facts is `SUPPORTED`; an item
+asserting the opposite position is `CONTRADICTED`.
 
-## 4. When the draft is wrong
+## 4. Factual context
 
-The draft has an item wrong where it marks as not needed a thing that is `REQUIRED`,
-or as needed a thing that is `NOT_REQUIRED`. An `UNADDRESSED` item is neither.
+Where a holding turns on a fact, the fact recorded for the item decides which position
+the holding gives. Where it turns on no fact, the holding gives the same position
+whatever is recorded.
 
-## 5. Corrected citations
+## 5. Status names
+
+`SUPPORTED`, `CONTRADICTED` or `UNSUPPORTED`. An item carries exactly one status.
+
+## 6. Corrected citations
 
 An item governed by a record other than `NONE` is a corrected-citation item where any
 section cited by its mentions differs from its governing section.
 
-## 6. The audit table
+## 7. The audit table
 
-The table carries one row per checklist item, in the order each `item_id` first
-appears in the mention export. `mention_count` is the number of mention rows
-carrying that `item_id`.
+The table carries one row per checklist item, in the order each `item_id` first appears
+in the mention export. `mention_count` is the number of mention rows carrying that
+`item_id`.
 
-## 7. The figures
+## 8. The figures
 
-`required_count`, `not_required_count` and `unaddressed_count` are the numbers of
-items whose status is each of those; together they are every item.
+`supported_count`, `contradicted_count` and `unsupported_count` are the numbers of
+items carrying each status; together they are every item.
 
-`draft_wrong_count` is the number of items the draft has wrong under section 4.
+`corrected_citation_count` is the number of corrected-citation items under section 6.
 
-`corrected_citation_count` is the number of corrected-citation items under section 5.
+`distinct_governing_section_count` counts the different governing sections the table
+carries. `NONE` is not a section and is not counted.
 
-`distinct_governing_section_count` counts the different governing sections the
-table carries. `NONE` is not a section and is not counted.
-
-`distinct_item_count` is the number of items, that is the number of rows in the
-table. `checklist_mention_count` is the number of mention rows in the export.
+`distinct_item_count` is the number of rows in the table. `checklist_mention_count` is
+the number of mention rows in the export.

@@ -1,11 +1,11 @@
 # Delivery note: tasting-programme checklist extract
 
-Prepared by the compliance team. Dates are ISO `YYYY-MM-DD`. The extract was taken
-on 2026-05-04, before the season opens.
+Prepared by the compliance team. Dates are ISO `YYYY-MM-DD`. The extract was taken on
+2026-05-04, before the season opens.
 
 `checklist_mentions.csv`: the positions recorded in the checklist at the extract date.
 Columns: `mention_ref`, `item_id`, `checklist_section`, `event_date`, `district`,
-`subject`, `draft_position`, `cited_section`, `context_id`.
+`subject`, `asserted_position`, `cited_section`, `context_id`, `item`.
 
 `district_control_totals.csv`: what each district section reports it contains.
 Columns: `district`, `mentions_reported`, `items_reported`, `contexts_attached`.

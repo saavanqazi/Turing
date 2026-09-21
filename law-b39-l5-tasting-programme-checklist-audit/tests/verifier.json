@@ -57,7 +57,7 @@
    "name": "register_table_trap_superseded",
    "metadata": {
     "how_justification": "Parses checklist_audit.csv and applies table_equals to the trap row.",
-    "why_justification": "The item whose governing record was displaced by a later one, graded cell by cell.",
+    "why_justification": "The item whose governing record was displaced by a later one.",
     "tag": "core"
    },
    "source": {
@@ -75,9 +75,9 @@
     "expected": {
      "id_column": "item_id",
      "rows": {
-      "IT-112": {
+      "IT-114": {
        "mention_count": "2",
-       "status": "REQUIRED",
+       "status": "CONTRADICTED",
        "governing_section": "BR-216"
       }
      },
@@ -115,173 +115,193 @@
      "rows": {
       "IT-101": {
        "mention_count": "2",
-       "status": "REQUIRED",
+       "status": "SUPPORTED",
        "governing_section": "BR-201"
       },
       "IT-102": {
        "mention_count": "1",
-       "status": "REQUIRED",
+       "status": "SUPPORTED",
        "governing_section": "BR-203"
       },
       "IT-103": {
        "mention_count": "2",
-       "status": "REQUIRED",
-       "governing_section": "BR-207"
+       "status": "CONTRADICTED",
+       "governing_section": "BR-218"
       },
       "IT-104": {
        "mention_count": "1",
-       "status": "REQUIRED",
-       "governing_section": "BR-210"
+       "status": "SUPPORTED",
+       "governing_section": "BR-207"
       },
       "IT-105": {
        "mention_count": "1",
-       "status": "REQUIRED",
-       "governing_section": "AG-311"
+       "status": "SUPPORTED",
+       "governing_section": "BR-210"
       },
       "IT-106": {
        "mention_count": "2",
-       "status": "REQUIRED",
-       "governing_section": "AG-306"
+       "status": "CONTRADICTED",
+       "governing_section": "AG-311"
       },
       "IT-107": {
-       "mention_count": "2",
-       "status": "NOT_REQUIRED",
-       "governing_section": "BR-209"
+       "mention_count": "1",
+       "status": "SUPPORTED",
+       "governing_section": "AG-306"
       },
       "IT-108": {
-       "mention_count": "1",
-       "status": "REQUIRED",
-       "governing_section": "BR-211"
+       "mention_count": "2",
+       "status": "CONTRADICTED",
+       "governing_section": "BR-209"
       },
       "IT-109": {
-       "mention_count": "3",
-       "status": "REQUIRED",
-       "governing_section": "BR-202"
+       "mention_count": "1",
+       "status": "SUPPORTED",
+       "governing_section": "BR-211"
       },
       "IT-110": {
-       "mention_count": "1",
-       "status": "UNADDRESSED",
-       "governing_section": "NONE"
+       "mention_count": "3",
+       "status": "CONTRADICTED",
+       "governing_section": "BR-202"
       },
       "IT-111": {
        "mention_count": "1",
-       "status": "NOT_REQUIRED",
-       "governing_section": "BR-206"
+       "status": "UNSUPPORTED",
+       "governing_section": "NONE"
+      },
+      "IT-112": {
+       "mention_count": "1",
+       "status": "SUPPORTED",
+       "governing_section": "BR-202"
       },
       "IT-113": {
        "mention_count": "1",
-       "status": "REQUIRED",
-       "governing_section": "BR-204"
-      },
-      "IT-114": {
-       "mention_count": "2",
-       "status": "NOT_REQUIRED",
-       "governing_section": "AG-304"
+       "status": "SUPPORTED",
+       "governing_section": "BR-206"
       },
       "IT-115": {
        "mention_count": "1",
-       "status": "REQUIRED",
-       "governing_section": "BR-208"
+       "status": "SUPPORTED",
+       "governing_section": "BR-204"
       },
       "IT-116": {
        "mention_count": "2",
-       "status": "NOT_REQUIRED",
-       "governing_section": "AG-308"
+       "status": "CONTRADICTED",
+       "governing_section": "AG-304"
       },
       "IT-117": {
        "mention_count": "1",
-       "status": "NOT_REQUIRED",
-       "governing_section": "AG-307"
+       "status": "SUPPORTED",
+       "governing_section": "BR-208"
       },
       "IT-118": {
        "mention_count": "2",
-       "status": "NOT_REQUIRED",
-       "governing_section": "BR-217"
+       "status": "CONTRADICTED",
+       "governing_section": "AG-308"
       },
       "IT-119": {
        "mention_count": "1",
-       "status": "NOT_REQUIRED",
-       "governing_section": "BR-218"
+       "status": "CONTRADICTED",
+       "governing_section": "BR-208"
       },
       "IT-120": {
        "mention_count": "2",
-       "status": "REQUIRED",
-       "governing_section": "BR-205"
+       "status": "SUPPORTED",
+       "governing_section": "AG-307"
       },
       "IT-121": {
        "mention_count": "1",
-       "status": "NOT_REQUIRED",
-       "governing_section": "BR-205"
+       "status": "SUPPORTED",
+       "governing_section": "BR-217"
       },
       "IT-122": {
        "mention_count": "1",
-       "status": "REQUIRED",
-       "governing_section": "AG-305"
+       "status": "CONTRADICTED",
+       "governing_section": "AG-307"
       },
       "IT-123": {
        "mention_count": "2",
-       "status": "NOT_REQUIRED",
-       "governing_section": "AG-305"
+       "status": "SUPPORTED",
+       "governing_section": "BR-205"
       },
       "IT-124": {
        "mention_count": "1",
-       "status": "NOT_REQUIRED",
-       "governing_section": "BR-202"
+       "status": "CONTRADICTED",
+       "governing_section": "BR-205"
       },
       "IT-125": {
-       "mention_count": "1",
-       "status": "NOT_REQUIRED",
-       "governing_section": "BR-208"
+       "mention_count": "2",
+       "status": "SUPPORTED",
+       "governing_section": "AG-305"
       },
       "IT-126": {
        "mention_count": "1",
-       "status": "NOT_REQUIRED",
-       "governing_section": "AG-307"
+       "status": "CONTRADICTED",
+       "governing_section": "AG-305"
       },
       "IT-127": {
-       "mention_count": "2",
-       "status": "UNADDRESSED",
+       "mention_count": "1",
+       "status": "UNSUPPORTED",
        "governing_section": "NONE"
       },
       "IT-128": {
-       "mention_count": "1",
-       "status": "UNADDRESSED",
+       "mention_count": "2",
+       "status": "UNSUPPORTED",
        "governing_section": "NONE"
       },
       "IT-129": {
-       "mention_count": "2",
-       "status": "UNADDRESSED",
+       "mention_count": "1",
+       "status": "UNSUPPORTED",
        "governing_section": "NONE"
       },
       "IT-130": {
        "mention_count": "1",
-       "status": "UNADDRESSED",
+       "status": "UNSUPPORTED",
        "governing_section": "NONE"
       },
       "IT-131": {
-       "mention_count": "1",
-       "status": "UNADDRESSED",
+       "mention_count": "2",
+       "status": "UNSUPPORTED",
        "governing_section": "NONE"
       },
       "IT-132": {
-       "mention_count": "2",
-       "status": "REQUIRED",
+       "mention_count": "1",
+       "status": "SUPPORTED",
        "governing_section": "AG-310"
       },
       "IT-133": {
        "mention_count": "1",
-       "status": "UNADDRESSED",
+       "status": "UNSUPPORTED",
        "governing_section": "NONE"
       },
       "IT-134": {
        "mention_count": "2",
-       "status": "UNADDRESSED",
+       "status": "UNSUPPORTED",
        "governing_section": "NONE"
       },
       "IT-135": {
        "mention_count": "1",
-       "status": "UNADDRESSED",
+       "status": "UNSUPPORTED",
        "governing_section": "NONE"
+      },
+      "IT-136": {
+       "mention_count": "2",
+       "status": "SUPPORTED",
+       "governing_section": "NONE"
+      },
+      "IT-137": {
+       "mention_count": "1",
+       "status": "SUPPORTED",
+       "governing_section": "NONE"
+      },
+      "IT-138": {
+       "mention_count": "1",
+       "status": "SUPPORTED",
+       "governing_section": "NONE"
+      },
+      "IT-139": {
+       "mention_count": "1",
+       "status": "CONTRADICTED",
+       "governing_section": "BR-210"
       }
      },
      "row_set": [
@@ -319,7 +339,11 @@
       "IT-132",
       "IT-133",
       "IT-134",
-      "IT-135"
+      "IT-135",
+      "IT-136",
+      "IT-137",
+      "IT-138",
+      "IT-139"
      ],
      "row_set_ordered": true,
      "columns": [
@@ -385,19 +409,15 @@
     "type": "deterministic",
     "expected": {
      "keys": {
-      "required_count": {
-       "value": 14,
+      "supported_count": {
+       "value": 18,
        "tolerance": null
       },
-      "not_required_count": {
+      "contradicted_count": {
        "value": 12,
        "tolerance": null
       },
-      "unaddressed_count": {
-       "value": 9,
-       "tolerance": null
-      },
-      "draft_wrong_count": {
+      "unsupported_count": {
        "value": 9,
        "tolerance": null
       },
@@ -410,11 +430,11 @@
        "tolerance": null
       },
       "distinct_item_count": {
-       "value": 35,
+       "value": 39,
        "tolerance": null
       },
       "checklist_mention_count": {
-       "value": 51,
+       "value": 55,
        "tolerance": null
       }
      },
@@ -427,10 +447,10 @@
    }
   },
   {
-   "name": "result_required_count",
+   "name": "result_supported_count",
    "metadata": {
-    "how_justification": "Reads results.json and compares $.required_count.",
-    "why_justification": "`required_count` is stated as the figure the policy defines.",
+    "how_justification": "Reads results.json and compares $.supported_count.",
+    "why_justification": "`supported_count` is stated as the figure section 8 defines.",
     "tag": "core"
    },
    "source": {
@@ -445,18 +465,18 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 14,
+    "expected": 18,
     "deterministic": {
-     "path": "$.required_count",
+     "path": "$.supported_count",
      "comparison": "equals"
     }
    }
   },
   {
-   "name": "result_not_required_count",
+   "name": "result_contradicted_count",
    "metadata": {
-    "how_justification": "Reads results.json and compares $.not_required_count.",
-    "why_justification": "`not_required_count` is stated as the figure the policy defines.",
+    "how_justification": "Reads results.json and compares $.contradicted_count.",
+    "why_justification": "`contradicted_count` is stated as the figure section 8 defines.",
     "tag": "core"
    },
    "source": {
@@ -473,16 +493,16 @@
     "type": "deterministic",
     "expected": 12,
     "deterministic": {
-     "path": "$.not_required_count",
+     "path": "$.contradicted_count",
      "comparison": "equals"
     }
    }
   },
   {
-   "name": "result_unaddressed_count",
+   "name": "result_unsupported_count",
    "metadata": {
-    "how_justification": "Reads results.json and compares $.unaddressed_count.",
-    "why_justification": "`unaddressed_count` is stated as the figure the policy defines.",
+    "how_justification": "Reads results.json and compares $.unsupported_count.",
+    "why_justification": "`unsupported_count` is stated as the figure section 8 defines.",
     "tag": "core"
    },
    "source": {
@@ -499,33 +519,7 @@
     "type": "deterministic",
     "expected": 9,
     "deterministic": {
-     "path": "$.unaddressed_count",
-     "comparison": "equals"
-    }
-   }
-  },
-  {
-   "name": "result_draft_wrong_count",
-   "metadata": {
-    "how_justification": "Reads results.json and compares $.draft_wrong_count.",
-    "why_justification": "`draft_wrong_count` is stated as the figure the policy defines.",
-    "tag": "core"
-   },
-   "source": {
-    "type": "file",
-    "file": {
-     "type": "json",
-     "command": "read_file",
-     "arguments": {
-      "path": "results.json"
-     }
-    }
-   },
-   "assertion": {
-    "type": "deterministic",
-    "expected": 9,
-    "deterministic": {
-     "path": "$.draft_wrong_count",
+     "path": "$.unsupported_count",
      "comparison": "equals"
     }
    }
@@ -534,7 +528,7 @@
    "name": "result_corrected_citation_count",
    "metadata": {
     "how_justification": "Reads results.json and compares $.corrected_citation_count.",
-    "why_justification": "`corrected_citation_count` is stated as the figure the policy defines.",
+    "why_justification": "`corrected_citation_count` is stated as the figure section 8 defines.",
     "tag": "core"
    },
    "source": {
@@ -560,7 +554,7 @@
    "name": "result_distinct_governing_section_count",
    "metadata": {
     "how_justification": "Reads results.json and compares $.distinct_governing_section_count.",
-    "why_justification": "`distinct_governing_section_count` is stated as the figure the policy defines.",
+    "why_justification": "`distinct_governing_section_count` is stated as the figure section 8 defines.",
     "tag": "core"
    },
    "source": {
@@ -586,7 +580,7 @@
    "name": "result_distinct_item_count",
    "metadata": {
     "how_justification": "Reads results.json and compares $.distinct_item_count.",
-    "why_justification": "`distinct_item_count` is stated as the figure the policy defines.",
+    "why_justification": "`distinct_item_count` is stated as the figure section 8 defines.",
     "tag": "core"
    },
    "source": {
@@ -601,7 +595,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 35,
+    "expected": 39,
     "deterministic": {
      "path": "$.distinct_item_count",
      "comparison": "equals"
@@ -612,7 +606,7 @@
    "name": "result_checklist_mention_count",
    "metadata": {
     "how_justification": "Reads results.json and compares $.checklist_mention_count.",
-    "why_justification": "`checklist_mention_count` is stated as the figure the policy defines.",
+    "why_justification": "`checklist_mention_count` is stated as the figure section 8 defines.",
     "tag": "core"
    },
    "source": {
@@ -627,7 +621,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 51,
+    "expected": 55,
     "deterministic": {
      "path": "$.checklist_mention_count",
      "comparison": "equals"
