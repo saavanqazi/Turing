@@ -258,3 +258,16 @@ spec = OrderedDict(task_id="gen-g308-commission-report-reconciliation-audit", ve
 for p in ("tests/verifier.json","tests/manifest.json"):
     (ROOT/p).write_text(json.dumps(spec, indent=1)+"\n", encoding="utf-8")
 print(f"verifiers: {len(vs)}  ({len(L)} lines x 3 codes = {len(L)*3} line checks)")
+
+# ---- golden trajectory: a required oracle asset this bundle lacked ------
+steps = [{"name":"bash","arguments":{"command":f"cat input/{f}"}} for f in
+         ("commission_policy.md","commission_lines.csv","commission_exceptions.csv")]
+for name, marker in (("commission_findings.csv","FINDINGSEOF"),
+                     ("commission_memo.md","MEMOEOF"),
+                     ("results.json","RESULTSEOF")):
+    steps.append({"name":"bash","arguments":{"command":
+        f"cat > {name} << '{marker}'\n{(SOL/name).read_text()}{marker}"}})
+steps.append({"name":"bash","arguments":{"command":
+    "ls -la commission_findings.csv commission_memo.md results.json"}})
+(ROOT/"solution"/"golden_trajectory.json").write_text(json.dumps(steps, indent=2)+"\n", encoding="utf-8")
+print(f"golden_trajectory.json: {len(steps)} steps")
