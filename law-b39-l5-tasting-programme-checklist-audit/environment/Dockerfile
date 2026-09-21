@@ -4,7 +4,9 @@
 # python deps the vendored verifier engine needs. Installing the grader's deps
 # at build time (rather than in tests/test.sh) keeps verification independent of
 # network conditions at run time.
-FROM python:3.12-slim-bookworm
+# python:3.12-slim-bookworm, pinned to the registry's immutable multi-arch
+# index digest so the image cannot drift under the tag (QC1-1 / D27).
+FROM python@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e
 
 # E2B runs the image as uid 1000 unless the image says otherwise, and the
 # agent's first act is mkdir /logs/agent, which then fails. Declared here so
