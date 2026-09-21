@@ -6,7 +6,9 @@ the source register before the season opens.
 ## 0. What is audited
 
 The unit of audit is the checklist item: one position the checklist has recorded
-under an `item_id`.
+under an `item_id`. An item states what the register requires in the item's
+district, not what the programme did; a position about conduct is not audited
+here.
 
 ## 1. Governing record
 
@@ -24,9 +26,10 @@ no record governs is `UNSUPPORTED`.
 
 ## 3. How an item is judged
 
-The governing record's holding is applied to the facts recorded for the item. An item
-asserting the position that holding gives on those facts is `SUPPORTED`; an item
-asserting the opposite position is `CONTRADICTED`.
+The governing record's holding is applied to the facts recorded for the item. That
+gives one position on the item's subject. An item asserting that position is
+`SUPPORTED`; an item asserting the opposing position on the same subject is
+`CONTRADICTED`. Every subject has two opposing positions and no third.
 
 ## 4. Factual context
 

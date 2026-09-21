@@ -1,54 +1,54 @@
 mention_ref,item_id,checklist_section,event_date,district,subject,asserted_position,cited_section,context_id,item
-MR-001,IT-101,Permits,2026-03-07,D-ARD,brand_permit,brand_permit_required,BR-201,CX-201,The brand holds a state tasting permit covering the period of these tastings.
-MR-002,IT-101,Staffing,2026-03-07,D-ARD,brand_permit,brand_permit_required,AG-301,CX-201,The brand holds a state tasting permit covering the period of these tastings.
-MR-003,IT-102,Staffing,2026-03-08,D-BEL,store_permit,store_permit_required,AG-303,CX-202,Each store we work in holds a tasting permit in its own name.
-MR-004,IT-103,At the table,2026-05-03,D-BEL,store_permit,store_permit_required,BR-203,CX-203,The store must still hold its own permit for the May dates.
-MR-005,IT-103,Records,2026-05-03,D-BEL,store_permit,store_permit_required,BR-218,CX-203,The store must still hold its own permit for the May dates.
-MR-006,IT-104,Records,2026-03-08,D-BEL,age_check,age_checked,BR-207,CX-204,Every person served has their age verified before they are poured anything.
-MR-007,IT-105,Closing,2026-03-14,D-DUN,tasting_hours,hours_observed,BR-210,CX-205,Our sessions run only inside the hours the permit states.
-MR-008,IT-106,Permits,2026-03-14,D-ARD,tasting_hours,no_hours_limit,AG-311,CX-206,There is no hours restriction on these tastings.
-MR-009,IT-106,Staffing,2026-03-14,D-ARD,tasting_hours,no_hours_limit,AG-311,CX-206,There is no hours restriction on these tastings.
-MR-010,IT-107,Staffing,2026-03-15,D-COR,tasting_log,log_required,AG-306,CX-207,"A log of each tasting is kept with date, store, product and servings."
-MR-011,IT-108,At the table,2026-03-15,D-COR,permit_scope,permit_per_store,BR-209,CX-208,A separate tasting permit is obtained for each store on the round.
-MR-012,IT-108,Records,2026-03-15,D-COR,permit_scope,permit_per_store,BR-209,CX-208,A separate tasting permit is obtained for each store on the round.
-MR-013,IT-109,Records,2026-03-21,D-COR,sealed_product,sealed_on_arrival,BR-211,CX-209,Product arrives sealed and is opened at the table.
-MR-014,IT-110,Closing,2026-03-07,D-ARD,server_permit,covered_by_holder,AG-302,CX-210,Our people at the table work under the brand's permit and need nothing of their own.
-MR-015,IT-110,Permits,2026-03-07,D-ARD,server_permit,covered_by_holder,AG-302,CX-210,Our people at the table work under the brand's permit and need nothing of their own.
-MR-016,IT-110,Staffing,2026-03-07,D-ARD,server_permit,covered_by_holder,BR-202,CX-210,Our people at the table work under the brand's permit and need nothing of their own.
-MR-017,IT-111,Permits,2026-02-01,D-ARD,server_permit,covered_by_holder,AG-302,CX-211,In the pre-season week our staff needed no permit of their own.
-MR-018,IT-112,Staffing,2026-03-28,D-ARD,server_permit,covered_by_holder,BR-202,CX-212,On the brand-staffed date the servers needed no separate permit.
-MR-019,IT-113,At the table,2026-03-01,D-ARD,brand_rep,no_rep,BR-206,CX-213,No representative of the brand attends the March tastings.
-MR-020,IT-114,Records,2026-04-05,D-ARD,brand_rep,no_rep,BR-206,CX-214,No brand representative attends in April either.
-MR-021,IT-114,Closing,2026-04-05,D-ARD,brand_rep,no_rep,BR-216,CX-214,No brand representative attends in April either.
-MR-022,IT-115,Closing,2026-03-01,D-BEL,advance_notice,notice_required,AG-304,CX-215,Notice of each March event goes to the division beforehand.
-MR-023,IT-116,Permits,2026-03-22,D-BEL,advance_notice,notice_required,BR-204,CX-216,Notice of the late-March events goes to the division beforehand.
-MR-024,IT-116,Staffing,2026-03-22,D-BEL,advance_notice,notice_required,AG-304,CX-216,Notice of the late-March events goes to the division beforehand.
-MR-025,IT-117,Staffing,2026-03-08,D-BEL,signage,signage_posted,BR-208,CX-217,The prescribed notice is displayed at the table.
-MR-026,IT-118,At the table,2026-04-19,D-BEL,signage,signage_posted,BR-208,CX-218,The prescribed notice is displayed at the April tables too.
-MR-027,IT-118,Records,2026-04-19,D-BEL,signage,signage_posted,AG-308,CX-218,The prescribed notice is displayed at the April tables too.
-MR-028,IT-119,Records,2026-03-15,D-BEL,signage,signage_posted,BR-208,CX-219,The notice is displayed on the brand-staffed date.
-MR-029,IT-120,Closing,2026-03-14,D-DUN,server_training,no_certificate,AG-307,CX-220,Servers need no training certificate for these sessions.
-MR-030,IT-120,Permits,2026-03-14,D-DUN,server_training,no_certificate,BR-217,CX-220,Servers need no training certificate for these sessions.
-MR-031,IT-121,Permits,2026-04-26,D-DUN,server_training,no_certificate,AG-307,CX-221,Servers still need no certificate for the late-April session.
-MR-032,IT-122,Staffing,2026-03-21,D-DUN,server_training,no_certificate,AG-307,CX-222,At the marquee session outside the licensed area no certificate is needed.
-MR-033,IT-123,At the table,2026-03-15,D-COR,owner_consent,consent_on_file,BR-205,CX-223,The owner's written consent is on file for the Oakfield date.
-MR-034,IT-123,Records,2026-03-15,D-COR,owner_consent,consent_on_file,BR-205,CX-223,The owner's written consent is on file for the Oakfield date.
-MR-035,IT-124,Records,2026-03-21,D-COR,owner_consent,consent_on_file,BR-205,CX-224,The owner's written consent is on file for the Kingsway date.
-MR-036,IT-125,Closing,2026-03-15,D-COR,sample_size,size_limited,AG-305,CX-225,Every sample is kept within the prescribed size.
-MR-037,IT-125,Permits,2026-03-15,D-COR,sample_size,size_limited,AG-305,CX-225,Every sample is kept within the prescribed size.
-MR-038,IT-126,Permits,2026-03-21,D-COR,sample_size,size_limited,AG-305,CX-226,Samples at the trade morning are kept within the prescribed size.
-MR-039,IT-127,Staffing,2026-03-14,D-DUN,insurance,insurance_filed,BR-299,CX-227,A certificate of insurance is on file with the division.
-MR-040,IT-128,At the table,2026-03-07,D-ARD,server_id,id_card_required,BR-298,CX-228,Each server carries a state identification card.
-MR-041,IT-128,Records,2026-03-07,D-ARD,server_id,id_card_required,BR-298,CX-228,Each server carries a state identification card.
-MR-042,IT-129,Records,2026-03-15,D-COR,local_ordinance,ordinance_reviewed,AG-399,CX-229,The municipality's ordinance is reviewed for each store.
-MR-043,IT-130,Closing,2026-03-08,D-BEL,insurance,insurance_filed,BR-299,CX-230,A certificate of insurance is on file for the Belmont dates.
-MR-044,IT-131,Permits,2026-03-07,D-ARD,post_event_report,report_required,AG-310,CX-231,A short report follows each Ardenne event.
-MR-045,IT-131,Staffing,2026-03-07,D-ARD,post_event_report,report_required,AG-310,CX-231,A short report follows each Ardenne event.
-MR-046,IT-132,Staffing,2026-03-14,D-DUN,post_event_report,report_required,AG-310,CX-232,A short report follows each Dunmore event.
-MR-047,IT-133,At the table,2026-02-20,D-DUN,post_event_report,report_required,AG-310,CX-233,A short report followed the February pilot as well.
-MR-048,IT-134,Records,2026-03-21,D-COR,brand_permit,brand_permit_required,BR-201,CX-234,The brand's permit covers the Corvane dates.
-MR-049,IT-134,Closing,2026-03-21,D-COR,brand_permit,brand_permit_required,BR-201,CX-234,The brand's permit covers the Corvane dates.
-MR-050,IT-135,Closing,2026-03-08,D-BEL,tasting_log,log_required,AG-306,CX-235,A log is kept of each Belmont tasting.
+MR-001,IT-101,Permits,2026-03-07,D-ARD,brand_permit,brand_permit_required,BR-201,CX-201,In Ardenne the brand must hold a state tasting permit covering the tasting period.
+MR-002,IT-101,Staffing,2026-03-07,D-ARD,brand_permit,brand_permit_required,AG-301,CX-201,In Ardenne the brand must hold a state tasting permit covering the tasting period.
+MR-003,IT-102,Staffing,2026-03-08,D-BEL,store_permit,store_permit_required,AG-303,CX-202,Belmont requires each store to hold a tasting permit in its own name.
+MR-004,IT-103,At the table,2026-05-03,D-BEL,store_permit,store_permit_required,BR-203,CX-203,Belmont still requires the store to hold its own permit on the May dates.
+MR-005,IT-103,Records,2026-05-03,D-BEL,store_permit,store_permit_required,BR-218,CX-203,Belmont still requires the store to hold its own permit on the May dates.
+MR-006,IT-104,Records,2026-03-08,D-BEL,age_check,age_checked,BR-207,CX-204,Belmont requires the age of every person served to be verified before service.
+MR-007,IT-105,Closing,2026-03-14,D-DUN,tasting_hours,hours_observed,BR-210,CX-205,Dunmore requires a tasting to be held within the hours the permit states.
+MR-008,IT-106,Permits,2026-03-14,D-ARD,tasting_hours,no_hours_limit,AG-311,CX-206,Ardenne imposes no hours restriction on a tasting.
+MR-009,IT-106,Staffing,2026-03-14,D-ARD,tasting_hours,no_hours_limit,AG-311,CX-206,Ardenne imposes no hours restriction on a tasting.
+MR-010,IT-107,Staffing,2026-03-15,D-COR,tasting_log,log_required,AG-306,CX-207,Corvane requires a log of each tasting to be kept.
+MR-011,IT-108,At the table,2026-03-15,D-COR,permit_scope,permit_per_store,BR-209,CX-208,Corvane requires a separate tasting permit for each store.
+MR-012,IT-108,Records,2026-03-15,D-COR,permit_scope,permit_per_store,BR-209,CX-208,Corvane requires a separate tasting permit for each store.
+MR-013,IT-109,Records,2026-03-21,D-COR,sealed_product,sealed_on_arrival,BR-211,CX-209,Corvane requires product to arrive in sealed containers opened at the table.
+MR-014,IT-110,Closing,2026-03-07,D-ARD,server_permit,covered_by_holder,AG-302,CX-210,In Ardenne staff at the table are covered by the brand's permit and need none of their own.
+MR-015,IT-110,Permits,2026-03-07,D-ARD,server_permit,covered_by_holder,AG-302,CX-210,In Ardenne staff at the table are covered by the brand's permit and need none of their own.
+MR-016,IT-110,Staffing,2026-03-07,D-ARD,server_permit,covered_by_holder,BR-202,CX-210,In Ardenne staff at the table are covered by the brand's permit and need none of their own.
+MR-017,IT-111,Permits,2026-02-01,D-ARD,server_permit,covered_by_holder,AG-302,CX-211,In the pre-season week Ardenne required no permit of staff at the table.
+MR-018,IT-112,Staffing,2026-03-28,D-ARD,server_permit,covered_by_holder,BR-202,CX-212,On the brand-staffed date Ardenne required no separate permit of the servers.
+MR-019,IT-113,At the table,2026-03-01,D-ARD,brand_rep,no_rep,BR-206,CX-213,Ardenne requires no representative of the brand at a tasting in March.
+MR-020,IT-114,Records,2026-04-05,D-ARD,brand_rep,no_rep,BR-206,CX-214,Ardenne requires no representative of the brand at a tasting in April.
+MR-021,IT-114,Closing,2026-04-05,D-ARD,brand_rep,no_rep,BR-216,CX-214,Ardenne requires no representative of the brand at a tasting in April.
+MR-022,IT-115,Closing,2026-03-01,D-BEL,advance_notice,notice_required,AG-304,CX-215,Belmont requires notice of a March event to be filed with the division beforehand.
+MR-023,IT-116,Permits,2026-03-22,D-BEL,advance_notice,notice_required,BR-204,CX-216,Belmont requires notice of a late-March event to be filed with the division beforehand.
+MR-024,IT-116,Staffing,2026-03-22,D-BEL,advance_notice,notice_required,AG-304,CX-216,Belmont requires notice of a late-March event to be filed with the division beforehand.
+MR-025,IT-117,Staffing,2026-03-08,D-BEL,signage,signage_posted,BR-208,CX-217,Belmont requires the prescribed notice to be posted at the tasting table.
+MR-026,IT-118,At the table,2026-04-19,D-BEL,signage,signage_posted,BR-208,CX-218,Belmont requires the prescribed notice to be posted at an April tasting too.
+MR-027,IT-118,Records,2026-04-19,D-BEL,signage,signage_posted,AG-308,CX-218,Belmont requires the prescribed notice to be posted at an April tasting too.
+MR-028,IT-119,Records,2026-03-15,D-BEL,signage,signage_posted,BR-208,CX-219,Belmont requires the prescribed notice to be posted on the brand-staffed date.
+MR-029,IT-120,Closing,2026-03-14,D-DUN,server_training,no_certificate,AG-307,CX-220,Dunmore requires no training certificate of a person serving at these sessions.
+MR-030,IT-120,Permits,2026-03-14,D-DUN,server_training,no_certificate,BR-217,CX-220,Dunmore requires no training certificate of a person serving at these sessions.
+MR-031,IT-121,Permits,2026-04-26,D-DUN,server_training,no_certificate,AG-307,CX-221,Dunmore requires no training certificate at the late-April session.
+MR-032,IT-122,Staffing,2026-03-21,D-DUN,server_training,no_certificate,AG-307,CX-222,Dunmore requires no training certificate at the marquee session outside the licensed area.
+MR-033,IT-123,At the table,2026-03-15,D-COR,owner_consent,consent_on_file,BR-205,CX-223,Corvane requires the owner's written consent to be filed for the Oakfield date.
+MR-034,IT-123,Records,2026-03-15,D-COR,owner_consent,consent_on_file,BR-205,CX-223,Corvane requires the owner's written consent to be filed for the Oakfield date.
+MR-035,IT-124,Records,2026-03-21,D-COR,owner_consent,consent_on_file,BR-205,CX-224,Corvane requires the owner's written consent to be filed for the Kingsway date.
+MR-036,IT-125,Closing,2026-03-15,D-COR,sample_size,size_limited,AG-305,CX-225,Corvane requires every sample to be kept within the prescribed size.
+MR-037,IT-125,Permits,2026-03-15,D-COR,sample_size,size_limited,AG-305,CX-225,Corvane requires every sample to be kept within the prescribed size.
+MR-038,IT-126,Permits,2026-03-21,D-COR,sample_size,size_limited,AG-305,CX-226,Corvane requires samples at the trade morning to be kept within the prescribed size.
+MR-039,IT-127,Staffing,2026-03-14,D-DUN,insurance,insurance_filed,BR-299,CX-227,Dunmore requires a certificate of insurance to be filed with the division.
+MR-040,IT-128,At the table,2026-03-07,D-ARD,server_id,id_card_required,BR-298,CX-228,Ardenne requires each server to carry a state identification card.
+MR-041,IT-128,Records,2026-03-07,D-ARD,server_id,id_card_required,BR-298,CX-228,Ardenne requires each server to carry a state identification card.
+MR-042,IT-129,Records,2026-03-15,D-COR,local_ordinance,ordinance_reviewed,AG-399,CX-229,Corvane requires the municipality's ordinance to be reviewed for each store.
+MR-043,IT-130,Closing,2026-03-08,D-BEL,insurance,insurance_filed,BR-299,CX-230,Belmont requires a certificate of insurance to be filed with the division.
+MR-044,IT-131,Permits,2026-03-07,D-ARD,post_event_report,report_required,AG-310,CX-231,Ardenne requires a short report to be filed after each event.
+MR-045,IT-131,Staffing,2026-03-07,D-ARD,post_event_report,report_required,AG-310,CX-231,Ardenne requires a short report to be filed after each event.
+MR-046,IT-132,Staffing,2026-03-14,D-DUN,post_event_report,report_required,AG-310,CX-232,Dunmore requires a short report to be filed after each event.
+MR-047,IT-133,At the table,2026-02-20,D-DUN,post_event_report,report_required,AG-310,CX-233,Dunmore required a short report after the February pilot as well.
+MR-048,IT-134,Records,2026-03-21,D-COR,brand_permit,brand_permit_required,BR-201,CX-234,Corvane requires the brand to hold a state tasting permit for the period.
+MR-049,IT-134,Closing,2026-03-21,D-COR,brand_permit,brand_permit_required,BR-201,CX-234,Corvane requires the brand to hold a state tasting permit for the period.
+MR-050,IT-135,Closing,2026-03-08,D-BEL,tasting_log,log_required,AG-306,CX-235,Belmont requires a log of each tasting to be kept.
 MR-051,IT-136,Permits,2026-03-15,D-COR,insurance,no_record,BR-299,CX-236,The register carries no record on insurance in Corvane.
 MR-052,IT-136,Staffing,2026-03-15,D-COR,insurance,no_record,BR-299,CX-236,The register carries no record on insurance in Corvane.
 MR-053,IT-137,Staffing,2026-03-07,D-ARD,signage,no_record,BR-208,CX-237,The register carries no record on table signage in Ardenne.

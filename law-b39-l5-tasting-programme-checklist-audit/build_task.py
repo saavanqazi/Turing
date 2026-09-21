@@ -108,79 +108,79 @@ CTX_DEFAULT = {"every_server_is_holder_employee":"no","store_holds_own_permit":"
 #   (district, subject, event_date, asserted_position, ctx_overrides, cites, text)
 I = [
  ("D-ARD","brand_permit","2026-03-07","brand_permit_required",{},"BR-201",
-  "The brand holds a state tasting permit covering the period of these tastings."),
+  "In Ardenne the brand must hold a state tasting permit covering the tasting period."),
  ("D-BEL","store_permit","2026-03-08","store_permit_required",{},"AG-303",
-  "Each store we work in holds a tasting permit in its own name."),
+  "Belmont requires each store to hold a tasting permit in its own name."),
  ("D-BEL","store_permit","2026-05-03","store_permit_required",{},"BR-203",
-  "The store must still hold its own permit for the May dates."),
+  "Belmont still requires the store to hold its own permit on the May dates."),
  ("D-BEL","age_check","2026-03-08","age_checked",{},"BR-207",
-  "Every person served has their age verified before they are poured anything."),
+  "Belmont requires the age of every person served to be verified before service."),
  ("D-DUN","tasting_hours","2026-03-14","hours_observed",{},"BR-210",
-  "Our sessions run only inside the hours the permit states."),
+  "Dunmore requires a tasting to be held within the hours the permit states."),
  ("D-ARD","tasting_hours","2026-03-14","no_hours_limit",{},"AG-311",
-  "There is no hours restriction on these tastings."),
+  "Ardenne imposes no hours restriction on a tasting."),
  ("D-COR","tasting_log","2026-03-15","log_required",{},"AG-306",
-  "A log of each tasting is kept with date, store, product and servings."),
+  "Corvane requires a log of each tasting to be kept."),
  ("D-COR","permit_scope","2026-03-15","permit_per_store",{},"BR-209",
-  "A separate tasting permit is obtained for each store on the round."),
+  "Corvane requires a separate tasting permit for each store."),
  ("D-COR","sealed_product","2026-03-21","sealed_on_arrival",{},"BR-211",
-  "Product arrives sealed and is opened at the table."),
+  "Corvane requires product to arrive in sealed containers opened at the table."),
  # the guide-vs-regulation conflict, settled by date
  ("D-ARD","server_permit","2026-03-07","covered_by_holder",{},"AG-302",
-  "Our people at the table work under the brand's permit and need nothing of their own."),
+  "In Ardenne staff at the table are covered by the brand's permit and need none of their own."),
  ("D-ARD","server_permit","2026-02-01","covered_by_holder",{},"AG-302",
-  "In the pre-season week our staff needed no permit of their own."),
+  "In the pre-season week Ardenne required no permit of staff at the table."),
  ("D-ARD","server_permit","2026-03-28","covered_by_holder",{"every_server_is_holder_employee":"yes"},"BR-202",
-  "On the brand-staffed date the servers needed no separate permit."),
+  "On the brand-staffed date Ardenne required no separate permit of the servers."),
  # superseded records: the answer depends on WHEN
  ("D-ARD","brand_rep","2026-03-01","no_rep",{},"BR-206",
-  "No representative of the brand attends the March tastings."),
+  "Ardenne requires no representative of the brand at a tasting in March."),
  ("D-ARD","brand_rep","2026-04-05","no_rep",{},"BR-206",
-  "No brand representative attends in April either."),
+  "Ardenne requires no representative of the brand at a tasting in April."),
  ("D-BEL","advance_notice","2026-03-01","notice_required",{},"AG-304",
-  "Notice of each March event goes to the division beforehand."),
+  "Belmont requires notice of a March event to be filed with the division beforehand."),
  ("D-BEL","advance_notice","2026-03-22","notice_required",{},"BR-204",
-  "Notice of the late-March events goes to the division beforehand."),
+  "Belmont requires notice of a late-March event to be filed with the division beforehand."),
  ("D-BEL","signage","2026-03-08","signage_posted",{},"BR-208",
-  "The prescribed notice is displayed at the table."),
+  "Belmont requires the prescribed notice to be posted at the tasting table."),
  ("D-BEL","signage","2026-04-19","signage_posted",{},"BR-208",
-  "The prescribed notice is displayed at the April tables too."),
+  "Belmont requires the prescribed notice to be posted at an April tasting too."),
  ("D-BEL","signage","2026-03-15","signage_posted",{"every_server_is_holder_employee":"yes"},"BR-208",
-  "The notice is displayed on the brand-staffed date."),
+  "Belmont requires the prescribed notice to be posted on the brand-staffed date."),
  ("D-DUN","server_training","2026-03-14","no_certificate",{},"AG-307",
-  "Servers need no training certificate for these sessions."),
+  "Dunmore requires no training certificate of a person serving at these sessions."),
  ("D-DUN","server_training","2026-04-26","no_certificate",{},"AG-307",
-  "Servers still need no certificate for the late-April session."),
+  "Dunmore requires no training certificate at the late-April session."),
  ("D-DUN","server_training","2026-03-21","no_certificate",{"event_inside_licensed_area":"no"},"AG-307",
-  "At the marquee session outside the licensed area no certificate is needed."),
+  "Dunmore requires no training certificate at the marquee session outside the licensed area."),
  # context decides
  ("D-COR","owner_consent","2026-03-15","consent_on_file",{"store_holds_own_permit":"no"},"BR-205",
-  "The owner's written consent is on file for the Oakfield date."),
+  "Corvane requires the owner's written consent to be filed for the Oakfield date."),
  ("D-COR","owner_consent","2026-03-21","consent_on_file",{},"BR-205",
-  "The owner's written consent is on file for the Kingsway date."),
+  "Corvane requires the owner's written consent to be filed for the Kingsway date."),
  ("D-COR","sample_size","2026-03-15","size_limited",{},"AG-305",
-  "Every sample is kept within the prescribed size."),
+  "Corvane requires every sample to be kept within the prescribed size."),
  ("D-COR","sample_size","2026-03-21","size_limited",{"tasting_open_to_public":"no"},"AG-305",
-  "Samples at the trade morning are kept within the prescribed size."),
+  "Corvane requires samples at the trade morning to be kept within the prescribed size."),
  # nothing governs
  ("D-DUN","insurance","2026-03-14","insurance_filed",{},"BR-299",
-  "A certificate of insurance is on file with the division."),
+  "Dunmore requires a certificate of insurance to be filed with the division."),
  ("D-ARD","server_id","2026-03-07","id_card_required",{},"BR-298",
-  "Each server carries a state identification card."),
+  "Ardenne requires each server to carry a state identification card."),
  ("D-COR","local_ordinance","2026-03-15","ordinance_reviewed",{},"AG-399",
-  "The municipality's ordinance is reviewed for each store."),
+  "Corvane requires the municipality's ordinance to be reviewed for each store."),
  ("D-BEL","insurance","2026-03-08","insurance_filed",{},"BR-299",
-  "A certificate of insurance is on file for the Belmont dates."),
+  "Belmont requires a certificate of insurance to be filed with the division."),
  ("D-ARD","post_event_report","2026-03-07","report_required",{},"AG-310",
-  "A short report follows each Ardenne event."),
+  "Ardenne requires a short report to be filed after each event."),
  ("D-DUN","post_event_report","2026-03-14","report_required",{},"AG-310",
-  "A short report follows each Dunmore event."),
+  "Dunmore requires a short report to be filed after each event."),
  ("D-DUN","post_event_report","2026-02-20","report_required",{},"AG-310",
-  "A short report followed the February pilot as well."),
+  "Dunmore required a short report after the February pilot as well."),
  ("D-COR","brand_permit","2026-03-21","brand_permit_required",{},"BR-201",
-  "The brand's permit covers the Corvane dates."),
+  "Corvane requires the brand to hold a state tasting permit for the period."),
  ("D-BEL","tasting_log","2026-03-08","log_required",{},"AG-306",
-  "A log is kept of each Belmont tasting."),
+  "Belmont requires a log of each tasting to be kept."),
  # items asserting that the register is silent
  ("D-COR","insurance","2026-03-15","no_record",{},"BR-299",
   "The register carries no record on insurance in Corvane."),
@@ -312,7 +312,9 @@ the source register before the season opens.
 ## 0. What is audited
 
 The unit of audit is the checklist item: one position the checklist has recorded
-under an `item_id`.
+under an `item_id`. An item states what the register requires in the item's
+district, not what the programme did; a position about conduct is not audited
+here.
 
 ## 1. Governing record
 
@@ -330,9 +332,10 @@ no record governs is `UNSUPPORTED`.
 
 ## 3. How an item is judged
 
-The governing record's holding is applied to the facts recorded for the item. An item
-asserting the position that holding gives on those facts is `SUPPORTED`; an item
-asserting the opposite position is `CONTRADICTED`.
+The governing record's holding is applied to the facts recorded for the item. That
+gives one position on the item's subject. An item asserting that position is
+`SUPPORTED`; an item asserting the opposing position on the same subject is
+`CONTRADICTED`. Every subject has two opposing positions and no third.
 
 ## 4. Factual context
 
