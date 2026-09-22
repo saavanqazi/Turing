@@ -1,0 +1,73 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-8.4.1, pluggy-1.6.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 12 items
+
+../tests/test_outputs.py ............                                    [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::test_deliverable[evaluation_exists]
+PASSED ../tests/test_outputs.py::test_deliverable[evaluation_header]
+PASSED ../tests/test_outputs.py::test_deliverable[evaluation_table_trap_of01]
+PASSED ../tests/test_outputs.py::test_deliverable[evaluation_table]
+PASSED ../tests/test_outputs.py::test_deliverable[results_figures]
+PASSED ../tests/test_outputs.py::test_deliverable[results_exists]
+PASSED ../tests/test_outputs.py::test_incomplete_output[offer_evaluation.csv]
+PASSED ../tests/test_outputs.py::test_incomplete_output[results.json]
+PASSED ../tests/test_outputs.py::test_negative_corrupted_value[chosen_offer_id]
+PASSED ../tests/test_outputs.py::test_negative_corrupted_value[chosen_total_usd]
+PASSED ../tests/test_outputs.py::test_negative_corrupted_value[eligible_offer_count]
+PASSED ../tests/test_outputs.py::test_adversarial_extra_key
+============================== 12 passed in 1.12s ==============================
+{
+  "reward": 1.0,
+  "core_failures": [],
+  "passed": 6,
+  "total": 6,
+  "checks": [
+    {
+      "name": "evaluation_exists",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_header",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_table_trap_of01",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_table",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "results_figures",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "results_exists",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666665,
+      "detail": ""
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+    "id": "8cea7fb4-2b49-4516-85e8-ba35b0212dbe",
+    "task_name": "obi/bus-mg-bus-b7-a4-same-day-power-cord-sourcing",
+    "trial_name": "task__vR6K4Kt",
+    "trial_uri": "file:///C:/Users/amitb/Turing1/jobs/glm-b7a4-r2/task__vR6K4Kt",
+    "task_id": {
+        "path": "task"
+    },
+    "source": null,
+    "task_checksum": "53f3befaebad4644e114d3cfa783979d30bbfbe793a4e940f6171c48deb57085",
+    "config": {
+        "task": {
+            "path": "task",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": null
+        },
+        "trial_name": "task__vR6K4Kt",
+        "trials_dir": "jobs\\glm-b7a4-r2",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "terminus-2",
+            "import_path": null,
+            "model_name": "openai/glm-5.2",
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "resume_trajectory": false,
+            "load_trajectory": null,
+            "extra_allowed_hosts": [],
+            "kwargs": {},
+            "mcp_servers": []
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": null,
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": []
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "extra_instruction_paths": [],
+        "job_id": "687a0d7c-7509-4409-9bdc-fcb89c446751"
+    },
+    "agent_info": {
+        "name": "terminus-2",
+        "version": "2.0.0",
+        "model_info": {
+            "name": "glm-5.2",
+            "provider": "openai"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 88150,
+        "n_cache_tokens": 20608,
+        "n_output_tokens": 67267,
+        "cost_usd": 0.21700318000000002,
+        "rollout_details": [],
+        "metadata": {
+            "n_episodes": 9,
+            "api_request_times_msec": [
+                4964.881420135498,
+                5867.815017700195,
+                12321.568250656128,
+                245285.28141975403,
+                180970.56102752686,
+                48257.641077041626,
+                87507.36117362976,
+                74211.6630077362,
+                78594.0911769867
+            ],
+            "summarization_count": 0
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-09-22T17:48:39.793746Z",
+    "finished_at": "2026-09-22T18:01:36.259668Z",
+    "environment_setup": {
+        "started_at": "2026-09-22T17:48:39.918189Z",
+        "finished_at": "2026-09-22T17:48:45.159101Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-09-22T17:48:45.159151Z",
+        "finished_at": "2026-09-22T17:48:59.482831Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-09-22T17:48:59.482957Z",
+        "finished_at": "2026-09-22T18:01:29.230810Z"
+    },
+    "verifier": {
+        "started_at": "2026-09-22T18:01:29.232252Z",
+        "finished_at": "2026-09-22T18:01:32.369705Z"
+    },
+    "step_results": null,
+    "model": "GLM-5.2",
+    "overall_pass": true,
+    "final_answer": {
+        "eligible_offer_count": 7,
+        "chosen_offer_id": "OF-12",
+        "chosen_total_usd": 18.62
+    },
+    "reward": 1.0,
+    "judge": {
+        "type": "deterministic file_check",
+        "judge_model": null
+    }
+}

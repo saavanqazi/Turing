@@ -13,4 +13,4 @@ Dockerfile text eol=lf
 # The vendored verifier engine ships exactly as it arrived, CRLF and all: the
 # client computes a Layer 0 hash from these .py files directly, so normalising
 # them would change the bytes it fingerprints. Left untouched on purpose.
-law-b39-l5-tasting-programme-checklist-audit/tests/rl_world_verifiers/** -text
+*/tests/rl_world_verifiers/** -text

@@ -1,0 +1,99 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-8.4.1, pluggy-1.6.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 12 items
+
+../tests/test_outputs.py ...F........                                    [100%]
+
+=================================== FAILURES ===================================
+______________________ test_deliverable[evaluation_table] ______________________
+
+definition = VerifierDefinition(name='evaluation_table', metadata=VerifierMetadata(how_justification="Parses offer_evaluation.csv w...on_code': 'id'}}, deterministic=DeterministicConfig(path='$', comparison='table_equals', tolerance=None), rubric=None))
+
+    @pytest.mark.parametrize(
+        "definition",
+        SPEC.verifiers,
+        ids=[definition.name for definition in SPEC.verifiers],
+    )
+    def test_deliverable(definition):
+        outcome = verify_definition(
+            definition,
+            REGISTRY,
+            WEIGHTS[definition.name],
+            config=SPEC.config,
+            completion_fn=None,
+        )["result"]
+        detail = outcome.get("error") or outcome.get("reason") or "assertion failed"
+>       assert outcome["success"], f"{definition.name}: {detail}"
+E       AssertionError: evaluation_table: row OF-13: reason_code expected STOCK_RESERVE, got SAME_DAY_SUSPENDED
+E       assert False
+
+/tests/test_outputs.py:144: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::test_deliverable[evaluation_exists]
+PASSED ../tests/test_outputs.py::test_deliverable[evaluation_header]
+PASSED ../tests/test_outputs.py::test_deliverable[evaluation_table_trap_of01]
+PASSED ../tests/test_outputs.py::test_deliverable[results_figures]
+PASSED ../tests/test_outputs.py::test_deliverable[results_exists]
+PASSED ../tests/test_outputs.py::test_incomplete_output[offer_evaluation.csv]
+PASSED ../tests/test_outputs.py::test_incomplete_output[results.json]
+PASSED ../tests/test_outputs.py::test_negative_corrupted_value[chosen_offer_id]
+PASSED ../tests/test_outputs.py::test_negative_corrupted_value[chosen_total_usd]
+PASSED ../tests/test_outputs.py::test_negative_corrupted_value[eligible_offer_count]
+PASSED ../tests/test_outputs.py::test_adversarial_extra_key
+FAILED ../tests/test_outputs.py::test_deliverable[evaluation_table] - Asserti...
+========================= 1 failed, 11 passed in 1.15s =========================
+{
+  "reward": 0.0,
+  "core_failures": [
+    "evaluation_table"
+  ],
+  "passed": 5,
+  "total": 6,
+  "checks": [
+    {
+      "name": "evaluation_exists",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_header",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_table_trap_of01",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_table",
+      "tag": "core",
+      "passed": false,
+      "weight": 0.1666666667,
+      "detail": "row OF-13: reason_code expected STOCK_RESERVE, got SAME_DAY_SUSPENDED"
+    },
+    {
+      "name": "results_figures",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "results_exists",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666665,
+      "detail": ""
+    }
+  ]
+}

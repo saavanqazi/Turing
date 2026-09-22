@@ -1,0 +1,52 @@
+{
+  "reward": 0.0,
+  "core_failures": [
+    "evaluation_table"
+  ],
+  "passed": 5,
+  "total": 6,
+  "checks": [
+    {
+      "name": "evaluation_exists",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_header",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_table_trap_of01",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_table",
+      "tag": "core",
+      "passed": false,
+      "weight": 0.1666666667,
+      "detail": "row OF-13: reason_code expected STOCK_RESERVE, got SAME_DAY_SUSPENDED"
+    },
+    {
+      "name": "results_figures",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "results_exists",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666665,
+      "detail": ""
+    }
+  ]
+}

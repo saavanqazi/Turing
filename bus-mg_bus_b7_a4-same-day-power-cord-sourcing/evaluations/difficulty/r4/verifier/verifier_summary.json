@@ -1,0 +1,51 @@
+{
+  "source": "derived from verifier/score.json (tests/score.py output)",
+  "reward": 1.0,
+  "passed": 6,
+  "total": 6,
+  "core_failures": [],
+  "items": [
+    {
+      "name": "evaluation_exists",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_header",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_table_trap_of01",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "evaluation_table",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "results_figures",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666667,
+      "detail": ""
+    },
+    {
+      "name": "results_exists",
+      "tag": "core",
+      "passed": true,
+      "weight": 0.1666666665,
+      "detail": ""
+    }
+  ]
+}
