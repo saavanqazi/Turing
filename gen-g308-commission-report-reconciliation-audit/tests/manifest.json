@@ -8710,6 +8710,786 @@
      "comparison": "regex_match"
     }
    }
+  },
+  {
+   "name": "memo_explains_deal_061_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 6% within 400 characters of DEAL-061, either order, with no other deal id in between.",
+    "why_justification": "DEAL-061 was reported at 6%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-061\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-061\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_061_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 8% within 400 characters of DEAL-061, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-061 is 8%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-061\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-061\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_062_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 8% within 400 characters of DEAL-062, either order, with no other deal id in between.",
+    "why_justification": "DEAL-062 was reported at 8%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-062\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-062\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_062_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 4% within 400 characters of DEAL-062, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-062 is 4%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-062\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-062\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_063_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 4% within 400 characters of DEAL-063, either order, with no other deal id in between.",
+    "why_justification": "DEAL-063 was reported at 4%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-063\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-063\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_063_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 0% within 400 characters of DEAL-063, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-063 is 0%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-063\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b0(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b0(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-063\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_064_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 4% within 400 characters of DEAL-064, either order, with no other deal id in between.",
+    "why_justification": "DEAL-064 was reported at 4%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-064\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-064\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_064_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 8% within 400 characters of DEAL-064, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-064 is 8%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-064\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-064\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_065_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 6% within 400 characters of DEAL-065, either order, with no other deal id in between.",
+    "why_justification": "DEAL-065 was reported at 6%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-065\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-065\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_065_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 4% within 400 characters of DEAL-065, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-065 is 4%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-065\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-065\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_066_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 8% within 400 characters of DEAL-066, either order, with no other deal id in between.",
+    "why_justification": "DEAL-066 was reported at 8%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-066\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-066\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_066_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 0% within 400 characters of DEAL-066, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-066 is 0%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-066\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b0(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b0(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-066\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_067_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 10% within 400 characters of DEAL-067, either order, with no other deal id in between.",
+    "why_justification": "DEAL-067 was reported at 10%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-067\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b10(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b10(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-067\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_067_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 8% within 400 characters of DEAL-067, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-067 is 8%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-067\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-067\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_068_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 2% within 400 characters of DEAL-068, either order, with no other deal id in between.",
+    "why_justification": "DEAL-068 was reported at 2%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-068\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b2(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b2(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-068\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_068_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 4% within 400 characters of DEAL-068, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-068 is 4%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-068\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-068\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_075_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 0% within 400 characters of DEAL-075, either order, with no other deal id in between.",
+    "why_justification": "DEAL-075 was reported at 0%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-075\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b0(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b0(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-075\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_075_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 8% within 400 characters of DEAL-075, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-075 is 8%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-075\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-075\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_078_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 6% within 400 characters of DEAL-078, either order, with no other deal id in between.",
+    "why_justification": "DEAL-078 was reported at 6%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-078\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-078\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_078_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 8% within 400 characters of DEAL-078, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-078 is 8%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-078\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-078\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_082_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 6% within 400 characters of DEAL-082, either order, with no other deal id in between.",
+    "why_justification": "DEAL-082 was reported at 6%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-082\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-082\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_082_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 4% within 400 characters of DEAL-082, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-082 is 4%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-082\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-082\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_083_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 6% within 400 characters of DEAL-083, either order, with no other deal id in between.",
+    "why_justification": "DEAL-083 was reported at 6%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-083\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-083\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_083_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 8% within 400 characters of DEAL-083, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-083 is 8%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-083\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-083\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_087_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 10% within 400 characters of DEAL-087, either order, with no other deal id in between.",
+    "why_justification": "DEAL-087 was reported at 10%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-087\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b10(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b10(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-087\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_087_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 8% within 400 characters of DEAL-087, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-087 is 8%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-087\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-087\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_090_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 6% within 400 characters of DEAL-090, either order, with no other deal id in between.",
+    "why_justification": "DEAL-090 was reported at 6%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-090\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b6(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-090\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_090_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 4% within 400 characters of DEAL-090, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-090 is 4%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-090\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b4(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-090\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_092_reported",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 12% within 400 characters of DEAL-092, either order, with no other deal id in between.",
+    "why_justification": "DEAL-092 was reported at 12%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-092\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b12(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b12(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-092\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_explains_deal_092_applicable",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md and requires 8% within 400 characters of DEAL-092, either order, with no other deal id in between.",
+    "why_justification": "The rate that applies to DEAL-092 is 8%; explaining its rate mismatch states that rate.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?is)(?:\\bDEAL\\-092\\b(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)|\\b8(?:\\.0+)?\\s?(?:%|percent\\b|pct\\b)(?:(?!\\bDEAL-\\d{3}\\b).){0,400}?\\bDEAL\\-092\\b)",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
   }
  ]
 }

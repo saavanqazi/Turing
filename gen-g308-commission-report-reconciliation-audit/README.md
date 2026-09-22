@@ -86,7 +86,7 @@ It writes `commission_findings.csv` (one row per finding), `commission_memo.md`
 
 ## Verification
 
-The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 335
+The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 365
 checks). Every line carries one check per finding code, required where the code
 applies and forbidden where it does not, so a missed finding and a false positive
 are each caught on the line that caused them. The remaining checks are the CSV
@@ -97,6 +97,10 @@ wildcard between anchors: the three finding codes the instruction names, and, fo
 each of the three lines that disagree with their standard rate and are compliant
 anyway, that line and the register entry that makes it so. A memo of stock
 reconciliation prose that names no deal and cites no register entry fails all nine.
+For each rate-mismatch deal, the reported rate and the applicable rate must each
+appear within 400 characters of the deal id, either order, with no other deal id in
+between: an explanation of a rate mismatch states both rates, and a memo that names
+every deal but explains nothing fails all thirty of those.
 
 The reward is **graded**, not binary: `tests/test.sh` writes
 `reward = passed / (passed + failed)`, with `1.0` only when every check passes.
@@ -123,7 +127,7 @@ so the gold cannot drift from the data it describes.
   what all five figures mean, neither of which the policy said.
 - **Scaled from 8 lines to 97**, with the edge cases above built from the rules
   already in the policy.
-- **15 checks to 335**, and the binary reward replaced with the graded one.
+- **15 checks to 365**, and the binary reward replaced with the graded one.
 - **The inputs were re-cut across six files.** The single pre-consolidated
   `commission_lines.csv`, with the ledger match as a `yes`/`no` column and the
   exception state as a `status` column, was replaced by five partner reports in

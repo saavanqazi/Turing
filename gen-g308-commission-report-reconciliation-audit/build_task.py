@@ -679,6 +679,37 @@ for nm, pat, why in memo_facts:
                     "to a single token, with no wildcard between anchors.", why, MEMO,
                 det("$.text","regex_match",pat)))
 
+# Explaining a rate mismatch means stating the rate reported and the rate that
+# applies. Each is pinned within 400 characters of the deal id, in either
+# order, and the gap may not cross another deal id, so a rate cannot be
+# borrowed from a neighbouring row of a table. This is the shape of check the
+# instruction's "explaining each finding" asks for, and the one place in this
+# task family where rollouts actually differ: the findings come out the same
+# every run, and what varies is whether the write-up carries the facts.
+GAP = r"(?:(?!\bDEAL-\d{3}\b).){0,400}?"
+def near(deal, fact):
+    d = r"\b" + re.escape(deal) + r"\b"
+    return r"(?is)(?:" + d + GAP + fact + r"|" + fact + GAP + d + r")"
+def rate_re(n):
+    return r"\b" + str(n) + r"(?:\.0+)?\s?(?:%|percent\b|pct\b)"
+seen = set()
+for r in rows:
+    if r["finding_code"] != "RATE_MISMATCH" or r["deal_id"] in seen:
+        continue
+    seen.add(r["deal_id"])
+    ln = next(x for x in L if x[0] == r["deal_id"] and x[1] == r["source_report"])
+    deal, reported = ln[0], ln[3]
+    applicable = APPROVED.get(deal, STANDARD[ln[2]])
+    key = deal.lower().replace("-", "_")
+    for tag, rate, why in (
+        ("reported", reported, f"{deal} was reported at {reported}%; explaining its rate mismatch states that rate."),
+        ("applicable", applicable, f"The rate that applies to {deal} is {applicable}%; explaining its rate mismatch states that rate."),
+    ):
+        vs.append(V(f"memo_explains_{key}_{tag}",
+                    f"Opens commission_memo.md and requires {rate}% within 400 characters of {deal}, either "
+                    f"order, with no other deal id in between.", why, MEMO,
+                    det("$.text", "regex_match", near(deal, rate_re(rate)))))
+
 spec = OrderedDict(task_id="gen-g308-commission-report-reconciliation-audit", verifiers=vs)
 for p in ("tests/verifier.json","tests/manifest.json"):
     (ROOT/p).write_text(json.dumps(spec, indent=1)+"\n", encoding="utf-8")
