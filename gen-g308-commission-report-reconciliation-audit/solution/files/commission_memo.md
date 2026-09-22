@@ -1,9 +1,9 @@
 # Commission reconciliation memo — June 2026 run
 
-Consolidated 92 commission lines from the five partner reports and
+Consolidated 94 commission lines from the five partner reports and
 reconciled them against COMM-POL-6, the June NetSuite revenue export and the commission
-exceptions register. 31 findings were raised across
-26 lines; 66 lines are compliant.
+exceptions register. 32 findings were raised across
+27 lines; 67 lines are compliant.
 Rates were normalised to whole percent first: PartnerB files a decimal fraction, PartnerC
 files basis points and PartnerD writes a percent sign, so the reported rate is not
 comparable across reports until it is converted.
@@ -37,7 +37,8 @@ R2 requires every commissionable line to be matched to a revenue record in the r
 Whether the line is commissionable turns on that rate and not on the rate the partner
 reported, so a house line at 0% is out of scope for this rule even with no record at all.
 A record in `2026-05` is not a match for this run, so a deal whose only record sits in May
-is unmatched exactly as a deal with no record is.
+is unmatched exactly as a deal with no record is, and a run-month reversal that takes back
+everything the run month recognised leaves a net of zero, which is not a match either.
 
 - DEAL-069 (PartnerE): commissionable at 8%, no revenue record — `UNMATCHED_TO_LEDGER`.
 - DEAL-070 (PartnerA): commissionable at 4%, no revenue record — `UNMATCHED_TO_LEDGER`.
@@ -47,6 +48,7 @@ is unmatched exactly as a deal with no record is.
 - DEAL-079 (PartnerC): commissionable at 4%, no revenue record — `UNMATCHED_TO_LEDGER`.
 - DEAL-079 (PartnerD): commissionable at 4%, no revenue record — `UNMATCHED_TO_LEDGER`.
 - DEAL-086 (PartnerB): commissionable at 3%, no revenue record — `UNMATCHED_TO_LEDGER`.
+- DEAL-088 (PartnerC): commissionable at 8%, a run-month net of 0 after the reversal — `UNMATCHED_TO_LEDGER`.
 
 ## Duplicate lines
 

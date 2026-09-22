@@ -21,9 +21,18 @@ RUN_MONTH_FIRST, RUN_MONTH_LAST, RUN_PERIOD = "2026-06-01", "2026-06-30", "2026-
 
 # (deal_id, partner, end_user_type, rate_pct, revenue_usd); the ledger lives apart
 L = []
-LEDGER = {}          # deal_id -> "june" | "may" | "none"
+LEDGER = {}          # deal_id -> [(period, amount), ...]; amount may be negative
 def add(deal, partner, ctype, rate, rev, ledger):
-    L.append((deal, partner, ctype, rate, rev)); LEDGER[deal] = ledger
+    """`ledger` is "june", "may", "none", or an explicit list of records."""
+    L.append((deal, partner, ctype, rate, rev))
+    if isinstance(ledger, list):
+        LEDGER[deal] = ledger
+    else:
+        LEDGER[deal] = {"june": [(RUN_PERIOD, rev)], "may": [("2026-05", rev)], "none": []}[ledger]
+
+def net_recognised(deal):
+    """What the run month recognised for this deal, reversals netted off."""
+    return sum(a for period, a in LEDGER.get(deal, []) if period == RUN_PERIOD)
 
 PARTNERS = ["PartnerA","PartnerB","PartnerC","PartnerD","PartnerE"]
 TYPES    = ["new","renewal","house"]
@@ -75,6 +84,14 @@ add("DEAL-085", "PartnerA", "house",   3, 16000, "june")  # house at 3 -> commis
 add("DEAL-086", "PartnerB", "house",   3, 18000, "none")  # house at 3 -> commissionable, no record
 add("DEAL-087", "PartnerD", "new",    10, 47000, "june")  # window opens in July -> mismatch
 
+# --- reversals: the run month recognised revenue and then took it back.
+#     088 nets to zero and is unmatched; 089 is reversed in part and is
+#     still matched, so netting the wrong way is wrong in both directions.
+add("DEAL-088", "PartnerC", "new",     8, 50000,
+    [(RUN_PERIOD, 50000), (RUN_PERIOD, -50000)])
+add("DEAL-089", "PartnerE", "renewal", 4, 30000,
+    [(RUN_PERIOD, 30000), (RUN_PERIOD, -12000)])
+
 # (exception_code, deal_id, approved_rate_pct, effective_from, effective_to)
 EX = [
  ("EXC-VP-02","DEAL-080", 6,"2026-01-01",""),            # open ended
@@ -103,7 +120,7 @@ def findings_for(line):
     effective = APPROVED.get(deal, STANDARD[ctype])      # R4 displaces R1's rate
     if rate != effective:                                # R1
         out.append("RATE_MISMATCH")
-    if effective > 0 and LEDGER.get(deal) != "june":     # R2, on the effective rate
+    if effective > 0 and net_recognised(deal) <= 0:      # R2, on the effective rate
         out.append("UNMATCHED_TO_LEDGER")
     if deal in dup_deals:                                # R3, on every occurrence
         out.append("DUPLICATE_LINE")
@@ -148,12 +165,37 @@ LABEL = {
 }
 REPORT_FILE = {p: f"partner_{p[-1].lower()}_report.csv" for p in PARTNERS}
 
+# Deal ids as filed. Partners key their own systems differently and some export
+# with padding, so the same deal reaches the run in more than one spelling. Two
+# of the duplicated deals are duplicated only across a spelling, so a solver that
+# joins on the raw string never sees them -- and its ledger join misses too.
+ID_FORM = {
+ ("DEAL-076","PartnerC"): "lower",   ("DEAL-077","PartnerE"): "pad",
+ ("DEAL-078","PartnerE"): "lowerpad",("DEAL-012","PartnerC"): "lower",
+ ("DEAL-027","PartnerC"): "lower",   ("DEAL-034","PartnerE"): "pad",
+ ("DEAL-042","PartnerC"): "lower",   ("DEAL-054","PartnerE"): "pad",
+}
+# An entry naming a partner that does not file that deal would quietly do nothing.
+for _key in ID_FORM:
+    assert _key in {(d, p) for d, p, *_ in L}, f"ID_FORM entry {_key} matches no line"
+def filed_id(deal, partner):
+    form = ID_FORM.get((deal, partner))
+    if form == "lower":    return deal.lower()
+    if form == "pad":      return f" {deal} "
+    if form == "lowerpad": return f" {deal.lower()} "
+    return deal
+
+# Two partners close their report with a totals line. It names no deal, so it is
+# not a commission line; counting it inflates total_lines and invents a line.
+TOTALS_ROW = {"PartnerA", "PartnerD"}
+
 def report_rows(partner):
     out = []
     for deal, p, ctype, rate, rev in L:
         if p != partner:
             continue
         lbl = LABEL[partner][ctype]
+        deal = filed_id(deal, partner)
         if partner == "PartnerA":
             out.append(dict(deal_id=deal, customer_type=lbl, commission_rate_pct=rate, revenue_usd=rev))
         elif partner == "PartnerB":
@@ -164,6 +206,12 @@ def report_rows(partner):
             out.append(dict(deal_id=deal, type=lbl, rate=f"{rate}%", revenue=rev))
         else:
             out.append(dict(deal_id=deal, end_user=lbl, commission_rate_pct=rate, revenue_usd=rev))
+    if partner in TOTALS_ROW:
+        total = sum(x[4] for x in L if x[1] == partner)
+        if partner == "PartnerA":
+            out.append(dict(deal_id="TOTAL", customer_type="", commission_rate_pct="", revenue_usd=total))
+        else:
+            out.append(dict(deal_id="TOTAL", type="", rate="", revenue=total))
     return out
 
 COLS = {
@@ -181,22 +229,22 @@ for p in PARTNERS:
 # One record per deal that has one, in the period that deal's record sits in,
 # plus records for deals no partner reported. Absence and wrong-period are
 # both "no run-month record"; only one of them looks like a match.
+def money(a):
+    """The export's own convention: a reversal is written in parentheses."""
+    return f"${a:,}" if a >= 0 else f"(${-a:,})"
+
 ledger_rows, rid = [], 0
 for deal in sorted({x[0] for x in L}):
-    state = LEDGER[deal]
-    if state == "none":
-        continue
-    rid += 1
-    rev = next(x[4] for x in L if x[0] == deal)
-    ledger_rows.append(dict(revenue_record_id=f"REV-{rid:04d}", deal_id=deal,
-                            recognized_usd=rev,
-                            period=RUN_PERIOD if state == "june" else "2026-05"))
+    for period, amount in LEDGER[deal]:
+        rid += 1
+        ledger_rows.append(dict(revenue_record_id=f"REV-{rid:04d}", deal_id=deal,
+                                recognized_usd=money(amount), period=period))
 for deal, amount, period in (("DEAL-099", 31000, RUN_PERIOD),
                              ("DEAL-120", 18500, RUN_PERIOD),
                              ("DEAL-121", 22400, "2026-05")):
     rid += 1
     ledger_rows.append(dict(revenue_record_id=f"REV-{rid:04d}", deal_id=deal,
-                            recognized_usd=amount, period=period))
+                            recognized_usd=money(amount), period=period))
 w_csv(INP/"netsuite_revenue_export.csv", ledger_rows,
       ["revenue_record_id","deal_id","recognized_usd","period"])
 
@@ -221,6 +269,15 @@ consolidated line list is every line of every report.
 
 `source_report` is the partner the report belongs to: `PartnerA` for
 `partner_a_report.csv`, `PartnerB` for `partner_b_report.csv`, and so on.
+
+A report may close with a totals line, which names no deal and is not a commission line.
+The consolidated line list is every line of every report that names a deal.
+
+Partners key their own systems, so the same deal reaches this run in more than one
+spelling. Deal ids are compared with surrounding spaces trimmed and case ignored:
+` deal-076 ` and `DEAL-076` are the same deal, in this policy and in every file it names.
+Write a deal id into `commission_findings.csv` in the form the exceptions register and the
+revenue export use, upper case with no surrounding spaces.
 
 A report states its rate in the unit its own column name declares:
 
@@ -252,11 +309,16 @@ A line whose reported rate does not match the standard rate for its end-user typ
 
 ## R2 — Ledger match
 
-Every commissionable line (standard or approved rate above 0%) must be matched to a
-NetSuite revenue record for the run month before it is paid. A line is matched when
-`netsuite_revenue_export.csv` carries a record whose `deal_id` is the line's deal id and
-whose `period` is the run month. A record in any other period is not a match for this
-run. A commissionable line with no such record is `UNMATCHED_TO_LEDGER`.
+Every commissionable line (standard or approved rate above 0%) must be matched to revenue
+recognised for its deal in the run month before it is paid.
+
+Net the run-month records for that deal in `netsuite_revenue_export.csv`. An amount in
+parentheses is a reversal and counts as negative, so `($12,000)` is -12,000. A line is
+matched when that net is above zero. Records in any other period are not part of this
+run's net, whatever they say.
+
+A commissionable line whose run-month net is zero or below, or whose deal has no run-month
+record at all, is `UNMATCHED_TO_LEDGER`.
 
 ## R3 — Duplicate lines
 
@@ -322,11 +384,18 @@ memo += ["", "## Ledger matches", "",
  "Whether the line is commissionable turns on that rate and not on the rate the partner",
  "reported, so a house line at 0% is out of scope for this rule even with no record at all.",
  "A record in `2026-05` is not a match for this run, so a deal whose only record sits in May",
- "is unmatched exactly as a deal with no record is.", ""]
+ "is unmatched exactly as a deal with no record is, and a run-month reversal that takes back",
+ "everything the run month recognised leaves a net of zero, which is not a match either.", ""]
 for r in rows:
     if r["finding_code"] == "UNMATCHED_TO_LEDGER":
         ln = next(x for x in L if x[0] == r["deal_id"] and x[1] == r["source_report"])
-        state = {"none": "no revenue record", "may": "a revenue record in 2026-05 only"}[LEDGER[ln[0]]]
+        recs = LEDGER[ln[0]]
+        if not recs:
+            state = "no revenue record"
+        elif not any(pd == RUN_PERIOD for pd, _ in recs):
+            state = "a revenue record in 2026-05 only"
+        else:
+            state = f"a run-month net of {net_recognised(ln[0])} after the reversal"
         memo.append(f"- {r['deal_id']} ({r['source_report']}): commissionable at "
                     f"{APPROVED.get(ln[0], STANDARD[ln[2]])}%, {state} — `UNMATCHED_TO_LEDGER`.")
 memo += ["", "## Duplicate lines", "",

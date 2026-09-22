@@ -9,7 +9,7 @@ NetSuite revenue export and the VP exceptions register.
 The agent is given `commission_policy.md`, five partner reports
 (`partner_a_report.csv` .. `partner_e_report.csv`), `netsuite_revenue_export.csv`
 and `commission_exceptions.csv` under `input/`. It must first consolidate the five
-reports into one line list of 92 lines, normalising the rate to whole percent and
+reports into one line list of 94 lines, normalising the rate to whole percent and
 the end-user label to one of the three types, and then for each line:
 
 1. Compare the reported rate against the rate R1 is read against for that
@@ -35,7 +35,17 @@ It writes `commission_findings.csv` (one row per finding), `commission_memo.md`
 - **The five reports disagree on format.** One files the rate as a decimal
   fraction, one as basis points, one with a percent sign; two label the end-user
   type in long form. A solver that compares the printed number against the
-  standard rate is wrong on 25 checks.
+  standard rate is wrong on 26 checks.
+- **The data is not clean.** Two reports close with a `TOTAL` line that names no
+  deal. Eight lines are filed under a deal id that is lower case, space-padded or
+  both, and two of the four duplicated deals are duplicated only across a
+  spelling, so a solver that joins on the raw string never sees them and its
+  ledger join misses as well.
+- **The export nets.** Amounts are written `$50,000`, and a reversal is written
+  `($50,000)`. One deal's run month recognises revenue and then takes all of it
+  back, leaving a net of zero, which is not a match; another is reversed in part
+  and is still matched. Counting records rather than netting them is wrong in
+  both directions.
 - A line can be caught by more than one rule, and five of them are.
 - Commissionability is defined on the standard or approved rate, not the reported
   one. A house line reported at 0% with no ledger match is out of scope for R2;
@@ -64,7 +74,7 @@ It writes `commission_findings.csv` (one row per finding), `commission_memo.md`
 
 ## Verification
 
-The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 294
+The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 300
 checks). Every line carries one check per finding code, required where the code
 applies and forbidden where it does not, so a missed finding and a false positive
 are each caught on the line that caused them. The remaining checks are the CSV
@@ -99,14 +109,18 @@ so the gold cannot drift from the data it describes.
   exactly one. The rules stay; the tip-offs are gone.
 - **Two policy sections added.** How a line caught by two rules is reported, and
   what all five figures mean, neither of which the policy said.
-- **Scaled from 8 lines to 92**, with the edge cases above built from the rules
+- **Scaled from 8 lines to 94**, with the edge cases above built from the rules
   already in the policy.
-- **15 checks to 294**, and the binary reward replaced with the graded one.
+- **15 checks to 300**, and the binary reward replaced with the graded one.
 - **The inputs were re-cut across six files.** The single pre-consolidated
   `commission_lines.csv`, with the ledger match as a `yes`/`no` column and the
   exception state as a `status` column, was replaced by five partner reports in
   five formats plus a revenue export, after four of four GLM-5.2 rollouts passed
-  every check on the pre-consolidated inputs. The four policy rules are unchanged.
+  every check on the pre-consolidated inputs. When four of four passed that too,
+  the irregularities above were added: totals lines, deal ids filed in three
+  spellings, and a revenue export that has to be netted. The four policy rules
+  are unchanged throughout; every one of these is stated in R0 and R2, so nothing
+  rests on noticing something the policy does not say.
 - **The base image is pinned by digest**, not by the mutable `python:3.12-slim-bookworm`
   tag, so the image the grader runs on cannot drift under the tag.
 

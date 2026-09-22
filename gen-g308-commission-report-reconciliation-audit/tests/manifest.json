@@ -7282,6 +7282,162 @@
    }
   },
   {
+   "name": "line_DEAL-088_PartnerC_rate_mismatch",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-088/PartnerC row under RATE_MISMATCH.",
+    "why_justification": "DEAL-088 on PartnerC is not a RATE_MISMATCH; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-088\\x22?\\s*,\\s*\\x22?PartnerC\\x22?\\s*,\\s*\\x22?RATE_MISMATCH\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-088_PartnerC_unmatched_to_ledger",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and requires the DEAL-088/PartnerC row under UNMATCHED_TO_LEDGER.",
+    "why_justification": "DEAL-088 on PartnerC is a UNMATCHED_TO_LEDGER under the policy.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-088\\x22?\\s*,\\s*\\x22?PartnerC\\x22?\\s*,\\s*\\x22?UNMATCHED_TO_LEDGER\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-088_PartnerC_duplicate_line",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-088/PartnerC row under DUPLICATE_LINE.",
+    "why_justification": "DEAL-088 on PartnerC is not a DUPLICATE_LINE; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-088\\x22?\\s*,\\s*\\x22?PartnerC\\x22?\\s*,\\s*\\x22?DUPLICATE_LINE\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-089_PartnerE_rate_mismatch",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-089/PartnerE row under RATE_MISMATCH.",
+    "why_justification": "DEAL-089 on PartnerE is not a RATE_MISMATCH; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-089\\x22?\\s*,\\s*\\x22?PartnerE\\x22?\\s*,\\s*\\x22?RATE_MISMATCH\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-089_PartnerE_unmatched_to_ledger",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-089/PartnerE row under UNMATCHED_TO_LEDGER.",
+    "why_justification": "DEAL-089 on PartnerE is not a UNMATCHED_TO_LEDGER; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-089\\x22?\\s*,\\s*\\x22?PartnerE\\x22?\\s*,\\s*\\x22?UNMATCHED_TO_LEDGER\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-089_PartnerE_duplicate_line",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-089/PartnerE row under DUPLICATE_LINE.",
+    "why_justification": "DEAL-089 on PartnerE is not a DUPLICATE_LINE; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-089\\x22?\\s*,\\s*\\x22?PartnerE\\x22?\\s*,\\s*\\x22?DUPLICATE_LINE\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
    "name": "result_total_lines",
    "metadata": {
     "how_justification": "Reads results.json and compares $.total_lines.",
@@ -7300,7 +7456,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 92,
+    "expected": 94,
     "deterministic": {
      "path": "$.total_lines",
      "comparison": "equals"
@@ -7352,7 +7508,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 8,
+    "expected": 9,
     "deterministic": {
      "path": "$.unmatched_to_ledger_count",
      "comparison": "equals"
@@ -7404,7 +7560,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 66,
+    "expected": 67,
     "deterministic": {
      "path": "$.compliant_lines",
      "comparison": "equals"

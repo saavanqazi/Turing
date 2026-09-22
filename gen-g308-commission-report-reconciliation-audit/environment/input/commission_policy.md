@@ -14,6 +14,15 @@ consolidated line list is every line of every report.
 `source_report` is the partner the report belongs to: `PartnerA` for
 `partner_a_report.csv`, `PartnerB` for `partner_b_report.csv`, and so on.
 
+A report may close with a totals line, which names no deal and is not a commission line.
+The consolidated line list is every line of every report that names a deal.
+
+Partners key their own systems, so the same deal reaches this run in more than one
+spelling. Deal ids are compared with surrounding spaces trimmed and case ignored:
+` deal-076 ` and `DEAL-076` are the same deal, in this policy and in every file it names.
+Write a deal id into `commission_findings.csv` in the form the exceptions register and the
+revenue export use, upper case with no surrounding spaces.
+
 A report states its rate in the unit its own column name declares:
 
 | rate column | unit |
@@ -44,11 +53,16 @@ A line whose reported rate does not match the standard rate for its end-user typ
 
 ## R2 — Ledger match
 
-Every commissionable line (standard or approved rate above 0%) must be matched to a
-NetSuite revenue record for the run month before it is paid. A line is matched when
-`netsuite_revenue_export.csv` carries a record whose `deal_id` is the line's deal id and
-whose `period` is the run month. A record in any other period is not a match for this
-run. A commissionable line with no such record is `UNMATCHED_TO_LEDGER`.
+Every commissionable line (standard or approved rate above 0%) must be matched to revenue
+recognised for its deal in the run month before it is paid.
+
+Net the run-month records for that deal in `netsuite_revenue_export.csv`. An amount in
+parentheses is a reversal and counts as negative, so `($12,000)` is -12,000. A line is
+matched when that net is above zero. Records in any other period are not part of this
+run's net, whatever they say.
+
+A commissionable line whose run-month net is zero or below, or whose deal has no run-month
+record at all, is `UNMATCHED_TO_LEDGER`.
 
 ## R3 — Duplicate lines
 
