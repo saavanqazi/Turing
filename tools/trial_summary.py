@@ -52,6 +52,7 @@ ap.add_argument("job_dir")
 ap.add_argument("--trial", help="only trials whose name contains this")
 ap.add_argument("--full", action="store_true", help="print every agent step, not a head and tail")
 ap.add_argument("--n", type=int, default=8, help="steps to show at each end when not --full")
+ap.add_argument("--step", type=int, help="print this step's keystrokes in full, nothing else")
 args = ap.parse_args()
 job = Path(args.job_dir)
 trials = sorted(p.parent for p in job.rglob("result.json") if p.parent != job)
@@ -78,6 +79,12 @@ for t in trials:
         for n in failed[:40]: print(f"     FAIL {n}")
         if len(failed) > 40: print(f"     ... and {len(failed) - 40} more")
     steps = trajectory(t)
+    if args.step is not None:
+        src, m, keys = steps[args.step]
+        print(f"  step {args.step} ({src}): {m}")
+        for k in keys:
+            print("-" * 78); print(k)
+        continue
     agent_steps = [(i, m, k) for i, (src, m, k) in enumerate(steps) if src == "agent"]
     ncmd = sum(len(k) for _, _, k in agent_steps)
     print(f"  trajectory: {len(steps)} steps, {len(agent_steps)} agent turns, {ncmd} commands")
