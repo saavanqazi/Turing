@@ -1,0 +1,20 @@
+Deal,Segment,Rate,Amount
+DEAL-001,Renewal,0.04,11370
+DEAL-006,New Business,0.08,18220
+DEAL-011,House Account,0.00,25070
+DEAL-016,Renewal,0.04,31920
+DEAL-021,New Business,0.08,38770
+DEAL-026,House Account,0.00,45620
+DEAL-031,Renewal,0.04,52470
+DEAL-036,New Business,0.08,59320
+DEAL-041,House Account,0.00,66170
+DEAL-046,Renewal,0.04,73020
+DEAL-051,New Business,0.08,79870
+DEAL-056,House Account,0.00,86720
+DEAL-061,New Business,0.06,74900
+DEAL-066,House Account,0.08,79400
+DEAL-071,New Business,0.08,81800
+DEAL-075,New Business,0.00,41000
+DEAL-077,Renewal,0.04,32000
+DEAL-080,Renewal,0.06,35000
+DEAL-086,House Account,0.03,18000

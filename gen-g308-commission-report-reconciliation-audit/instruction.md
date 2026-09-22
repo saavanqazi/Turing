@@ -1,6 +1,6 @@
 # Task
 
-Consolidate this month's commission lines from the partner reports and reconcile them against the commission recognition policy, the NetSuite match flag already recorded on each line, and the commission exceptions register. Save `commission_findings.csv` with the columns `deal_id,source_report,finding_code`, one row per finding, where `finding_code` is one of `RATE_MISMATCH`, `UNMATCHED_TO_LEDGER` or `DUPLICATE_LINE`. Then write `commission_memo.md` explaining each finding, and any line that looks underpaid or overpaid against the standard rates but is compliant anyway, with the rule that makes it so.
+Consolidate this month's commission lines from the five partner reports in `input/`, which do not share a format, and reconcile them against the commission recognition policy, the NetSuite revenue export and the commission exceptions register. Save `commission_findings.csv` with the columns `deal_id,source_report,finding_code`, one row per finding, where `finding_code` is one of `RATE_MISMATCH`, `UNMATCHED_TO_LEDGER` or `DUPLICATE_LINE`. Then write `commission_memo.md` explaining each finding, and any line that looks underpaid or overpaid against the standard rates but is compliant anyway, with the rule that makes it so.
 
 ---
 Save your deliverables into your current working directory using exactly these filenames:

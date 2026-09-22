@@ -1,20 +1,24 @@
 # Commission Report Reconciliation Audit
 
-Consolidate a month of partner commission lines and reconcile them against the
-commission recognition policy, the NetSuite match flag recorded on each line, and
-the VP exceptions register.
+Consolidate a month of partner commission lines from five reports that do not
+share a format, and reconcile them against the commission recognition policy, the
+NetSuite revenue export and the VP exceptions register.
 
 ## Task Description
 
-The agent is given `commission_policy.md`, `commission_lines.csv` and
-`commission_exceptions.csv` under `input/`. For each of 91 commission lines it must:
+The agent is given `commission_policy.md`, five partner reports
+(`partner_a_report.csv` .. `partner_e_report.csv`), `netsuite_revenue_export.csv`
+and `commission_exceptions.csv` under `input/`. It must first consolidate the five
+reports into one line list of 92 lines, normalising the rate to whole percent and
+the end-user label to one of the three types, and then for each line:
 
 1. Compare the reported rate against the rate R1 is read against for that
    end-user type — new 8%, renewal 4%, house 0% — unless an active exception
    displaces it (`RATE_MISMATCH`).
 2. Decide whether the line is commissionable, which turns on the standard or
    approved rate being above 0% rather than on the rate the partner reported, and
-   if so require a June NetSuite match (`UNMATCHED_TO_LEDGER`).
+   if so require a revenue record for the run month `2026-06`
+   (`UNMATCHED_TO_LEDGER`).
 3. Flag every occurrence of a `deal_id` that appears in more than one source
    report (`DUPLICATE_LINE`).
 
@@ -24,17 +28,29 @@ It writes `commission_findings.csv` (one row per finding), `commission_memo.md`
 
 ## Why it is non-trivial
 
-- A line can be caught by more than one rule, and four of them are.
+- **Nothing is read off a line directly.** The rate has to be normalised, the
+  ledger match has to be joined from a separate export, and whether an exception
+  applies has to be derived from its date window against the run month. Each of
+  the three rules is a derivation over two sources rather than a column lookup.
+- **The five reports disagree on format.** One files the rate as a decimal
+  fraction, one as basis points, one with a percent sign; two label the end-user
+  type in long form. A solver that compares the printed number against the
+  standard rate is wrong on 25 checks.
+- A line can be caught by more than one rule, and five of them are.
 - Commissionability is defined on the standard or approved rate, not the reported
   one. A house line reported at 0% with no ledger match is out of scope for R2;
   a new line reported at 0% with no ledger match is in scope, because its
   standard rate is 8%, and it carries a rate mismatch as well.
-- The exceptions register is not a simple override list. One exception is
-  expired and does not displace the standard rate; one approves the rate that is
-  already standard and changes nothing; one approves a rate the line does not
-  report, so the mismatch is against the approved rate rather than the standard
-  one; one makes a house line commissionable at 3%; and one names a deal that is
-  not in the line list at all.
+- The ledger export is not a match flag. A deal can have a record in `2026-05`
+  and none in the run month, which is not a match; the export also carries records
+  for deals no partner reported, which match nothing.
+- The exceptions register is not a simple override list, and `status` is not one
+  of its columns: whether an exception applies is a date-window test against the
+  run month. One window closed on 2026-05-31 and one opens on 2026-07-01, so
+  neither displaces the standard rate; one opens mid-run-month and one closes on
+  its last day, so both do; one approves the rate that is already standard and
+  changes nothing; one makes a house line commissionable at 3%; and one names a
+  deal that is in no report at all.
 - One deal is reported by three partners rather than two, so a solver that
   flags only the later occurrence is wrong on every duplicate.
 
@@ -48,7 +64,7 @@ It writes `commission_findings.csv` (one row per finding), `commission_memo.md`
 
 ## Verification
 
-The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 291
+The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 294
 checks). Every line carries one check per finding code, required where the code
 applies and forbidden where it does not, so a missed finding and a false positive
 are each caught on the line that caused them. The remaining checks are the CSV
@@ -83,9 +99,14 @@ so the gold cannot drift from the data it describes.
   exactly one. The rules stay; the tip-offs are gone.
 - **Two policy sections added.** How a line caught by two rules is reported, and
   what all five figures mean, neither of which the policy said.
-- **Scaled from 8 lines to 91**, with the edge cases above built from the rules
+- **Scaled from 8 lines to 92**, with the edge cases above built from the rules
   already in the policy.
-- **15 checks to 291**, and the binary reward replaced with the graded one.
+- **15 checks to 294**, and the binary reward replaced with the graded one.
+- **The inputs were re-cut across six files.** The single pre-consolidated
+  `commission_lines.csv`, with the ledger match as a `yes`/`no` column and the
+  exception state as a `status` column, was replaced by five partner reports in
+  five formats plus a revenue export, after four of four GLM-5.2 rollouts passed
+  every check on the pre-consolidated inputs. The four policy rules are unchanged.
 - **The base image is pinned by digest**, not by the mutable `python:3.12-slim-bookworm`
   tag, so the image the grader runs on cannot drift under the tag.
 
