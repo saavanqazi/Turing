@@ -14,3 +14,7 @@ Dockerfile text eol=lf
 # client computes a Layer 0 hash from these .py files directly, so normalising
 # them would change the bytes it fingerprints. Left untouched on purpose.
 */tests/rl_world_verifiers/** -text
+
+# Trial evidence under evaluations/ ships byte-for-byte as Harbor wrote it, on
+# whichever platform ran the battery. Never normalised.
+*/evaluations/** -text
