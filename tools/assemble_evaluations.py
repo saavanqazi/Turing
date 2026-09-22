@@ -18,27 +18,34 @@ neither and cleared the gate, so it is followed here.
 Never point --solvability at an oracle run: an oracle replays the gold, so it
 shows the verifier can grade the gold, not that a model can solve the task.
 """
-import argparse, hashlib, json, shutil, sys
+import argparse, hashlib, json, shutil, sys, zipfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 JOB_FILES = ("config.json", "lock.json", "job.log", "result.json")
 
 def trials(job: Path):
-    return sorted(p for p in job.iterdir() if p.is_dir() and (p / "verifier").is_dir())
+    """Every trial Harbor wrote, including one that errored before verification."""
+    return sorted(p for p in job.iterdir() if p.is_dir() and (p / "result.json").exists())
 
-def reward(trial: Path) -> float:
+def reward(trial: Path):
+    """The verifier's reward, or None when the trial never reached the verifier."""
     for name, read in (("reward.json", lambda f: json.loads(f.read_text())["reward"]),
                        ("reward.txt",  lambda f: float(f.read_text().strip()))):
         f = trial / "verifier" / name
         if f.exists():
             return float(read(f))
-    raise SystemExit(f"no reward file in {trial}")
+    return None
+
+def exception_of(trial: Path):
+    info = json.loads((trial / "result.json").read_text(encoding="utf-8")).get("exception_info")
+    return info and info.get("exception_type")
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--task", required=True, help="task folder name, e.g. gen-g308-commission-report-reconciliation-audit")
 ap.add_argument("--difficulty", required=True, type=Path, help="job folder holding the 4 GLM rollouts")
 ap.add_argument("--solvability", type=Path, help="job folder holding a reward-1.0 non-oracle run")
+ap.add_argument("--zip", action="store_true", help="also write <task>.zip beside the task folder")
 a = ap.parse_args()
 
 TASK = REPO / a.task
@@ -69,7 +76,10 @@ for i, t in enumerate(ts[:4], 1):
     rewards.append(reward(t))
 
 src = a.solvability or a.difficulty
-win = next((t for t in trials(src) if reward(t) == 1.0), None)
+# A clean 1.0 first; a 1.0 that Harbor also marked with an exception (a run that
+# wrote its files and then hit the agent timeout) only if nothing cleaner exists.
+cands = [t for t in trials(src) if reward(t) == 1.0]
+win = next((t for t in cands if not exception_of(t)), cands[0] if cands else None)
 if win:
     (root / "solvability").mkdir(parents=True)
     shutil.copytree(win, root / "solvability" / "r1")
@@ -86,10 +96,23 @@ if win:
 else:
     print("NO reward-1.0 run found — solvability/ needs one from any non-oracle model")
 
-for i, r in enumerate(rewards, 1):
-    print(f"  difficulty/r{i}  reward {r}")
+for i, (t, r) in enumerate(zip(ts[:4], rewards), 1):
+    exc = exception_of(t)
+    print(f"  difficulty/r{i}  reward {r}" + (f"   ({exc})" if exc else "") + f"   <- {t.name}")
 passed = sum(1 for r in rewards if r == 1.0)
-print(f"{passed} of 4 fully passed —", 
+completed = sum(1 for r in rewards if r is not None)
+print(f"{passed} of 4 fully passed ({completed} reached the verifier) —",
       "REJECTED: 4/4 is too easy" if passed == 4 else
       "IN BAND" if passed in (1, 2, 3) else
       "0/4: submittable, but Turing must re-run on another frontier model")
+if completed < 4:
+    print(f"  {4 - completed} trial(s) never reached the verifier; say so in review.csv rather than counting them as fails")
+
+if a.zip:
+    out = REPO / f"{a.task}.zip"
+    skip = {"__pycache__", ".pytest_cache", ".gitkeep"}
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
+        for f in sorted(TASK.rglob("*")):
+            if f.is_file() and not (set(f.relative_to(TASK).parts) & skip):
+                z.write(f, Path(a.task) / f.relative_to(TASK))
+    print(f"zip: {out}  ({out.stat().st_size // 1024} KB, top-level folder {a.task}/)")
