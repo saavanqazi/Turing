@@ -7438,6 +7438,240 @@
    }
   },
   {
+   "name": "line_DEAL-090_PartnerD_rate_mismatch",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and requires the DEAL-090/PartnerD row under RATE_MISMATCH.",
+    "why_justification": "DEAL-090 on PartnerD is a RATE_MISMATCH under the policy.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-090\\x22?\\s*,\\s*\\x22?PartnerD\\x22?\\s*,\\s*\\x22?RATE_MISMATCH\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-090_PartnerD_unmatched_to_ledger",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-090/PartnerD row under UNMATCHED_TO_LEDGER.",
+    "why_justification": "DEAL-090 on PartnerD is not a UNMATCHED_TO_LEDGER; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-090\\x22?\\s*,\\s*\\x22?PartnerD\\x22?\\s*,\\s*\\x22?UNMATCHED_TO_LEDGER\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-090_PartnerD_duplicate_line",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-090/PartnerD row under DUPLICATE_LINE.",
+    "why_justification": "DEAL-090 on PartnerD is not a DUPLICATE_LINE; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-090\\x22?\\s*,\\s*\\x22?PartnerD\\x22?\\s*,\\s*\\x22?DUPLICATE_LINE\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-091_PartnerA_rate_mismatch",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-091/PartnerA row under RATE_MISMATCH.",
+    "why_justification": "DEAL-091 on PartnerA is not a RATE_MISMATCH; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-091\\x22?\\s*,\\s*\\x22?PartnerA\\x22?\\s*,\\s*\\x22?RATE_MISMATCH\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-091_PartnerA_unmatched_to_ledger",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-091/PartnerA row under UNMATCHED_TO_LEDGER.",
+    "why_justification": "DEAL-091 on PartnerA is not a UNMATCHED_TO_LEDGER; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-091\\x22?\\s*,\\s*\\x22?PartnerA\\x22?\\s*,\\s*\\x22?UNMATCHED_TO_LEDGER\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-091_PartnerA_duplicate_line",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-091/PartnerA row under DUPLICATE_LINE.",
+    "why_justification": "DEAL-091 on PartnerA is not a DUPLICATE_LINE; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-091\\x22?\\s*,\\s*\\x22?PartnerA\\x22?\\s*,\\s*\\x22?DUPLICATE_LINE\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-092_PartnerE_rate_mismatch",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and requires the DEAL-092/PartnerE row under RATE_MISMATCH.",
+    "why_justification": "DEAL-092 on PartnerE is a RATE_MISMATCH under the policy.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-092\\x22?\\s*,\\s*\\x22?PartnerE\\x22?\\s*,\\s*\\x22?RATE_MISMATCH\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-092_PartnerE_unmatched_to_ledger",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-092/PartnerE row under UNMATCHED_TO_LEDGER.",
+    "why_justification": "DEAL-092 on PartnerE is not a UNMATCHED_TO_LEDGER; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-092\\x22?\\s*,\\s*\\x22?PartnerE\\x22?\\s*,\\s*\\x22?UNMATCHED_TO_LEDGER\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
+   "name": "line_DEAL-092_PartnerE_duplicate_line",
+   "metadata": {
+    "how_justification": "Opens commission_findings.csv and forbids the DEAL-092/PartnerE row under DUPLICATE_LINE.",
+    "why_justification": "DEAL-092 on PartnerE is not a DUPLICATE_LINE; flagging it would be a false positive.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "csv",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_findings.csv"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?mi)^\\x22?DEAL\\-092\\x22?\\s*,\\s*\\x22?PartnerE\\x22?\\s*,\\s*\\x22?DUPLICATE_LINE\\x22?\\s*\\r?$",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "not_regex_match"
+    }
+   }
+  },
+  {
    "name": "result_total_lines",
    "metadata": {
     "how_justification": "Reads results.json and compares $.total_lines.",
@@ -7456,7 +7690,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 94,
+    "expected": 97,
     "deterministic": {
      "path": "$.total_lines",
      "comparison": "equals"
@@ -7482,7 +7716,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 14,
+    "expected": 16,
     "deterministic": {
      "path": "$.rate_mismatch_count",
      "comparison": "equals"
@@ -7560,7 +7794,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": 67,
+    "expected": 68,
     "deterministic": {
      "path": "$.compliant_lines",
      "comparison": "equals"
@@ -7672,10 +7906,10 @@
    }
   },
   {
-   "name": "memo_rule_exc_vp_02",
+   "name": "memo_rule_apr_0104",
    "metadata": {
     "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
-    "why_justification": "EXC-VP-02 is the register entry that makes DEAL-080 compliant, and the instruction asks for the rule that makes it so.",
+    "why_justification": "APR-0104 is the approval that makes DEAL-080 compliant, and the instruction asks for the rule that makes it so.",
     "tag": "core"
    },
    "source": {
@@ -7690,7 +7924,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": "(?i)\\bEXC\\-VP\\-02\\b",
+    "expected": "(?i)\\bAPR\\-0104\\b",
     "deterministic": {
      "path": "$.text",
      "comparison": "regex_match"
@@ -7724,10 +7958,10 @@
    }
   },
   {
-   "name": "memo_rule_exc_vp_07",
+   "name": "memo_rule_apr_0118",
    "metadata": {
     "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
-    "why_justification": "EXC-VP-07 is the register entry that makes DEAL-081 compliant, and the instruction asks for the rule that makes it so.",
+    "why_justification": "APR-0118 is the approval that makes DEAL-081 compliant, and the instruction asks for the rule that makes it so.",
     "tag": "core"
    },
    "source": {
@@ -7742,7 +7976,7 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": "(?i)\\bEXC\\-VP\\-07\\b",
+    "expected": "(?i)\\bAPR\\-0118\\b",
     "deterministic": {
      "path": "$.text",
      "comparison": "regex_match"
@@ -7776,10 +8010,10 @@
    }
   },
   {
-   "name": "memo_rule_exc_vp_18",
+   "name": "memo_rule_apr_0112",
    "metadata": {
     "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
-    "why_justification": "EXC-VP-18 is the register entry that makes DEAL-085 compliant, and the instruction asks for the rule that makes it so.",
+    "why_justification": "APR-0112 is the approval that makes DEAL-085 compliant, and the instruction asks for the rule that makes it so.",
     "tag": "core"
    },
    "source": {
@@ -7794,7 +8028,59 @@
    },
    "assertion": {
     "type": "deterministic",
-    "expected": "(?i)\\bEXC\\-VP\\-18\\b",
+    "expected": "(?i)\\bAPR\\-0112\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_compliant_deal_091",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-091 is paid at 6% against a standard 4%, so it is a line the instruction requires the memo to account for by name.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-091\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_rule_apr_0142",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "APR-0142 is the approval that makes DEAL-091 compliant, and the instruction asks for the rule that makes it so.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bAPR\\-0142\\b",
     "deterministic": {
      "path": "$.text",
      "comparison": "regex_match"

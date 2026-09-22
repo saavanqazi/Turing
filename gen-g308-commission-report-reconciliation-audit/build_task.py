@@ -92,24 +92,109 @@ add("DEAL-088", "PartnerC", "new",     8, 50000,
 add("DEAL-089", "PartnerE", "renewal", 4, 30000,
     [(RUN_PERIOD, 30000), (RUN_PERIOD, -12000)])
 
-# (exception_code, deal_id, approved_rate_pct, effective_from, effective_to)
-EX = [
- ("EXC-VP-02","DEAL-080", 6,"2026-01-01",""),            # open ended
- ("EXC-VP-07","DEAL-081",12,"2025-07-01","2026-12-31"),  # spans the run month
- ("EXC-VP-09","DEAL-082", 6,"2025-01-01","2026-05-31"),  # closed the day before
- ("EXC-VP-11","DEAL-083", 8,"2026-06-15",""),            # opens inside the run month
- ("EXC-VP-14","DEAL-084", 8,"2026-03-01",""),            # approved == standard
- ("EXC-VP-18","DEAL-085", 3,"2026-02-01","2026-06-30"),  # closes on the last day
- ("EXC-VP-21","DEAL-086", 3,"2026-04-01",""),
- ("EXC-VP-25","DEAL-099", 5,"2026-01-01",""),            # deal is in no partner report
- ("EXC-VP-30","DEAL-087",10,"2026-07-01",""),            # opens after the run month
+# --- lines whose approval turns on reading the thread, not a cell -------
+#     090 is approved on a condition the run month does not meet; 091 on one
+#     it does; 092 was approved and then withdrawn in full four days later.
+add("DEAL-090", "PartnerD", "renewal", 6, 38500, "june")
+add("DEAL-091", "PartnerA", "renewal", 6, 31000, "june")
+add("DEAL-092", "PartnerE", "new",    12, 55000, "june")
+
+# ---- the VP approvals thread -------------------------------------------
+# Approvals do not arrive as a register with a status column. They arrive as a
+# mailbox: grants, a correction, a lapse, a withdrawal, two approvals conditional
+# on what the run month recognises, and two messages that name a deal or a rate
+# without approving anything. Which rate is in force for June is the reading of
+# the thread, not the reading of a cell.
+#
+# (msg_id, date, deal, kind, rate, covers_from, covers_to, condition, text)
+# kind: grant | amend | end | revoke | note
+THREAD = [
+ ("APR-0088","2025-07-03","DEAL-081","grant",10,"2025-07-01","2026-12-31",None,
+  "Approving a commission rate of 10% on DEAL-081 for the term of the reseller agreement, "
+  "1 July 2025 through 31 December 2026."),
+ ("APR-0091","2025-09-19","DEAL-082","grant",6,"2025-09-01","",None,
+  "DEAL-082 is approved at 6% with effect from 1 September 2025, until further notice."),
+ ("APR-0104","2026-01-12","DEAL-080","grant",6,"2026-01-01","",None,
+  "Approving 6% on DEAL-080 with effect from 1 January 2026, until further notice."),
+ ("APR-0112","2026-02-01","DEAL-085","grant",3,"2026-02-01","2026-06-30",None,
+  "The house account on DEAL-085 is approved at 3% from 1 February 2026 through 30 June 2026."),
+ ("APR-0118","2026-02-14","DEAL-081","amend",12,None,None,None,
+  "Correction to APR-0088. The rate approved on DEAL-081 should read 12%, not 10%. The term "
+  "of that approval is unchanged."),
+ ("APR-0125","2026-03-01","DEAL-084","grant",8,"2026-03-01","",None,
+  "DEAL-084 is approved at 8% from 1 March 2026, until further notice."),
+ ("APR-0130","2026-04-02","DEAL-086","grant",3,"2026-04-01","",None,
+  "DEAL-086 is approved at 3% with effect from 1 April 2026, until further notice."),
+ ("APR-0136","2026-04-20",None,"note",None,None,None,None,
+  "Reminder to the desk: an approval binds the commission run only once it carries an APR "
+  "number in this thread. Nothing agreed verbally is binding on a run."),
+ ("APR-0138","2026-04-25",None,"note",None,None,None,None,
+  "DEAL-045 came up in the quarterly review. No change to its commission treatment; it stays "
+  "on the standard rate for its end-user type."),
+ ("APR-0141","2026-05-06","DEAL-090","grant",6,"2026-05-01","",("min_recognised",40000),
+  "Approving 6% on DEAL-090 from 1 May 2026, until further notice, provided the run month "
+  "recognises at least $40,000 of revenue on that deal. If it recognises less than that, the "
+  "deal is paid at the standard rate for its end-user type."),
+ ("APR-0142","2026-05-06","DEAL-091","grant",6,"2026-05-01","",("min_recognised",25000),
+  "Approving 6% on DEAL-091 from 1 May 2026, until further notice, provided the run month "
+  "recognises at least $25,000 of revenue on that deal. If it recognises less than that, the "
+  "deal is paid at the standard rate for its end-user type."),
+ ("APR-0147","2026-05-28","DEAL-082","end",None,None,"2026-05-31",None,
+  "The approval on DEAL-082 lapses at the end of May 2026 and is not being renewed."),
+ ("APR-0150","2026-06-04","DEAL-092","grant",12,"2026-06-01","",None,
+  "DEAL-092 is approved at 12% with effect from 1 June 2026, until further notice."),
+ ("APR-0154","2026-06-15","DEAL-083","grant",8,"2026-06-15","",None,
+  "Approving 8% on DEAL-083 with immediate effect."),
+ ("APR-0158","2026-06-18","DEAL-092","revoke",None,None,None,None,
+  "The approval on DEAL-092 at APR-0150 is withdrawn in full. It should not have issued, and "
+  "no part of this run is to be paid on it."),
+ ("APR-0161","2026-06-20","DEAL-087","grant",10,"2026-07-01","",None,
+  "Approving 10% on DEAL-087 with effect from 1 July 2026."),
+ ("APR-0163","2026-06-22","DEAL-099","grant",5,"2026-06-01","",None,
+  "DEAL-099 is approved at 5% with effect from 1 June 2026, until further notice."),
 ]
 
 def applies(frm, to):
-    """The window covers part of the run month."""
+    """The period covers part of the run month."""
     return frm <= RUN_MONTH_LAST and (to == "" or to >= RUN_MONTH_FIRST)
 
-APPROVED = {d: r for _, d, r, f, t in EX if applies(f, t)}
+def condition_holds(cond, deal):
+    kind, threshold = cond
+    assert kind == "min_recognised"
+    return net_recognised(deal) >= threshold
+
+def resolve_approvals():
+    """Read the thread in date order; a later message about a deal governs."""
+    standing = {}
+    for mid, date, deal, kind, rate, frm, to, cond, _text in sorted(THREAD, key=lambda m: m[1]):
+        if kind == "note" or deal is None:
+            continue
+        if kind == "grant":
+            standing[deal] = dict(msg=mid, rate=rate, frm=frm, to=to, cond=cond)
+        elif kind == "amend":
+            s = standing[deal]
+            if rate is not None: s["rate"] = rate
+            if frm is not None:  s["frm"]  = frm
+            if to is not None:   s["to"]   = to
+            s["msg"] = mid
+        elif kind == "end":
+            standing[deal].update(to=to, msg=mid)
+        elif kind == "revoke":
+            standing.pop(deal, None)
+    return {d: s for d, s in standing.items()
+            if applies(s["frm"], s["to"]) and (s["cond"] is None or condition_holds(s["cond"], d))}
+
+IN_FORCE = resolve_approvals()
+APPROVED = {d: s["rate"] for d, s in IN_FORCE.items()}
+
+# The prose is what the solver reads, so it must say what the fields say.
+for mid, date, deal, kind, rate, frm, to, cond, text in THREAD:
+    if deal is not None:
+        assert deal in text, f"{mid} does not name {deal}"
+    if rate is not None:
+        assert f"{rate}%" in text, f"{mid} does not state {rate}%"
+    if kind == "note":
+        assert "approv" not in text.lower().split("approvals")[0] or "%" not in text, mid
 
 # ---- the rules, implemented once ----------------------------------------
 dup_deals = {d for d in {x[0] for x in L} if sum(1 for y in L if y[0] == d) > 1}
@@ -248,10 +333,12 @@ for deal, amount, period in (("DEAL-099", 31000, RUN_PERIOD),
 w_csv(INP/"netsuite_revenue_export.csv", ledger_rows,
       ["revenue_record_id","deal_id","recognized_usd","period"])
 
-w_csv(INP/"commission_exceptions.csv",
-      [dict(exception_code=c, deal_id=d, approved_rate_pct=r, effective_from=f, effective_to=t)
-       for c, d, r, f, t in EX],
-      ["exception_code","deal_id","approved_rate_pct","effective_from","effective_to"])
+(INP/"commission_exceptions.csv").unlink(missing_ok=True)    # superseded by the thread
+thread_md = ["# VP commission approvals — thread extract", "",
+ "Every approval that binds a commission run appears here, in the order it was sent.", ""]
+for mid, date, deal, kind, rate, frm, to, cond, text in sorted(THREAD, key=lambda m: m[1]):
+    thread_md += [f"## {mid} — {date}", "", text, ""]
+(INP/"vp_approvals.md").write_text("\n".join(thread_md), encoding="utf-8")
 
 # ---- the policy ---------------------------------------------------------
 (INP/"commission_policy.md").write_text("""# Commission recognition policy (COMM-POL-6)
@@ -276,7 +363,7 @@ The consolidated line list is every line of every report that names a deal.
 Partners key their own systems, so the same deal reaches this run in more than one
 spelling. Deal ids are compared with surrounding spaces trimmed and case ignored:
 ` deal-076 ` and `DEAL-076` are the same deal, in this policy and in every file it names.
-Write a deal id into `commission_findings.csv` in the form the exceptions register and the
+Write a deal id into `commission_findings.csv` in the form the approvals thread and the
 revenue export use, upper case with no surrounding spaces.
 
 A report states its rate in the unit its own column name declares:
@@ -327,12 +414,20 @@ The same `deal_id` must not appear in more than one partner report. A deal that 
 
 ## R4 — VP-approved rate overrides
 
-An exception in `commission_exceptions.csv` applies to this run when its window covers any
-part of the run month: `effective_from` is on or before the last day of the run month, and
-`effective_to` is either empty or on or after the first day. An exception that applies is
-paid at the register's `approved_rate_pct` instead of the standard rate for its end-user
-type, and for that deal the approved rate is the rate R1 is read against. An exception
-whose window does not cover the run month does not displace the standard rate.
+Approvals are not a register. They are the VP approvals thread in `vp_approvals.md`, read in
+the order the messages were sent, each carrying an `APR` number.
+
+A message that grants a rate on a named deal puts that rate in force for the period the
+message states. A later message naming the same deal governs over an earlier one: it may
+correct the rate, end the approval on a date, or withdraw it altogether. A message that
+names no deal, or that names a deal without granting a rate on it, changes nothing.
+
+An approval is in force for this run when the period it stands for, after every later
+message about that deal has been applied, covers any part of the run month, and when any
+condition the approval attaches holds on this run's data. A deal with an approval in force
+is paid at that rate instead of the standard rate for its end-user type, and for that deal
+the approved rate is the rate R1 is read against. A deal with no approval in force is read
+against the standard rate.
 
 ## Finding codes
 
@@ -362,15 +457,15 @@ w_csv(SOL/"commission_findings.csv", rows, ["deal_id","source_report","finding_c
 memo = ["# Commission reconciliation memo — June 2026 run", "",
  f"Consolidated {RESULTS['total_lines']} commission lines from the five partner reports and",
  "reconciled them against COMM-POL-6, the June NetSuite revenue export and the commission",
- f"exceptions register. {len(rows)} findings were raised across",
+ f"VP approvals thread. {len(rows)} findings were raised across",
  f"{RESULTS['total_lines'] - RESULTS['compliant_lines']} lines; {RESULTS['compliant_lines']} lines are compliant.",
  "Rates were normalised to whole percent first: PartnerB files a decimal fraction, PartnerC",
  "files basis points and PartnerD writes a percent sign, so the reported rate is not",
  "comparable across reports until it is converted.", "",
  "## Rate mismatches", "",
  "R1 sets the standard rate by end-user type: new 8%, renewal 4%, house 0%. A line whose",
- "reported rate is not the rate R1 is read against is a `RATE_MISMATCH`. Where an exception",
- "window covers the run month the approved rate is the rate R1 is read against, so the",
+ "reported rate is not the rate R1 is read against is a `RATE_MISMATCH`. Where an approval is",
+ "in force for the run month the approved rate is the rate R1 is read against, so the",
  "comparison is made against the approved rate and not the standard one.", ""]
 for r in rows:
     if r["finding_code"] == "RATE_MISMATCH":
@@ -407,17 +502,30 @@ for d in sorted(dup_deals):
     memo.append(f"- {d}: reported by {', '.join(ps)} — `DUPLICATE_LINE` on each of the {len(ps)} lines.")
 memo += ["", "## Lines that look wrong and are not", "",
  "R4 lets a VP-approved rate override the standard mapping. These lines disagree with the",
- "standard rate for their end-user type and are compliant anyway, because an exception whose",
- "window covers the run month sets the rate they are paid at:", ""]
-for code, deal, rate, frm, to in EX:
-    if applies(frm, to) and any(x[0] == deal for x in L):
+ "standard rate for their end-user type and are compliant anyway, because an approval in the",
+ "thread is in force for the run month and sets the rate they are paid at:", ""]
+def compliant_anyway():
+    """Lines carrying no finding whose rate is not the standard one for their type."""
+    for deal, s in sorted(IN_FORCE.items()):
+        if not any(x[0] == deal for x in L):
+            continue
         ln = next(x for x in L if x[0] == deal)
-        if rate != STANDARD[ln[2]] and not findings_for(ln):
-            memo.append(f"- {deal} ({ln[1]}): {ln[2]} line paid at {rate}% under {code} "
-                        f"({frm} to {to or 'open ended'}), against a standard {STANDARD[ln[2]]}% — "
-                        f"compliant, not a rate mismatch.")
-memo += ["", "An exception whose window does not cover the run month does not displace the standard",
- "rate, and an approved rate equal to the standard rate changes nothing.", ""]
+        if s["rate"] != STANDARD[ln[2]] and not findings_for(ln):
+            yield s["msg"], deal, s["rate"], ln
+for msg, deal, rate, ln in compliant_anyway():
+    memo.append(f"- {deal} ({ln[1]}): {ln[2]} line paid at {rate}% under {msg}, against a "
+                f"standard {STANDARD[ln[2]]}% — compliant, not a rate mismatch.")
+memo += ["", "## How the thread was read", "",
+ "APR-0118 corrects APR-0088 rather than replacing it, so DEAL-081 stands at 12% and not 10%.",
+ "APR-0147 lapses the DEAL-082 approval at the end of May, so June is read against the",
+ "standard rate. APR-0158 withdraws APR-0150 in full, so DEAL-092 is read against the standard",
+ "rate for the whole run and not for part of it. APR-0161 approves DEAL-087 from 1 July, which",
+ "is after this run. APR-0141 and APR-0142 are conditional on what the run month recognises:",
+ f"DEAL-090 recognises {net_recognised('DEAL-090')}, short of the 40,000 the approval requires,",
+ f"so it is read against the standard rate; DEAL-091 recognises {net_recognised('DEAL-091')},",
+ "which clears the 25,000 its approval requires, so it stands. APR-0136 and APR-0138 grant",
+ "nothing; APR-0138 names a deal without approving a rate on it. APR-0163 approves a deal that",
+ "no partner reported.", ""]
 (SOL/"commission_memo.md").write_text("\n".join(memo), encoding="utf-8")
 print(f"fixtures + gold written; memo {len(' '.join(memo).split())} words")
 
@@ -478,18 +586,13 @@ memo_facts = [
  ("memo_code_duplicate_line", r"(?i)duplicate[\s_\-]?line",
   "DUPLICATE_LINE is one of the three codes the instruction names, and the memo explains each finding."),
 ]
-for code, deal, rate, frm, to in EX:
-    if not applies(frm, to) or not any(x[0] == deal for x in L):
-        continue
-    ln = next(x for x in L if x[0] == deal)
-    if rate == STANDARD[ln[2]] or findings_for(ln):
-        continue                       # not a line that looks wrong and is not
+for msg, deal, rate, ln in compliant_anyway():
     memo_facts += [
      (f"memo_compliant_{deal.lower().replace('-','_')}", r"(?i)\b" + re.escape(deal) + r"\b",
       f"{deal} is paid at {rate}% against a standard {STANDARD[ln[2]]}%, so it is a line the "
       f"instruction requires the memo to account for by name."),
-     (f"memo_rule_{code.lower().replace('-','_')}", r"(?i)\b" + re.escape(code) + r"\b",
-      f"{code} is the register entry that makes {deal} compliant, and the instruction asks for "
+     (f"memo_rule_{msg.lower().replace('-','_')}", r"(?i)\b" + re.escape(msg) + r"\b",
+      f"{msg} is the approval that makes {deal} compliant, and the instruction asks for "
       f"the rule that makes it so."),
     ]
 for nm, pat, why in memo_facts:

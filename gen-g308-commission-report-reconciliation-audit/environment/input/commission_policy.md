@@ -20,7 +20,7 @@ The consolidated line list is every line of every report that names a deal.
 Partners key their own systems, so the same deal reaches this run in more than one
 spelling. Deal ids are compared with surrounding spaces trimmed and case ignored:
 ` deal-076 ` and `DEAL-076` are the same deal, in this policy and in every file it names.
-Write a deal id into `commission_findings.csv` in the form the exceptions register and the
+Write a deal id into `commission_findings.csv` in the form the approvals thread and the
 revenue export use, upper case with no surrounding spaces.
 
 A report states its rate in the unit its own column name declares:
@@ -71,12 +71,20 @@ The same `deal_id` must not appear in more than one partner report. A deal that 
 
 ## R4 — VP-approved rate overrides
 
-An exception in `commission_exceptions.csv` applies to this run when its window covers any
-part of the run month: `effective_from` is on or before the last day of the run month, and
-`effective_to` is either empty or on or after the first day. An exception that applies is
-paid at the register's `approved_rate_pct` instead of the standard rate for its end-user
-type, and for that deal the approved rate is the rate R1 is read against. An exception
-whose window does not cover the run month does not displace the standard rate.
+Approvals are not a register. They are the VP approvals thread in `vp_approvals.md`, read in
+the order the messages were sent, each carrying an `APR` number.
+
+A message that grants a rate on a named deal puts that rate in force for the period the
+message states. A later message naming the same deal governs over an earlier one: it may
+correct the rate, end the approval on a date, or withdraw it altogether. A message that
+names no deal, or that names a deal without granting a rate on it, changes nothing.
+
+An approval is in force for this run when the period it stands for, after every later
+message about that deal has been applied, covers any part of the run month, and when any
+condition the approval attaches holds on this run's data. A deal with an approval in force
+is paid at that rate instead of the standard rate for its end-user type, and for that deal
+the approved rate is the rate R1 is read against. A deal with no approval in force is read
+against the standard rate.
 
 ## Finding codes
 

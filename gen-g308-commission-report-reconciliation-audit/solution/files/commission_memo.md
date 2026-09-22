@@ -1,9 +1,9 @@
 # Commission reconciliation memo — June 2026 run
 
-Consolidated 94 commission lines from the five partner reports and
+Consolidated 97 commission lines from the five partner reports and
 reconciled them against COMM-POL-6, the June NetSuite revenue export and the commission
-exceptions register. 32 findings were raised across
-27 lines; 67 lines are compliant.
+VP approvals thread. 34 findings were raised across
+29 lines; 68 lines are compliant.
 Rates were normalised to whole percent first: PartnerB files a decimal fraction, PartnerC
 files basis points and PartnerD writes a percent sign, so the reported rate is not
 comparable across reports until it is converted.
@@ -11,8 +11,8 @@ comparable across reports until it is converted.
 ## Rate mismatches
 
 R1 sets the standard rate by end-user type: new 8%, renewal 4%, house 0%. A line whose
-reported rate is not the rate R1 is read against is a `RATE_MISMATCH`. Where an exception
-window covers the run month the approved rate is the rate R1 is read against, so the
+reported rate is not the rate R1 is read against is a `RATE_MISMATCH`. Where an approval is
+in force for the run month the approved rate is the rate R1 is read against, so the
 comparison is made against the approved rate and not the standard one.
 
 - DEAL-061 (PartnerB): new line reported at 6%, rate applicable 8% — `RATE_MISMATCH`.
@@ -29,6 +29,8 @@ comparison is made against the approved rate and not the standard one.
 - DEAL-082 (PartnerC): renewal line reported at 6%, rate applicable 4% — `RATE_MISMATCH`.
 - DEAL-083 (PartnerD): new line reported at 6%, rate applicable 8% — `RATE_MISMATCH`.
 - DEAL-087 (PartnerD): new line reported at 10%, rate applicable 8% — `RATE_MISMATCH`.
+- DEAL-090 (PartnerD): renewal line reported at 6%, rate applicable 4% — `RATE_MISMATCH`.
+- DEAL-092 (PartnerE): new line reported at 12%, rate applicable 8% — `RATE_MISMATCH`.
 
 ## Ledger matches
 
@@ -64,12 +66,23 @@ are only visible once the five reports are consolidated.
 ## Lines that look wrong and are not
 
 R4 lets a VP-approved rate override the standard mapping. These lines disagree with the
-standard rate for their end-user type and are compliant anyway, because an exception whose
-window covers the run month sets the rate they are paid at:
+standard rate for their end-user type and are compliant anyway, because an approval in the
+thread is in force for the run month and sets the rate they are paid at:
 
-- DEAL-080 (PartnerB): renewal line paid at 6% under EXC-VP-02 (2026-01-01 to open ended), against a standard 4% — compliant, not a rate mismatch.
-- DEAL-081 (PartnerA): new line paid at 12% under EXC-VP-07 (2025-07-01 to 2026-12-31), against a standard 8% — compliant, not a rate mismatch.
-- DEAL-085 (PartnerA): house line paid at 3% under EXC-VP-18 (2026-02-01 to 2026-06-30), against a standard 0% — compliant, not a rate mismatch.
+- DEAL-080 (PartnerB): renewal line paid at 6% under APR-0104, against a standard 4% — compliant, not a rate mismatch.
+- DEAL-081 (PartnerA): new line paid at 12% under APR-0118, against a standard 8% — compliant, not a rate mismatch.
+- DEAL-085 (PartnerA): house line paid at 3% under APR-0112, against a standard 0% — compliant, not a rate mismatch.
+- DEAL-091 (PartnerA): renewal line paid at 6% under APR-0142, against a standard 4% — compliant, not a rate mismatch.
 
-An exception whose window does not cover the run month does not displace the standard
-rate, and an approved rate equal to the standard rate changes nothing.
+## How the thread was read
+
+APR-0118 corrects APR-0088 rather than replacing it, so DEAL-081 stands at 12% and not 10%.
+APR-0147 lapses the DEAL-082 approval at the end of May, so June is read against the
+standard rate. APR-0158 withdraws APR-0150 in full, so DEAL-092 is read against the standard
+rate for the whole run and not for part of it. APR-0161 approves DEAL-087 from 1 July, which
+is after this run. APR-0141 and APR-0142 are conditional on what the run month recognises:
+DEAL-090 recognises 38500, short of the 40,000 the approval requires,
+so it is read against the standard rate; DEAL-091 recognises 31000,
+which clears the 25,000 its approval requires, so it stands. APR-0136 and APR-0138 grant
+nothing; APR-0138 names a deal without approving a rate on it. APR-0163 approves a deal that
+no partner reported.

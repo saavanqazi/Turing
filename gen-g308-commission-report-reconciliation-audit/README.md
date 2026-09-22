@@ -2,14 +2,14 @@
 
 Consolidate a month of partner commission lines from five reports that do not
 share a format, and reconcile them against the commission recognition policy, the
-NetSuite revenue export and the VP exceptions register.
+NetSuite revenue export and the VP approvals thread.
 
 ## Task Description
 
 The agent is given `commission_policy.md`, five partner reports
 (`partner_a_report.csv` .. `partner_e_report.csv`), `netsuite_revenue_export.csv`
-and `commission_exceptions.csv` under `input/`. It must first consolidate the five
-reports into one line list of 94 lines, normalising the rate to whole percent and
+and `vp_approvals.md` under `input/`. It must first consolidate the five
+reports into one line list of 97 lines, normalising the rate to whole percent and
 the end-user label to one of the three types, and then for each line:
 
 1. Compare the reported rate against the rate R1 is read against for that
@@ -54,13 +54,15 @@ It writes `commission_findings.csv` (one row per finding), `commission_memo.md`
 - The ledger export is not a match flag. A deal can have a record in `2026-05`
   and none in the run month, which is not a match; the export also carries records
   for deals no partner reported, which match nothing.
-- The exceptions register is not a simple override list, and `status` is not one
-  of its columns: whether an exception applies is a date-window test against the
-  run month. One window closed on 2026-05-31 and one opens on 2026-07-01, so
-  neither displaces the standard rate; one opens mid-run-month and one closes on
-  its last day, so both do; one approves the rate that is already standard and
-  changes nothing; one makes a house line commissionable at 3%; and one names a
-  deal that is in no report at all.
+- **Approvals are a thread, not a register.** Seventeen messages in date order,
+  and which rate is in force for June is the reading of the thread. One message
+  corrects an earlier one's rate rather than replacing the approval; one lapses
+  an approval at the end of May; one withdraws an approval in full four days
+  after it issued; one approves from 1 July, after this run; two are conditional
+  on what the run month recognises for the deal, and the condition holds for one
+  and fails for the other; two grant nothing at all, and one of those names a
+  deal without approving a rate on it. Each misreading costs three checks and so
+  costs the full pass.
 - One deal is reported by three partners rather than two, so a solver that
   flags only the later occurrence is wrong on every duplicate.
 
@@ -74,7 +76,7 @@ It writes `commission_findings.csv` (one row per finding), `commission_memo.md`
 
 ## Verification
 
-The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 300
+The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 311
 checks). Every line carries one check per finding code, required where the code
 applies and forbidden where it does not, so a missed finding and a false positive
 are each caught on the line that caused them. The remaining checks are the CSV
@@ -91,7 +93,7 @@ The reward is **graded**, not binary: `tests/test.sh` writes
 A run that misclassifies one line scores 0.9966 rather than collapsing to 0.0,
 which is what makes a near-miss legible as a near-miss.
 
-`build_task.py` declares the line list and the exceptions register, implements
+`build_task.py` declares the line list, the ledger and the approvals thread, implements
 the four rules once, and emits every input fixture, all three gold deliverables,
 the verifier pins and `solution/golden_trajectory.json` from that single source,
 so the gold cannot drift from the data it describes.
@@ -109,18 +111,23 @@ so the gold cannot drift from the data it describes.
   exactly one. The rules stay; the tip-offs are gone.
 - **Two policy sections added.** How a line caught by two rules is reported, and
   what all five figures mean, neither of which the policy said.
-- **Scaled from 8 lines to 94**, with the edge cases above built from the rules
+- **Scaled from 8 lines to 97**, with the edge cases above built from the rules
   already in the policy.
-- **15 checks to 300**, and the binary reward replaced with the graded one.
+- **15 checks to 311**, and the binary reward replaced with the graded one.
 - **The inputs were re-cut across six files.** The single pre-consolidated
   `commission_lines.csv`, with the ledger match as a `yes`/`no` column and the
   exception state as a `status` column, was replaced by five partner reports in
   five formats plus a revenue export, after four of four GLM-5.2 rollouts passed
   every check on the pre-consolidated inputs. When four of four passed that too,
   the irregularities above were added: totals lines, deal ids filed in three
-  spellings, and a revenue export that has to be netted. The four policy rules
-  are unchanged throughout; every one of these is stated in R0 and R2, so nothing
-  rests on noticing something the policy does not say.
+  spellings, and a revenue export that has to be netted. That was four of four
+  as well, at 21 minutes a battery against 13 - the task had become longer, not
+  harder, because every rule was one a solver could implement from a precise
+  statement and run. The exceptions register was then replaced by the approvals
+  thread, moving the facts out of columns and into prose that has to be read in
+  order. The four policy rules are unchanged throughout, and R0, R2 and R4 state
+  every convention, so nothing rests on noticing something the policy does not
+  say.
 - **The base image is pinned by digest**, not by the mutable `python:3.12-slim-bookworm`
   tag, so the image the grader runs on cannot drift under the tag.
 
