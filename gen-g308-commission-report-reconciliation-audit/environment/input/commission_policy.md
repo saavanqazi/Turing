@@ -32,13 +32,21 @@ A report states its rate in the unit its own column name declares:
 | `Rate` | decimal fraction of revenue; `0.08` is 8% |
 | `rate` | whole percent written with a percent sign; `8%` is 8% |
 
-Partners label the end-user type differently. These are the same type:
+### End-user type
 
-| in a partner report | end-user type |
-|---|---|
-| `new`, `New`, `New Business` | new |
-| `renewal`, `Renewal` | renewal |
-| `house`, `House`, `House Account` | house |
+No report states the end-user type. It is read from the line's deal description under
+these definitions, and nothing else in the description changes it:
+
+- **house** — our own sales team sourced the customer. Who priced, papered or closed the
+  order does not matter, and a partner that only processed an order our team sourced is
+  still a house line. House takes precedence over the other two types.
+- **new** — the customer held no active subscription with us on the day of signature. A
+  customer whose earlier subscription had already ended before signature is new, however
+  long they were a customer before, and a trial that was never a paid subscription does
+  not make them a renewal.
+- **renewal** — the customer held an active subscription with us on the day of
+  signature. Any order for such a customer is a renewal, whether it extends the term,
+  changes the seat count, adds a product or moves the customer to a different plan.
 
 ## R1 — Standard rate by end-user type
 

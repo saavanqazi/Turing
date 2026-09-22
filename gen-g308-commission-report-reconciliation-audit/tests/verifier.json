@@ -7880,6 +7880,630 @@
    }
   },
   {
+   "name": "memo_finding_deal_061",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-061 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-061\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_062",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-062 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-062\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_063",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-063 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-063\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_064",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-064 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-064\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_065",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-065 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-065\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_066",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-066 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-066\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_067",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-067 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-067\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_068",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-068 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-068\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_069",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-069 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-069\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_070",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-070 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-070\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_071",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-071 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-071\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_072",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-072 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-072\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_075",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-075 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-075\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_076",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-076 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-076\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_077",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-077 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-077\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_078",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-078 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-078\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_079",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-079 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-079\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_082",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-082 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-082\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_083",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-083 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-083\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_086",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-086 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-086\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_087",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-087 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-087\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_088",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-088 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-088\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_090",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-090 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-090\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
+   "name": "memo_finding_deal_092",
+   "metadata": {
+    "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",
+    "why_justification": "DEAL-092 carries a finding, and the memo explains each finding.",
+    "tag": "core"
+   },
+   "source": {
+    "type": "file",
+    "file": {
+     "type": "md",
+     "command": "extract_text",
+     "arguments": {
+      "path": "commission_memo.md"
+     }
+    }
+   },
+   "assertion": {
+    "type": "deterministic",
+    "expected": "(?i)\\bDEAL\\-092\\b",
+    "deterministic": {
+     "path": "$.text",
+     "comparison": "regex_match"
+    }
+   }
+  },
+  {
    "name": "memo_compliant_deal_080",
    "metadata": {
     "how_justification": "Opens commission_memo.md with md.extract_text and applies regex_match to a single token, with no wildcard between anchors.",

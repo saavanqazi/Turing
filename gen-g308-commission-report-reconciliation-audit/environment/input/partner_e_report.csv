@@ -1,21 +1,21 @@
-deal_id,end_user,commission_rate_pct,revenue_usd
-DEAL-004,Renewal,4,15480
-DEAL-009,New,8,22330
-DEAL-014,House,0,29180
-DEAL-019,Renewal,4,36030
-DEAL-024,New,8,42880
-DEAL-029,House,0,49730
- DEAL-034 ,Renewal,4,56580
-DEAL-039,New,8,63430
-DEAL-044,House,0,70280
-DEAL-049,Renewal,4,77130
- DEAL-054 ,New,8,83980
-DEAL-059,House,0,90830
-DEAL-064,New,4,77600
-DEAL-069,New,8,80200
-DEAL-074,House,0,49000
- DEAL-077 ,Renewal,4,32000
- deal-078 ,New,6,45000
-DEAL-084,New,8,52000
-DEAL-089,Renewal,4,30000
-DEAL-092,New,12,55000
+deal_id,context,commission_rate_pct,revenue_usd
+DEAL-004,Upsell: added the analytics module to the customer's live contract mid-term.,4,15480
+DEAL-009,Returning customer. Their previous contract expired last November; they signed again this month.,8,22330
+DEAL-014,Existing house account; the partner handled the renewal admin on this cycle.,0,29180
+DEAL-019,"Straight renewal, existing customer, existing plan.",4,36030
+DEAL-024,New account; the partner sourced and closed it.,8,42880
+DEAL-029,Direct account of ours; partner fulfilled the order only.,0,49730
+ DEAL-034 ,Cross-sell of a second product to a customer whose main subscription is active through 2027.,4,56580
+DEAL-039,New account; the partner sourced and closed it.,8,63430
+DEAL-044,House account sourced by our own sales team; the partner processed the order.,0,70280
+DEAL-049,"Straight renewal, existing customer, existing plan.",4,77130
+ DEAL-054 ,New account; the partner sourced and closed it.,8,83980
+DEAL-059,Our own account. Partner submitted the order paperwork at the customer's request.,0,90830
+DEAL-064,New account; the partner sourced and closed it.,4,77600
+DEAL-069,New account; the partner sourced and closed it.,8,80200
+DEAL-074,Sourced by our own sales team; partner fulfilled.,0,49000
+ DEAL-077 ,Renewal with seat increase from 20 to 25 on the live agreement.,4,32000
+ deal-078 ,Customer's first paid agreement with us.,6,45000
+DEAL-084,New account; the partner sourced and closed it.,8,52000
+DEAL-089,"Straight renewal, existing customer, existing plan.",4,30000
+DEAL-092,"New logo, first agreement, sourced and closed by the partner.",12,55000

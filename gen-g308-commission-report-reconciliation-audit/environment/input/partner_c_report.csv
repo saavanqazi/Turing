@@ -1,20 +1,20 @@
-deal_id,customer_type,rate_bps,revenue_usd
-DEAL-002,house,0,12740
-DEAL-007,renewal,400,19590
-deal-012,new,800,26440
-DEAL-017,house,0,33290
-DEAL-022,renewal,400,40140
-deal-027,new,800,46990
-DEAL-032,house,0,53840
-DEAL-037,renewal,400,60690
-deal-042,new,800,67540
-DEAL-047,house,0,74390
-DEAL-052,renewal,400,81240
-DEAL-057,new,800,88090
-DEAL-062,renewal,800,75800
-DEAL-067,new,1000,80300
-DEAL-072,renewal,400,82600
-deal-076,new,800,60000
-DEAL-079,renewal,400,28000
-DEAL-082,renewal,600,26000
-DEAL-088,new,800,50000
+deal_id,notes,rate_bps,revenue_usd
+DEAL-002,Sourced and negotiated by our enterprise AE; the partner processed the paperwork at the customer's request.,0,12740
+DEAL-007,Renewal with seat increase from 20 to 25 on the live agreement.,400,19590
+deal-012,"New logo signed this month, 24-month agreement.",800,26440
+DEAL-017,Direct account of ours; partner fulfilled the order only.,0,33290
+DEAL-022,Plan migration from Standard to Enterprise; the existing agreement still had eight months to run.,400,40140
+deal-027,"New logo signed this month, 24-month agreement.",800,46990
+DEAL-032,House account sourced by our own sales team; the partner processed the order.,0,53840
+DEAL-037,Renewal with seat increase from 20 to 25 on the live agreement.,400,60690
+deal-042,"New logo signed this month, 24-month agreement.",800,67540
+DEAL-047,Our own account. Partner submitted the order paperwork at the customer's request.,0,74390
+DEAL-052,Net-new order for the data add-on; the customer's core subscription is mid-term.,400,81240
+DEAL-057,"New logo signed this month, 24-month agreement.",800,88090
+DEAL-062,Renewal with seat increase from 20 to 25 on the live agreement.,800,75800
+DEAL-067,"New logo signed this month, 24-month agreement.",1000,80300
+DEAL-072,Renewal with seat increase from 20 to 25 on the live agreement.,400,82600
+deal-076,"Net-new customer, no prior relationship with us.",800,60000
+DEAL-079,"Straight renewal, existing customer, existing plan.",400,28000
+DEAL-082,Renewal with seat increase from 20 to 25 on the live agreement.,600,26000
+DEAL-088,"New customer; first subscription, 12 months.",800,50000

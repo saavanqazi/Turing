@@ -238,16 +238,83 @@ def w_csv(path, rows, cols):
     Path(path).write_text(o.getvalue(), encoding="utf-8")
 
 # ---- the five partner reports, each in its own format -------------------
-# Every report states its rate in the unit its own column name declares, and
-# labels the end-user type the way that partner labels it. The policy carries
-# the mapping for both; nothing here is inferable only from the gold.
-LABEL = {
- "PartnerA": {"new":"new",          "renewal":"renewal",  "house":"house"},
- "PartnerB": {"new":"New Business", "renewal":"Renewal",  "house":"House Account"},
- "PartnerC": {"new":"new",          "renewal":"renewal",  "house":"house"},
- "PartnerD": {"new":"new",          "renewal":"renewal",  "house":"house"},
- "PartnerE": {"new":"New",          "renewal":"Renewal",  "house":"House"},
+# No report states the end-user type. Each line carries the partner's own
+# description of the deal, and the type is read from it under the definitions
+# in policy R0. Most descriptions say what they are. About a quarter are written
+# so the obvious word points the wrong way -- "upsell" on a live contract is a
+# renewal, "win-back" after a lapse is new, "partner handled the renewal admin"
+# on an account our team sourced is house -- and every one of those has exactly
+# one answer under the definition and none by keyword. The type sits upstream
+# of the rate, of commissionability and so of the ledger test, so a misread
+# cascades.
+PLAIN = {
+ "new": [
+  "First subscription for this customer; 12-month term.",
+  "Net-new customer, no prior relationship with us.",
+  "New logo signed this month, 24-month agreement.",
+  "Customer's first paid agreement with us.",
+  "New account; the partner sourced and closed it.",
+ ],
+ "renewal": [
+  "Annual renewal of the existing subscription, same seat count.",
+  "Term renewal, 24 months, no change to plan.",
+  "Renewal with seat increase from 20 to 25 on the live agreement.",
+  "Renewal of the current subscription, signed two weeks before expiry.",
+  "Straight renewal, existing customer, existing plan.",
+ ],
+ "house": [
+  "House account sourced by our own sales team; the partner processed the order.",
+  "Direct account of ours; partner fulfilled the order only.",
+  "Sourced by our enterprise team; partner is reseller of record for billing.",
+  "Our own account. Partner submitted the order paperwork at the customer's request.",
+ ],
 }
+# Deal -> description, where the surface word points the wrong way.
+TRICKY = {
+ # reads as renewal, is new: no active subscription on the day of signature
+ "DEAL-003": "Win-back. The customer let their 2023 subscription lapse in January and signed a fresh two-year agreement on 12 June.",
+ "DEAL-009": "Returning customer. Their previous contract expired last November; they signed again this month.",
+ "DEAL-015": "Customer ran an unpaid trial last year that ended in October. This is their first paid agreement.",
+ "DEAL-051": "Former customer, churned in 2022, re-signed on 4 June on a new 12-month plan.",
+ # reads as house, is new: the partner sourced the customer
+ "DEAL-021": "Partner sourced the customer at a trade show; our AE joined the final call to help close. Customer's first subscription.",
+ "DEAL-033": "Co-sell: the partner brought the opportunity and our team helped with pricing. First subscription for this customer.",
+ # reads as new, is renewal: an active subscription on the day of signature
+ "DEAL-004": "Upsell: added the analytics module to the customer's live contract mid-term.",
+ "DEAL-010": "Expansion order, 30 additional seats on the existing agreement, which runs to 2027.",
+ "DEAL-016": "Customer signed a brand-new three-year agreement replacing their current contract six months early.",
+ "DEAL-022": "Plan migration from Standard to Enterprise; the existing agreement still had eight months to run.",
+ "DEAL-028": "First order under the new MSA. The customer's 2025 subscription is live until December.",
+ "DEAL-034": "Cross-sell of a second product to a customer whose main subscription is active through 2027.",
+ "DEAL-052": "Net-new order for the data add-on; the customer's core subscription is mid-term.",
+ # reads as renewal or new, is house: our own team sourced the customer
+ "DEAL-002": "Sourced and negotiated by our enterprise AE; the partner processed the paperwork at the customer's request.",
+ "DEAL-008": "Inbound lead from our website, worked by our SDR team; the partner was added to the order for billing only.",
+ "DEAL-014": "Existing house account; the partner handled the renewal admin on this cycle.",
+ "DEAL-020": "Our SDR booked the meeting and our AE closed. The partner is listed as reseller of record.",
+ "DEAL-026": "Subsidiary of a house account, sourced by our team through the parent relationship; partner papered the order.",
+ # special rows whose type the trap depends on
+ "DEAL-063": "Our own team sourced this account; the partner asked to be paid the standard renewal rate on it.",
+ "DEAL-066": "Direct house account; the partner processed a term extension for the customer.",
+ "DEAL-073": "House account sourced by our field team; partner submitted the order.",
+ "DEAL-074": "Sourced by our own sales team; partner fulfilled.",
+ "DEAL-075": "Customer's first paid agreement with us, signed 9 June.",
+ "DEAL-085": "House account sourced by our sales team; the partner fulfils the order each cycle.",
+ "DEAL-086": "Our own account; the partner is reseller of record for billing.",
+ "DEAL-088": "New customer; first subscription, 12 months.",
+ "DEAL-092": "New logo, first agreement, sourced and closed by the partner.",
+}
+def description(deal, ctype):
+    if deal in TRICKY:
+        return TRICKY[deal]
+    n = int(deal.split("-")[1])
+    return PLAIN[ctype][n % len(PLAIN[ctype])]
+# A tricky description filed against the wrong declared type would grade the
+# solver on my slip, so the declared type is checked against each one by eye
+# above and by key below: every TRICKY key must be a real deal.
+for _d in TRICKY:
+    assert any(x[0] == _d for x in L), f"TRICKY names {_d}, which is no deal"
+
 REPORT_FILE = {p: f"partner_{p[-1].lower()}_report.csv" for p in PARTNERS}
 
 # Deal ids as filed. Partners key their own systems differently and some export
@@ -279,32 +346,32 @@ def report_rows(partner):
     for deal, p, ctype, rate, rev in L:
         if p != partner:
             continue
-        lbl = LABEL[partner][ctype]
+        desc = description(deal, ctype)
         deal = filed_id(deal, partner)
         if partner == "PartnerA":
-            out.append(dict(deal_id=deal, customer_type=lbl, commission_rate_pct=rate, revenue_usd=rev))
+            out.append(dict(deal_id=deal, deal_description=desc, commission_rate_pct=rate, revenue_usd=rev))
         elif partner == "PartnerB":
-            out.append({"Deal": deal, "Segment": lbl, "Rate": f"{rate/100:.2f}", "Amount": rev})
+            out.append({"Deal": deal, "Description": desc, "Rate": f"{rate/100:.2f}", "Amount": rev})
         elif partner == "PartnerC":
-            out.append(dict(deal_id=deal, customer_type=lbl, rate_bps=rate * 100, revenue_usd=rev))
+            out.append(dict(deal_id=deal, notes=desc, rate_bps=rate * 100, revenue_usd=rev))
         elif partner == "PartnerD":
-            out.append(dict(deal_id=deal, type=lbl, rate=f"{rate}%", revenue=rev))
+            out.append(dict(deal_id=deal, deal_summary=desc, rate=f"{rate}%", revenue=rev))
         else:
-            out.append(dict(deal_id=deal, end_user=lbl, commission_rate_pct=rate, revenue_usd=rev))
+            out.append(dict(deal_id=deal, context=desc, commission_rate_pct=rate, revenue_usd=rev))
     if partner in TOTALS_ROW:
         total = sum(x[4] for x in L if x[1] == partner)
         if partner == "PartnerA":
-            out.append(dict(deal_id="TOTAL", customer_type="", commission_rate_pct="", revenue_usd=total))
+            out.append(dict(deal_id="TOTAL", deal_description="", commission_rate_pct="", revenue_usd=total))
         else:
-            out.append(dict(deal_id="TOTAL", type="", rate="", revenue=total))
+            out.append(dict(deal_id="TOTAL", deal_summary="", rate="", revenue=total))
     return out
 
 COLS = {
- "PartnerA": ["deal_id","customer_type","commission_rate_pct","revenue_usd"],
- "PartnerB": ["Deal","Segment","Rate","Amount"],
- "PartnerC": ["deal_id","customer_type","rate_bps","revenue_usd"],
- "PartnerD": ["deal_id","type","rate","revenue"],
- "PartnerE": ["deal_id","end_user","commission_rate_pct","revenue_usd"],
+ "PartnerA": ["deal_id","deal_description","commission_rate_pct","revenue_usd"],
+ "PartnerB": ["Deal","Description","Rate","Amount"],
+ "PartnerC": ["deal_id","notes","rate_bps","revenue_usd"],
+ "PartnerD": ["deal_id","deal_summary","rate","revenue"],
+ "PartnerE": ["deal_id","context","commission_rate_pct","revenue_usd"],
 }
 for p in PARTNERS:
     w_csv(INP/REPORT_FILE[p], report_rows(p), COLS[p])
@@ -375,13 +442,21 @@ A report states its rate in the unit its own column name declares:
 | `Rate` | decimal fraction of revenue; `0.08` is 8% |
 | `rate` | whole percent written with a percent sign; `8%` is 8% |
 
-Partners label the end-user type differently. These are the same type:
+### End-user type
 
-| in a partner report | end-user type |
-|---|---|
-| `new`, `New`, `New Business` | new |
-| `renewal`, `Renewal` | renewal |
-| `house`, `House`, `House Account` | house |
+No report states the end-user type. It is read from the line's deal description under
+these definitions, and nothing else in the description changes it:
+
+- **house** — our own sales team sourced the customer. Who priced, papered or closed the
+  order does not matter, and a partner that only processed an order our team sourced is
+  still a house line. House takes precedence over the other two types.
+- **new** — the customer held no active subscription with us on the day of signature. A
+  customer whose earlier subscription had already ended before signature is new, however
+  long they were a customer before, and a trial that was never a paid subscription does
+  not make them a renewal.
+- **renewal** — the customer held an active subscription with us on the day of
+  signature. Any order for such a customer is a renewal, whether it extends the term,
+  changes the seat count, adds a product or moves the customer to a different plan.
 
 ## R1 — Standard rate by end-user type
 
@@ -586,6 +661,10 @@ memo_facts = [
  ("memo_code_duplicate_line", r"(?i)duplicate[\s_\-]?line",
   "DUPLICATE_LINE is one of the three codes the instruction names, and the memo explains each finding."),
 ]
+for deal in sorted({r["deal_id"] for r in rows}):
+    memo_facts.append((f"memo_finding_{deal.lower().replace('-','_')}",
+                       r"(?i)\b" + re.escape(deal) + r"\b",
+                       f"{deal} carries a finding, and the memo explains each finding."))
 for msg, deal, rate, ln in compliant_anyway():
     memo_facts += [
      (f"memo_compliant_{deal.lower().replace('-','_')}", r"(?i)\b" + re.escape(deal) + r"\b",

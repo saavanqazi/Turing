@@ -1,20 +1,20 @@
-Deal,Segment,Rate,Amount
-DEAL-001,Renewal,0.04,11370
-DEAL-006,New Business,0.08,18220
-DEAL-011,House Account,0.00,25070
-DEAL-016,Renewal,0.04,31920
-DEAL-021,New Business,0.08,38770
-DEAL-026,House Account,0.00,45620
-DEAL-031,Renewal,0.04,52470
-DEAL-036,New Business,0.08,59320
-DEAL-041,House Account,0.00,66170
-DEAL-046,Renewal,0.04,73020
-DEAL-051,New Business,0.08,79870
-DEAL-056,House Account,0.00,86720
-DEAL-061,New Business,0.06,74900
-DEAL-066,House Account,0.08,79400
-DEAL-071,New Business,0.08,81800
-DEAL-075,New Business,0.00,41000
-DEAL-077,Renewal,0.04,32000
-DEAL-080,Renewal,0.06,35000
-DEAL-086,House Account,0.03,18000
+Deal,Description,Rate,Amount
+DEAL-001,"Term renewal, 24 months, no change to plan.",0.04,11370
+DEAL-006,"Net-new customer, no prior relationship with us.",0.08,18220
+DEAL-011,Our own account. Partner submitted the order paperwork at the customer's request.,0.00,25070
+DEAL-016,Customer signed a brand-new three-year agreement replacing their current contract six months early.,0.04,31920
+DEAL-021,Partner sourced the customer at a trade show; our AE joined the final call to help close. Customer's first subscription.,0.08,38770
+DEAL-026,"Subsidiary of a house account, sourced by our team through the parent relationship; partner papered the order.",0.00,45620
+DEAL-031,"Term renewal, 24 months, no change to plan.",0.04,52470
+DEAL-036,"Net-new customer, no prior relationship with us.",0.08,59320
+DEAL-041,Direct account of ours; partner fulfilled the order only.,0.00,66170
+DEAL-046,"Term renewal, 24 months, no change to plan.",0.04,73020
+DEAL-051,"Former customer, churned in 2022, re-signed on 4 June on a new 12-month plan.",0.08,79870
+DEAL-056,House account sourced by our own sales team; the partner processed the order.,0.00,86720
+DEAL-061,"Net-new customer, no prior relationship with us.",0.06,74900
+DEAL-066,Direct house account; the partner processed a term extension for the customer.,0.08,79400
+DEAL-071,"Net-new customer, no prior relationship with us.",0.08,81800
+DEAL-075,"Customer's first paid agreement with us, signed 9 June.",0.00,41000
+DEAL-077,Renewal with seat increase from 20 to 25 on the live agreement.,0.04,32000
+DEAL-080,"Annual renewal of the existing subscription, same seat count.",0.06,35000
+DEAL-086,Our own account; the partner is reseller of record for billing.,0.03,18000

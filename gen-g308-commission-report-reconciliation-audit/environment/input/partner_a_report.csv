@@ -1,21 +1,21 @@
-deal_id,customer_type,commission_rate_pct,revenue_usd
-DEAL-005,house,0,16850
-DEAL-010,renewal,4,23700
-DEAL-015,new,8,30550
-DEAL-020,house,0,37400
-DEAL-025,renewal,4,44250
-DEAL-030,new,8,51100
-DEAL-035,house,0,57950
-DEAL-040,renewal,4,64800
-DEAL-045,new,8,71650
-DEAL-050,house,0,78500
-DEAL-055,renewal,4,85350
-DEAL-060,new,8,92200
-DEAL-065,renewal,6,78500
-DEAL-070,renewal,4,81000
-DEAL-076,new,8,60000
-DEAL-078,new,6,45000
-DEAL-081,new,12,70000
-DEAL-085,house,3,16000
-DEAL-091,renewal,6,31000
+deal_id,deal_description,commission_rate_pct,revenue_usd
+DEAL-005,Direct account of ours; partner fulfilled the order only.,0,16850
+DEAL-010,"Expansion order, 30 additional seats on the existing agreement, which runs to 2027.",4,23700
+DEAL-015,Customer ran an unpaid trial last year that ended in October. This is their first paid agreement.,8,30550
+DEAL-020,Our SDR booked the meeting and our AE closed. The partner is listed as reseller of record.,0,37400
+DEAL-025,"Annual renewal of the existing subscription, same seat count.",4,44250
+DEAL-030,First subscription for this customer; 12-month term.,8,51100
+DEAL-035,Our own account. Partner submitted the order paperwork at the customer's request.,0,57950
+DEAL-040,"Annual renewal of the existing subscription, same seat count.",4,64800
+DEAL-045,First subscription for this customer; 12-month term.,8,71650
+DEAL-050,Sourced by our enterprise team; partner is reseller of record for billing.,0,78500
+DEAL-055,"Annual renewal of the existing subscription, same seat count.",4,85350
+DEAL-060,First subscription for this customer; 12-month term.,8,92200
+DEAL-065,"Annual renewal of the existing subscription, same seat count.",6,78500
+DEAL-070,"Annual renewal of the existing subscription, same seat count.",4,81000
+DEAL-076,"Net-new customer, no prior relationship with us.",8,60000
+DEAL-078,Customer's first paid agreement with us.,6,45000
+DEAL-081,"Net-new customer, no prior relationship with us.",12,70000
+DEAL-085,House account sourced by our sales team; the partner fulfils the order each cycle.,3,16000
+DEAL-091,"Term renewal, 24 months, no change to plan.",6,31000
 TOTAL,,,1035800

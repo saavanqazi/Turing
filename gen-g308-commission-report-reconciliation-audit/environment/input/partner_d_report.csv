@@ -1,22 +1,22 @@
-deal_id,type,rate,revenue
-DEAL-003,new,8%,14110
-DEAL-008,house,0%,20960
-DEAL-013,renewal,4%,27810
-DEAL-018,new,8%,34660
-DEAL-023,house,0%,41510
-DEAL-028,renewal,4%,48360
-DEAL-033,new,8%,55210
-DEAL-038,house,0%,62060
-DEAL-043,renewal,4%,68910
-DEAL-048,new,8%,75760
-DEAL-053,house,0%,82610
-DEAL-058,renewal,4%,89460
-DEAL-063,house,4%,76700
-DEAL-068,renewal,2%,81200
-DEAL-073,house,0%,48500
-DEAL-077,renewal,4%,32000
-DEAL-079,renewal,4%,28000
-DEAL-083,new,6%,38000
-DEAL-087,new,10%,47000
-DEAL-090,renewal,6%,38500
+deal_id,deal_summary,rate,revenue
+DEAL-003,Win-back. The customer let their 2023 subscription lapse in January and signed a fresh two-year agreement on 12 June.,8%,14110
+DEAL-008,"Inbound lead from our website, worked by our SDR team; the partner was added to the order for billing only.",0%,20960
+DEAL-013,"Renewal of the current subscription, signed two weeks before expiry.",4%,27810
+DEAL-018,Customer's first paid agreement with us.,8%,34660
+DEAL-023,Our own account. Partner submitted the order paperwork at the customer's request.,0%,41510
+DEAL-028,First order under the new MSA. The customer's 2025 subscription is live until December.,4%,48360
+DEAL-033,Co-sell: the partner brought the opportunity and our team helped with pricing. First subscription for this customer.,8%,55210
+DEAL-038,Sourced by our enterprise team; partner is reseller of record for billing.,0%,62060
+DEAL-043,"Renewal of the current subscription, signed two weeks before expiry.",4%,68910
+DEAL-048,Customer's first paid agreement with us.,8%,75760
+DEAL-053,Direct account of ours; partner fulfilled the order only.,0%,82610
+DEAL-058,"Renewal of the current subscription, signed two weeks before expiry.",4%,89460
+DEAL-063,Our own team sourced this account; the partner asked to be paid the standard renewal rate on it.,4%,76700
+DEAL-068,"Renewal of the current subscription, signed two weeks before expiry.",2%,81200
+DEAL-073,House account sourced by our field team; partner submitted the order.,0%,48500
+DEAL-077,Renewal with seat increase from 20 to 25 on the live agreement.,4%,32000
+DEAL-079,"Straight renewal, existing customer, existing plan.",4%,28000
+DEAL-083,Customer's first paid agreement with us.,6%,38000
+DEAL-087,"New logo signed this month, 24-month agreement.",10%,47000
+DEAL-090,"Annual renewal of the existing subscription, same seat count.",6%,38500
 TOTAL,,,1011320

@@ -10,7 +10,8 @@ The agent is given `commission_policy.md`, five partner reports
 (`partner_a_report.csv` .. `partner_e_report.csv`), `netsuite_revenue_export.csv`
 and `vp_approvals.md` under `input/`. It must first consolidate the five
 reports into one line list of 97 lines, normalising the rate to whole percent and
-the end-user label to one of the three types, and then for each line:
+reading each line's end-user type from its deal description under the policy's
+definitions, and then for each line:
 
 1. Compare the reported rate against the rate R1 is read against for that
    end-user type — new 8%, renewal 4%, house 0% — unless an active exception
@@ -28,6 +29,15 @@ It writes `commission_findings.csv` (one row per finding), `commission_memo.md`
 
 ## Why it is non-trivial
 
+- **The end-user type is a judgement, not a column.** No report states it. Each
+  line carries the partner's own description of the deal, and the policy defines
+  house, new and renewal in three clauses with a precedence rule. About a quarter
+  of the 97 descriptions are written so the obvious word points the wrong way:
+  an "upsell" on a live contract is a renewal, a "win-back" after a lapse is new,
+  "the partner handled the renewal admin" on an account our team sourced is
+  house. Every one has exactly one answer under the definition and none by
+  keyword, and the type sits upstream of the rate, of commissionability and so
+  of the ledger test, so a misread cascades.
 - **Nothing is read off a line directly.** The rate has to be normalised, the
   ledger match has to be joined from a separate export, and whether an exception
   applies has to be derived from its date window against the run month. Each of
@@ -76,7 +86,7 @@ It writes `commission_findings.csv` (one row per finding), `commission_memo.md`
 
 ## Verification
 
-The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 311
+The grader is the frozen verifier engine in `tests/` (`tests/verifier.json`, 335
 checks). Every line carries one check per finding code, required where the code
 applies and forbidden where it does not, so a missed finding and a false positive
 are each caught on the line that caused them. The remaining checks are the CSV
@@ -113,7 +123,7 @@ so the gold cannot drift from the data it describes.
   what all five figures mean, neither of which the policy said.
 - **Scaled from 8 lines to 97**, with the edge cases above built from the rules
   already in the policy.
-- **15 checks to 311**, and the binary reward replaced with the graded one.
+- **15 checks to 335**, and the binary reward replaced with the graded one.
 - **The inputs were re-cut across six files.** The single pre-consolidated
   `commission_lines.csv`, with the ledger match as a `yes`/`no` column and the
   exception state as a `status` column, was replaced by five partner reports in
@@ -125,9 +135,13 @@ so the gold cannot drift from the data it describes.
   harder, because every rule was one a solver could implement from a precise
   statement and run. The exceptions register was then replaced by the approvals
   thread, moving the facts out of columns and into prose that has to be read in
-  order. The four policy rules are unchanged throughout, and R0, R2 and R4 state
-  every convention, so nothing rests on noticing something the policy does not
-  say.
+  order. That was four of four as well: the thread's reading rules were stated
+  precisely in R4, so reading became mechanical too. The end-user type column
+  was then removed from every report and replaced by a deal description, which
+  is the one determination in the task that cannot be reduced to a stated
+  algorithm; it is the same mechanism that lands the sibling b39 bundle in band.
+  The four policy rules are unchanged throughout, and R0, R2 and R4 state every
+  convention, so nothing rests on noticing something the policy does not say.
 - **The base image is pinned by digest**, not by the mutable `python:3.12-slim-bookworm`
   tag, so the image the grader runs on cannot drift under the tag.
 
