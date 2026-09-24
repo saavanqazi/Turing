@@ -1,5 +1,5 @@
-2026-09-16T22:10:04Z broker-1 queue=notify.push event=BACKPRESSURE_ENGAGED in_flight=5310
-2026-09-16T22:48:51Z broker-1 queue=notify.push event=BACKPRESSURE_RELEASED in_flight=1204
+2026-09-16T22:10:04Z broker-1 queue=inventory.reservation-events event=BACKPRESSURE_ENGAGED in_flight=5310
+2026-09-16T22:48:51Z broker-1 queue=inventory.reservation-events event=BACKPRESSURE_RELEASED in_flight=1204
 2026-09-16T23:30:02Z broker-3 queue=search.index-updates event=CONSUMER_JOINED consumers=8
 2026-09-17T00:55:17Z broker-2 queue=payments.settlement-report event=CONSUMER_LEFT consumers=1
 2026-09-17T01:20:40Z broker-2 queue=identity.session-validate event=BACKPRESSURE_ENGAGED in_flight=1890

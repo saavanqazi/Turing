@@ -1,6 +1,6 @@
 # Queue backpressure audit — incident night, 2026-09-17
 
-40 queues in the broker export, audited against PLAT-31. 21 are compliant and 19 carry a finding: 8 over threshold, 7 over their drain time, 4 with no backpressure config.
+40 queues in the broker export, audited against PLAT-31. 19 are compliant and 21 carry a finding: 9 over threshold, 8 over their drain time, 4 with no backpressure config.
 
 | Queue | Tier | In-flight | Finding |
 |---|---|---|---|
@@ -19,27 +19,27 @@
 | `payments.settlement-report` | standard | 5,600 | none |
 | `payments.chargeback-events` | — | 700 | NO_BACKPRESSURE_CONFIGURED |
 | `payouts.transfer-instructions` | critical | 8,000 | none |
-| `payouts.statement-render` | standard | 1,700 | none |
+| `payouts.fx-rate-fetch` | standard | 600 | none |
 | `payouts.fx-quotes` | critical | 700 | DRAIN_TIME_EXCEEDED |
 | `search.autocomplete-requests` | critical | 1,600 | none |
 | `search.index-updates` | standard | 7,200 | BACKPRESSURE_THRESHOLD_EXCEEDED |
-| `search.click-logs` | standard | 3,900 | none |
+| `devices.reputation-lookup` | critical | 800 | DRAIN_TIME_EXCEEDED |
 | `search.synonym-reload` | — | 20 | NO_BACKPRESSURE_CONFIGURED |
 | `identity.login-otp` | standard | 1,200 | none |
 | `identity.password-reset-emails` | standard | 350 | DRAIN_TIME_EXCEEDED |
 | `identity.session-validate` | critical | 1,300 | BACKPRESSURE_THRESHOLD_EXCEEDED |
 | `identity.kyc-checks` | standard | 2,100 | none |
 | `support.ticket-lookup` | standard | 1,150 | none |
-| `support.ticket-events` | standard | 5,000 | none |
+| `payments.refund-status` | standard | 5,000 | none |
 | `reports.priority-exports` | standard | 3,400 | BACKPRESSURE_THRESHOLD_EXCEEDED |
 | `reports.finance-daily` | standard | 9,000 | none |
-| `reports.tax-summaries` | standard | 900 | none |
+| `fraud.audit-trail` | standard | 900 | none |
 | `inventory.stock-reserve` | critical | 2,200 | none |
 | `inventory.restock-feed` | standard | 5,300 | BACKPRESSURE_THRESHOLD_EXCEEDED |
 | `inventory.price-sync` | standard | 650 | DRAIN_TIME_EXCEEDED |
-| `notify.push` | standard | 4,800 | none |
+| `inventory.reservation-events` | standard | 1,400 | none |
 | `notify.email-digest` | — | 12,000 | NO_BACKPRESSURE_CONFIGURED |
-| `notify.sms` | standard | 300 | none |
+| `ledger.balance-snapshot` | critical | 1,100 | BACKPRESSURE_THRESHOLD_EXCEEDED |
 | `wallet.topup-commands` | critical | 900 | DRAIN_TIME_EXCEEDED |
 | `wallet.balance-query` | critical | 1,150 | BACKPRESSURE_THRESHOLD_EXCEEDED |
 | `wallet.cashback-accrual` | critical | 1,800 | BACKPRESSURE_THRESHOLD_EXCEEDED |
@@ -56,6 +56,7 @@
 - `payments.chargeback-events` — `NO_BACKPRESSURE_CONFIGURED`: it has no entry in the backpressure config, so there is no threshold to measure its 700 in-flight messages against.
 - `payouts.fx-quotes` — `DRAIN_TIME_EXCEEDED`: its drain time is 23.3 minutes (700 in flight over a net 30/min); the critical max drain time is 15 minutes.
 - `search.index-updates` — `BACKPRESSURE_THRESHOLD_EXCEEDED`: 7,200 in flight against a threshold of 5,000 (the standard default; the queue is standard), and backpressure was not engaged when it was sampled at 01:52:00 UTC.
+- `devices.reputation-lookup` — `DRAIN_TIME_EXCEEDED`: its drain time is 16 minutes (800 in flight over a net 50/min); the critical max drain time is 15 minutes.
 - `search.synonym-reload` — `NO_BACKPRESSURE_CONFIGURED`: it has no entry in the backpressure config, so there is no threshold to measure its 20 in-flight messages against.
 - `identity.password-reset-emails` — `DRAIN_TIME_EXCEEDED`: it is not draining (acks 30/min against publishes 30/min), which exceeds any maximum; the standard max drain time is 60 minutes.
 - `identity.session-validate` — `BACKPRESSURE_THRESHOLD_EXCEEDED`: 1,300 in flight against a threshold of 1,000 (the critical default; the queue is critical), and backpressure was not engaged when it was sampled at 01:50:00 UTC.
@@ -63,6 +64,7 @@
 - `inventory.restock-feed` — `BACKPRESSURE_THRESHOLD_EXCEEDED`: 5,300 in flight against a threshold of 5,000 (the standard default; the queue is standard), and backpressure was not engaged when it was sampled at 01:51:30 UTC.
 - `inventory.price-sync` — `DRAIN_TIME_EXCEEDED`: it is not draining (acks 200/min against publishes 210/min), which exceeds any maximum; the standard max drain time is 60 minutes.
 - `notify.email-digest` — `NO_BACKPRESSURE_CONFIGURED`: it has no entry in the backpressure config, so there is no threshold to measure its 12,000 in-flight messages against.
+- `ledger.balance-snapshot` — `BACKPRESSURE_THRESHOLD_EXCEEDED`: 1,100 in flight against a threshold of 1,000 (the critical default; the queue is critical), and backpressure was not engaged when it was sampled at 01:53:30 UTC.
 - `wallet.topup-commands` — `DRAIN_TIME_EXCEEDED`: its drain time is 18 minutes (900 in flight over a net 50/min); the critical max drain time is 15 minutes.
 - `wallet.balance-query` — `BACKPRESSURE_THRESHOLD_EXCEEDED`: 1,150 in flight against a threshold of 1,000 (the critical default; the queue is critical), and backpressure was not engaged when it was sampled at 02:03:00 UTC.
 - `wallet.cashback-accrual` — `BACKPRESSURE_THRESHOLD_EXCEEDED`: 1,800 in flight against a threshold of 1,000 (the critical default; the queue is critical), and backpressure was not engaged when it was sampled at 01:55:00 UTC.

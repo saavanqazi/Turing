@@ -247,5 +247,21 @@ Harbor (user, Windows): oracle-c239-p1 **1.0**; glm-c239-p1 **4/4** at 1.0 (28/2
   (122/122, independent memo); cold tier read #2 36/36 (1 soft spot → closed).
 - Docker oracle 1.0; 13 probes as expected.
 
+Harbor (user): oracle-c239-v1 **1.0**; glm-c239-v1 **4/4** at 1.0 (122/122 each,
+13.7–16.3 min). Every run read all six files, hand-coded 36 tiers correctly, scripted the
+rest. Runtime ×7, reward unchanged: the catalogue (after the fairness fixes) echoed §2's
+own words, so classification was keyword matching.
+
+### Phase 2 v2 — built, awaiting battery
+- One lever: the tier. §2(a)'s hold now carries down a chain of services; six filler queues
+  replaced by chain cases (2-hop `devices.reputation-lookup`, cross-section
+  `ledger.balance-snapshot`; chain broken after the answer: `fraud.audit-trail`,
+  `inventory.reservation-events`; waited on only by a scheduled job `payouts.fx-rate-fetch`
+  or staff `payments.refund-status`). Catalogue rewritten in the teams' voice.
+- 40 queues, 125 checks. Figures: flagged 21 · threshold 9 · no-config 4 · drain 8 ·
+  compliant 19. Surface-label misreading now changes 15 queues (34 checks).
+- Fairness: cold tier read 36/36 (4 small wording gaps → closed); cold full solve **1.0**
+  (125/125). Docker oracle 1.0; 13 probes as expected.
+
 ### Waiting on you
-`oracle-c239-v1` (expect 1.0), then `glm-c239-v1` `-k 4`, then `trial_summary.py`.
+`oracle-c239-v2`, then `glm-c239-v2` `-k 4`, then `trial_summary.py`.

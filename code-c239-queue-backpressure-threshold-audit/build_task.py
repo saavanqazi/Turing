@@ -54,27 +54,27 @@ EXPORT = [
     ("payments.settlement-report",    "payments-core",  "02:12:00", 5600,  200,  180, True),
     ("payments.chargeback-events",    "payments-core",  "01:41:10",  700,   35,   30, False),
     ("payouts.transfer-instructions", "payouts",        "01:42:00", 8000, 1500, 1200, True),
-    ("payouts.statement-render",      "payouts",        "01:42:30", 1700,   90,  150, False),
+    ("payouts.fx-rate-fetch",         "payouts",        "01:42:30",  600,   20,   40, False),
     ("payouts.fx-quotes",             "payouts",        "01:43:00",  700,  400,  430, False),
     ("search.autocomplete-requests",  "search",         "01:49:00", 1600,  450,  600, False),
     ("search.index-updates",          "search",         "01:52:00", 7200,  800,  900, True),
-    ("search.click-logs",             "search",         "01:44:00", 3900, 1200, 1300, False),
+    ("devices.reputation-lookup",     "device-intel",   "01:44:00",  800,  200,  250, False),
     ("search.synonym-reload",         "search",         "01:44:30",   20,    0,    5, False),
     ("identity.login-otp",            "identity",       "01:45:30", 1200,  800,  850, False),
     ("identity.password-reset-emails","identity",       "01:46:00",  350,   30,   30, False),
     ("identity.session-validate",     "identity",       "01:50:00", 1300, 5000, 5600, False),
     ("identity.kyc-checks",           "identity",       "01:46:40", 2100,  120,  170, False),
     ("support.ticket-lookup",         "support-desk",   "01:47:10", 1150,  400,  450, False),
-    ("support.ticket-events",         "support-desk",   "01:47:40", 5000,  300,  400, False),
+    ("payments.refund-status",        "payments-core",  "01:47:40", 5000,  300,  400, False),
     ("reports.priority-exports",      "bi-reports",     "01:48:10", 3400,  330,  400, False),
     ("reports.finance-daily",         "bi-reports",     "02:05:00", 9000,  100,   90, False),
-    ("reports.tax-summaries",         "bi-reports",     "01:48:40",  900,   10,   25, False),
+    ("fraud.audit-trail",             "fraud-scoring",  "01:48:40",  900,   10,   25, False),
     ("inventory.stock-reserve",       "inventory",      "01:51:00", 2200,  620,  800, False),
     ("inventory.restock-feed",        "inventory",      "01:51:30", 5300,  400,  520, False),
     ("inventory.price-sync",          "inventory",      "01:52:30",  650,  210,  200, False),
-    ("notify.push",                   "notify",         "01:53:00", 4800, 2000, 2100, False),
+    ("inventory.reservation-events",  "inventory",      "01:53:00", 1400,  300,  370, False),
     ("notify.email-digest",           "notify",         "01:53:20",12000,  900,  700, True),
-    ("notify.sms",                    "notify",         "01:53:30",  300,  100,  120, False),
+    ("ledger.balance-snapshot",       "ledger",         "01:53:30", 1100,  900, 1000, False),
     ("wallet.topup-commands",         "wallet",         "01:54:00",  900,  300,  350, False),
     ("wallet.balance-query",          "wallet",         "02:03:00", 1150, 2000, 2400, False),
     ("wallet.cashback-accrual",       "wallet",         "01:55:00", 1800,  150,  300, True),
@@ -90,14 +90,14 @@ TIER = {
     "fraud.score-requests": C, "fraud.score-replies": C, "fraud.model-retrain": S, "fraud.case-review": S,
     "payments.charge-commands": C, "payments.refund-commands": C, "payments.receipt-emails": S,
     "payments.settlement-report": S,
-    "payouts.transfer-instructions": C, "payouts.statement-render": S, "payouts.fx-quotes": C,
-    "search.autocomplete-requests": C, "search.index-updates": S, "search.click-logs": S,
+    "payouts.transfer-instructions": C, "payouts.fx-rate-fetch": S, "payouts.fx-quotes": C,
+    "search.autocomplete-requests": C, "search.index-updates": S, "devices.reputation-lookup": C,
     "identity.login-otp": S, "identity.password-reset-emails": S, "identity.session-validate": C,
     "identity.kyc-checks": S,
-    "support.ticket-lookup": S, "support.ticket-events": S,
-    "reports.priority-exports": S, "reports.finance-daily": S, "reports.tax-summaries": S,
+    "support.ticket-lookup": S, "payments.refund-status": S,
+    "reports.priority-exports": S, "reports.finance-daily": S, "inventory.reservation-events": S,
     "inventory.stock-reserve": C, "inventory.restock-feed": S, "inventory.price-sync": S,
-    "notify.push": S, "notify.sms": S,
+    "ledger.balance-snapshot": C, "fraud.audit-trail": S,
     "wallet.topup-commands": C, "wallet.balance-query": C, "wallet.cashback-accrual": C,
     "wallet.statement-emails": S,
 }
@@ -107,7 +107,9 @@ SURFACE = {
     "fraud.score-replies": S, "fraud.case-review": C, "payments.refund-commands": S,
     "payments.receipt-emails": C, "payouts.transfer-instructions": S, "search.index-updates": C,
     "identity.login-otp": C, "support.ticket-lookup": C, "reports.priority-exports": C,
-    "wallet.cashback-accrual": S,
+    "wallet.cashback-accrual": S, "devices.reputation-lookup": S, "ledger.balance-snapshot": S,
+    "fraud.audit-trail": C, "inventory.reservation-events": C, "payouts.fx-rate-fetch": C,
+    "payments.refund-status": C,
 }
 OVERRIDE = {"fraud.score-requests": 1500, "reports.priority-exports": 3000, "inventory.stock-reserve": 2500}
 DECOMMISSIONED = ["legacy.order-sync"]            # configured, no longer in the export
@@ -129,8 +131,8 @@ SCHEDULE = [
 ]
 # broker event log: (day, time, broker, queue, event, detail)
 EVENTS = [
-    ("2026-09-16", "22:10:04", "broker-1", "notify.push",                  "BACKPRESSURE_ENGAGED",  "in_flight=5310"),
-    ("2026-09-16", "22:48:51", "broker-1", "notify.push",                  "BACKPRESSURE_RELEASED", "in_flight=1204"),
+    ("2026-09-16", "22:10:04", "broker-1", "inventory.reservation-events", "BACKPRESSURE_ENGAGED",  "in_flight=5310"),
+    ("2026-09-16", "22:48:51", "broker-1", "inventory.reservation-events", "BACKPRESSURE_RELEASED", "in_flight=1204"),
     ("2026-09-16", "23:30:02", "broker-3", "search.index-updates",         "CONSUMER_JOINED",       "consumers=8"),
     ("2026-09-17", "00:55:17", "broker-2", "payments.settlement-report",   "CONSUMER_LEFT",         "consumers=1"),
     ("2026-09-17", "01:20:40", "broker-2", "identity.session-validate",    "BACKPRESSURE_ENGAGED",  "in_flight=1890"),
@@ -280,17 +282,16 @@ service. "Team priority" is that team's own label for its queues.
 
 ## checkout-api
 
-Serves the storefront checkout. When a customer presses *Place order*, checkout-api
-publishes the order to `checkout.order-submit` and keeps the customer's request open until
-the order service's confirmation comes back on `checkout.order-confirm`; only then is the
-confirmation page returned. Before it confirms, checkout-api also puts a scoring request on
-`fraud.score-requests` and does not answer the customer until the score has come back on
-`fraud.score-replies`, and it reserves stock through `inventory.stock-reserve` (see
-inventory). Once the confirmation page has gone back to the customer, checkout-api publishes
-a purchase event to `checkout.analytics-events` for the data team. An hour after a basket is
-abandoned it publishes a reminder to `checkout.abandoned-cart-emails`. Coupon codes typed at
-checkout are checked through `checkout.coupon-validate`, launched last week and not yet
-onboarded to the backpressure config.
+Runs the storefront checkout. *Place order* goes out on `checkout.order-submit`, where the
+order service picks it up, and the shopper's browser only gets its confirmation page once
+the order service's confirmation has landed on `checkout.order-confirm`. Before it will confirm an order, checkout-api needs a
+risk score, which it requests on `fraud.score-requests` and gets back on
+`fraud.score-replies`, and a stock hold from inventory (see inventory). With the
+confirmation page sent, it drops a purchase event on `checkout.analytics-events` for the
+data team. An hour after a basket is abandoned it queues a reminder on
+`checkout.abandoned-cart-emails`. Coupon codes typed at checkout are checked through
+`checkout.coupon-validate`, launched last week and not yet onboarded to the backpressure
+config.
 
 Team priority: order-submit P1 · order-confirm P1 · analytics-events P1 ("the revenue
 dashboards depend on it") · abandoned-cart-emails critical ("direct revenue") ·
@@ -298,105 +299,126 @@ coupon-validate P2.
 
 ## fraud-scoring
 
-Consumes `fraud.score-requests` and answers on `fraud.score-replies`. The team rates both
-standard: most of the traffic on them is the overnight rescoring of old orders.
-`fraud.model-retrain` carries training jobs for the model refresh. `fraud.case-review` feeds
-the analyst console: when one of our fraud analysts opens a flagged case, the console waits
-for the case bundle to come back on this queue.
+Scores orders from `fraud.score-requests` and answers on `fraud.score-replies`. We rate both
+standard: most of what goes through them is the overnight rescoring of old orders. To score
+a checkout order we first post a lookup on the shopper's device to
+`devices.reputation-lookup`, and no score goes back until device-intel has answered it. Once a score has gone back, the decision
+is appended to `fraud.audit-trail` for the compliance team. `fraud.model-retrain` carries
+training jobs for the model refresh. `fraud.case-review` feeds the analyst console: when one
+of our fraud analysts opens a flagged case, the console sits waiting for the case bundle to
+come back on this queue.
 
-Team priority: score-requests standard · score-replies standard · model-retrain P3 ·
-case-review critical ("analysts are blocked without it").
+Team priority: score-requests standard · score-replies standard · audit-trail P1
+("regulators read it") · model-retrain P3 · case-review critical ("analysts are blocked
+without it").
+
+## device-intel
+
+Keeps reputation data on devices. Other services post their lookups to
+`devices.reputation-lookup` and we answer them. We have no customer-facing endpoints.
+
+Team priority: reputation-lookup P3 ("internal lookups").
 
 ## payments-core
 
-`payments.charge-commands` carries the instruction to charge a customer's card once an
-order has been confirmed. `payments.refund-commands` carries the refund instructions the
-support team issues; there are a few dozen a day. When a charge has gone through,
+`payments.charge-commands` tells the card processor to charge the customer's card once an
+order has been confirmed. `payments.refund-commands` carries the refunds the support team
+issues, a few dozen a day. `payments.refund-status` answers "where has this refund got to?"
+lookups from the support console (see support-desk). When a charge has gone through,
 `payments.receipt-emails` sends the customer their receipt. `payments.settlement-report`
 builds the nightly report of the day's settlements for finance.
 `payments.chargeback-events` records chargebacks notified by the card schemes; it was added
 during the incident and has not been onboarded yet.
 
-Team priority: charge-commands P1 · refund-commands low · receipt-emails P1 ("customers
-chase receipts fast") · settlement-report P2.
+Team priority: charge-commands P1 · refund-commands low · refund-status P1 · receipt-emails
+P1 ("customers chase receipts fast") · settlement-report P2.
 
 ## payouts
 
-Pays our merchants. The nightly payout run puts one transfer instruction per merchant on
-`payouts.transfer-instructions`, which the bank connector executes. `payouts.statement-render`
-renders the PDF statements merchants download the next morning. When a merchant switches
-payout currency in the merchant app, payouts-api holds the app's call until a live quote
-comes back on `payouts.fx-quotes`.
+Pays our merchants. Before the nightly payout run starts, it fetches the day's exchange
+rates through `payouts.fx-rate-fetch` and waits until they are in; it then puts one transfer
+instruction per merchant on `payouts.transfer-instructions`, which the bank connector
+executes. When a merchant switches payout currency in the merchant app, payouts-api keeps
+the app's call open until a live quote arrives on `payouts.fx-quotes`.
 
-Team priority: transfer-instructions P3 ("it's a batch job") · statement-render P2 ·
-fx-quotes P2.
+Team priority: fx-rate-fetch P1 ("no rates, no payouts") · transfer-instructions P3 ("it's
+a batch job") · fx-quotes P2.
 
 ## search
 
-`search.autocomplete-requests` carries the suggestions a shopper sees while typing:
-search-api takes the search box's call, sends the lookup through this queue and holds the
-call until the suggestions come back on it. `search.index-updates` feeds catalogue changes into the search index a few minutes
-after they are made. `search.click-logs` collects click-through events for ranking.
-`search.synonym-reload` was created for a one-off synonym import and has no config yet.
+Shoppers get type-ahead suggestions from search-api, which looks them up through
+`search.autocomplete-requests` and does not answer the search box until they are back.
+`search.index-updates` feeds catalogue changes into the search index a few minutes after
+they are made. `search.synonym-reload` was created for a one-off synonym import and has no
+config yet.
 
 Team priority: autocomplete-requests P1 · index-updates critical ("stale results cost
-sales") · click-logs P3.
+sales").
 
 ## identity
 
 The API gateway holds every call a customer's storefront or app makes until the caller's
-session check has come back on `identity.session-validate`. When a customer asks for a
-login code, the login API replies "code sent" straight away and the code is sent by SMS
-from `identity.login-otp` a few seconds later. When a customer asks for a password reset,
-the login API replies "check your email" straight away and the link goes out from
-`identity.password-reset-emails`. New customers' identity checks are queued on
-`identity.kyc-checks` after the app has told them the result will arrive by email within
-the hour.
+session check has come back on `identity.session-validate`. When a customer asks for a login
+code, the login API replies "code sent" at once, and the code goes out by SMS from
+`identity.login-otp` a few seconds later. A password-reset request is answered "check your
+email" at once, and the link goes out from `identity.password-reset-emails`. New customers'
+identity checks are queued on `identity.kyc-checks` after the app has told them the result
+will arrive by email within the hour.
 
 Team priority: session-validate P1 · login-otp critical ("nobody can log in without it") ·
 password-reset-emails P2 · kyc-checks P2.
 
 ## support-desk
 
-`support.ticket-lookup` backs the support agents' console: when an agent opens a ticket,
-the console waits for the customer's history to come back on this queue.
-`support.ticket-events` streams ticket updates to the data warehouse.
+`support.ticket-lookup` backs the agents' console: opening a ticket leaves the console
+waiting until the customer's history is back on this queue. When an agent asks where a
+customer's refund has got to, we look it up on `payments.refund-status` and the console
+waits for the answer; nothing else uses that queue.
 
-Team priority: ticket-lookup critical ("agents are blocked without it") · ticket-events P3.
+Team priority: ticket-lookup critical ("agents are blocked without it").
 
 ## bi-reports
 
 `reports.priority-exports` produces the hourly exports the leadership team asked for "as a
 priority". `reports.finance-daily` compiles the day's revenue and settlement figures for
-finance. `reports.tax-summaries` compiles the quarterly tax summaries.
+finance.
 
-Team priority: priority-exports P1 · finance-daily P2 · tax-summaries P3.
+Team priority: priority-exports P1 · finance-daily P2.
 
 ## inventory
 
-`inventory.stock-reserve` holds stock for an order: checkout-api, while it is holding the
-customer's *Place order* request, puts a reservation on this queue and waits for it to be
-consumed. `inventory.restock-feed` imports supplier restock files.
-`inventory.price-sync` pushes price changes out to the storefront cache.
+While checkout-api is holding a shopper's *Place order*, it asks us to hold the stock by
+putting a reservation on `inventory.stock-reserve`, and it cannot confirm until we have
+picked the reservation up. Once we have taken a reservation we announce it on
+`inventory.reservation-events`, which the warehouse systems read in their own time.
+`inventory.restock-feed` imports supplier restock files. `inventory.price-sync` pushes price
+changes out to the storefront cache.
 
-Team priority: stock-reserve P1 · restock-feed P3 · price-sync P2.
+Team priority: stock-reserve P1 · reservation-events P1 ("part of every order") ·
+restock-feed P3 · price-sync P2.
+
+## ledger
+
+Holds the authoritative customer balances. Services that need one ask us, and we answer on
+`ledger.balance-snapshot`.
+
+Team priority: balance-snapshot P3 ("back-office service").
 
 ## notify
 
-`notify.push` sends app push notifications. `notify.sms` sends marketing and service texts
-(login codes are sent by identity, not from here). `notify.email-digest` sends the weekly
-digest; it has not been onboarded to the backpressure config.
-
-Team priority: push P2 · sms P2.
+`notify.email-digest` sends the weekly digest; it has not been onboarded to the
+backpressure config.
 
 ## wallet
 
 `wallet.topup-commands` carries the instruction to add funds to a customer's wallet once
-their card has been charged for a top-up. When a customer opens the balance screen, wallet-api holds the app's call
-until the balance comes back on `wallet.balance-query`. `wallet.cashback-accrual` carries
-the instruction to credit earned cashback into a customer's wallet the day after a
-purchase. `wallet.statement-emails` sends the monthly wallet
-statements.
+their card has been charged for a top-up. When a customer opens the balance screen,
+wallet-api keeps the app's call open until the balance is back on `wallet.balance-query`;
+to work that balance out, wallet-api first asks ledger for the latest snapshot and waits
+for ledger's answer.
+`wallet.cashback-accrual` carries the instruction to credit earned cashback into a
+customer's wallet the day after a purchase. `wallet.statement-emails` sends the monthly
+wallet statements.
 
 Team priority: topup-commands P1 · balance-query P1 · cashback-accrual low ("best effort") ·
 statement-emails P3.
@@ -428,13 +450,16 @@ A queue is **critical** when either of these holds:
 
 - **(a) A customer's call is held on it.** A service answering a customer — a web, app or
   API call from someone outside the company, merchants included — holds that call open while
-  a message it has put on this queue waits to be consumed — even if it then goes on waiting
-  for a reply on another queue — or until an answer comes back to it on this queue. That
-  covers a request the service sends on the customer's behalf while it holds the call, as
-  well as the customer's own. It is enough that some of the queue's traffic is held this
-  way. A queue a service publishes to only after it has answered does not count, and neither
-  does a queue where the one kept waiting is a member of staff. Waiting that happens after
-  the call has been answered — for an email or a text to arrive, say — is not a held call.
+  a message it has put on this queue waits to be consumed, or until an answer comes back to
+  it on this queue, even if it goes on waiting on other queues as well. The hold carries
+  down a chain: when the service holding a customer's call is itself waiting on a second
+  service, and that service cannot answer until a message it has put on a queue has been
+  consumed or an answer has come back to it on a queue, the customer's call is held on that
+  queue too, however many services lie in between. It is enough that some of the queue's
+  traffic is held this way. A queue a service publishes to only after it has answered does
+  not count, and neither does a queue where the one kept waiting is a member of staff or a
+  scheduled job rather than a customer. Waiting that happens after the call has been
+  answered — for an email or a text to arrive, say — is not a held call.
 - **(b) It moves money.** A message on it instructs a movement of funds: a charge, a
   refund, a payout, a credit to or debit from a wallet, or a settlement transfer. A message
   that reports, reconciles, summarises or notifies about a movement that has already been
@@ -483,7 +508,8 @@ window exempts a queue from section 1.
 ## 7. One finding per queue
 
 Each queue in the broker export carries exactly one finding: the first of sections 1, 4
-and 5 that applies to it, or `none` when none does. The finding names are
+and 5 that applies to it, with the exemptions in sections 4 and 6 taken into account, or
+`none` when none does. The finding names are
 `NO_BACKPRESSURE_CONFIGURED`, `BACKPRESSURE_THRESHOLD_EXCEEDED`, `DRAIN_TIME_EXCEEDED` and
 `none`.
 

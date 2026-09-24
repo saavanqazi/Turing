@@ -20,13 +20,16 @@ A queue is **critical** when either of these holds:
 
 - **(a) A customer's call is held on it.** A service answering a customer — a web, app or
   API call from someone outside the company, merchants included — holds that call open while
-  a message it has put on this queue waits to be consumed — even if it then goes on waiting
-  for a reply on another queue — or until an answer comes back to it on this queue. That
-  covers a request the service sends on the customer's behalf while it holds the call, as
-  well as the customer's own. It is enough that some of the queue's traffic is held this
-  way. A queue a service publishes to only after it has answered does not count, and neither
-  does a queue where the one kept waiting is a member of staff. Waiting that happens after
-  the call has been answered — for an email or a text to arrive, say — is not a held call.
+  a message it has put on this queue waits to be consumed, or until an answer comes back to
+  it on this queue, even if it goes on waiting on other queues as well. The hold carries
+  down a chain: when the service holding a customer's call is itself waiting on a second
+  service, and that service cannot answer until a message it has put on a queue has been
+  consumed or an answer has come back to it on a queue, the customer's call is held on that
+  queue too, however many services lie in between. It is enough that some of the queue's
+  traffic is held this way. A queue a service publishes to only after it has answered does
+  not count, and neither does a queue where the one kept waiting is a member of staff or a
+  scheduled job rather than a customer. Waiting that happens after the call has been
+  answered — for an email or a text to arrive, say — is not a held call.
 - **(b) It moves money.** A message on it instructs a movement of funds: a charge, a
   refund, a payout, a credit to or debit from a wallet, or a settlement transfer. A message
   that reports, reconciles, summarises or notifies about a movement that has already been
@@ -76,7 +79,8 @@ window exempts a queue from section 1.
 ## 7. One finding per queue
 
 Each queue in the broker export carries exactly one finding: the first of sections 1, 4
-and 5 that applies to it, or `none` when none does. The finding names are
+and 5 that applies to it, with the exemptions in sections 4 and 6 taken into account, or
+`none` when none does. The finding names are
 `NO_BACKPRESSURE_CONFIGURED`, `BACKPRESSURE_THRESHOLD_EXCEEDED`, `DRAIN_TIME_EXCEEDED` and
 `none`.
 

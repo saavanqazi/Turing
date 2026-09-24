@@ -10,6 +10,13 @@
 # the oracle of record is still `harbor run -a oracle`.
 set -euo pipefail
 
+# The cloud sandbox does not keep a Docker daemon alive between sessions; start
+# one if none answers and this shell may.
+if ! docker info >/dev/null 2>&1 && command -v dockerd >/dev/null && [ "$(id -u)" = 0 ]; then
+    (dockerd >/tmp/dockerd.log 2>&1 &)
+    for _ in $(seq 1 30); do docker info >/dev/null 2>&1 && break; sleep 1; done
+fi
+
 TASK="$(cd "$1" && pwd)"
 SUB="${2:-}"
 TAG="oracle-$(basename "$TASK" | tr 'A-Z' 'a-z' | cut -c1-60)"
