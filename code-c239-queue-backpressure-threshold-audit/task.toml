@@ -1,0 +1,30 @@
+schema_version = "1.3"
+artifacts = []
+
+[task]
+name = "obi/code-c239-queue-backpressure-threshold-audit"
+description = "Audit message queue in-flight counts against the backpressure policy"
+authors = []
+keywords = ["harbor", "shannon-200", "code", "non-connector", "offline"]
+
+[metadata]
+source_config = "infra/task-harness/configs/shannon-200/task_code_C239_queue_backpressure_threshold_audit"
+
+[verifier]
+timeout_sec = 600.0
+collect = []
+
+[verifier.env]
+
+[agent]
+timeout_sec = 1800.0
+
+[environment]
+network_mode = "public"
+build_timeout_sec = 1200.0
+os = "linux"
+mcp_servers = []
+
+[environment.env]
+
+[solution.env]

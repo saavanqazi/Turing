@@ -1,0 +1,380 @@
+{
+  "task_id": "code-C239-queue-backpressure-threshold-audit",
+  "verifiers": [
+    {
+      "name": "audit_exists",
+      "metadata": {
+        "how_justification": "Checks backpressure_audit.csv is present as a file in the workspace.",
+        "why_justification": "Audit delivered."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "filesystem",
+          "command": "check_path_exists",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": true,
+        "deterministic": {
+          "path": "$.is_file",
+          "comparison": "equals"
+        }
+      }
+    },
+    {
+      "name": "memo_exists",
+      "metadata": {
+        "how_justification": "Checks backpressure_memo.md is present as a file in the workspace.",
+        "why_justification": "Memo delivered."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "filesystem",
+          "command": "check_path_exists",
+          "arguments": {
+            "path": "backpressure_memo.md"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": true,
+        "deterministic": {
+          "path": "$.is_file",
+          "comparison": "equals"
+        }
+      }
+    },
+    {
+      "name": "schema_present",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv with csv.extract_text and applies regex_match.",
+        "why_justification": "Audit carries the requested schema."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "\\bqueue_id.*finding",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "threshold_flagged",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv with csv.extract_text and applies regex_match.",
+        "why_justification": "Q-02 flagged over its in-flight threshold."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^\\x22?Q\\-02\\x22?\\s*,.*BACKPRESSURE_THRESHOLD_EXCEEDED",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "no_config_flagged",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv with csv.extract_text and applies regex_match.",
+        "why_justification": "Q-04 flagged for no backpressure config."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^\\x22?Q\\-04\\x22?\\s*,.*NO_BACKPRESSURE_CONFIGURED",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "drain_flagged",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv with csv.extract_text and applies regex_match.",
+        "why_justification": "Q-05 flagged for exceeding its drain time."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^\\x22?Q\\-05\\x22?\\s*,.*DRAIN_TIME_EXCEEDED",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "trap_clean",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv with csv.extract_text and applies regex_match.",
+        "why_justification": "Q-03 inside the burst window reads none."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^\\x22?Q\\-03\\x22?\\s*,.*none",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "memo_names_trap",
+      "metadata": {
+        "how_justification": "Opens backpressure_memo.md with md.extract_text and applies contains.",
+        "why_justification": "Memo names the burst-window queue."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "md",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_memo.md"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "Q-03",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "contains"
+        }
+      }
+    },
+    {
+      "name": "memo_explains_burst",
+      "metadata": {
+        "how_justification": "Opens backpressure_memo.md with md.extract_text and applies regex_match.",
+        "why_justification": "Memo ties the exemption to the scheduled burst window."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "md",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_memo.md"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?i)\\bburst\\w*\\b.*\\bwindow",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "results_exists",
+      "metadata": {
+        "how_justification": "Checks results.json is present as a file in the workspace.",
+        "why_justification": "Derived figures delivered."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "filesystem",
+          "command": "check_path_exists",
+          "arguments": {
+            "path": "results.json"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": true,
+        "deterministic": {
+          "path": "$.is_file",
+          "comparison": "equals"
+        }
+      }
+    },
+    {
+      "name": "result_flagged_count",
+      "metadata": {
+        "how_justification": "Reads results.json with json.read_file and compares $.flagged_count.",
+        "why_justification": "Derived figure `flagged_count`, recomputed from the delivered artifacts."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "json",
+          "command": "read_file",
+          "arguments": {
+            "path": "results.json"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": 3,
+        "deterministic": {
+          "path": "$.flagged_count",
+          "comparison": "equals"
+        }
+      }
+    },
+    {
+      "name": "result_threshold_exceeded_count",
+      "metadata": {
+        "how_justification": "Reads results.json with json.read_file and compares $.threshold_exceeded_count.",
+        "why_justification": "Derived figure `threshold_exceeded_count`, recomputed from the delivered artifacts."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "json",
+          "command": "read_file",
+          "arguments": {
+            "path": "results.json"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": 1,
+        "deterministic": {
+          "path": "$.threshold_exceeded_count",
+          "comparison": "equals"
+        }
+      }
+    },
+    {
+      "name": "result_no_config_count",
+      "metadata": {
+        "how_justification": "Reads results.json with json.read_file and compares $.no_config_count.",
+        "why_justification": "Derived figure `no_config_count`, recomputed from the delivered artifacts."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "json",
+          "command": "read_file",
+          "arguments": {
+            "path": "results.json"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": 1,
+        "deterministic": {
+          "path": "$.no_config_count",
+          "comparison": "equals"
+        }
+      }
+    },
+    {
+      "name": "result_drain_exceeded_count",
+      "metadata": {
+        "how_justification": "Reads results.json with json.read_file and compares $.drain_exceeded_count.",
+        "why_justification": "Derived figure `drain_exceeded_count`, recomputed from the delivered artifacts."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "json",
+          "command": "read_file",
+          "arguments": {
+            "path": "results.json"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": 1,
+        "deterministic": {
+          "path": "$.drain_exceeded_count",
+          "comparison": "equals"
+        }
+      }
+    },
+    {
+      "name": "result_compliant_count",
+      "metadata": {
+        "how_justification": "Reads results.json with json.read_file and compares $.compliant_count.",
+        "why_justification": "Derived figure `compliant_count`, recomputed from the delivered artifacts."
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "json",
+          "command": "read_file",
+          "arguments": {
+            "path": "results.json"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": 3,
+        "deterministic": {
+          "path": "$.compliant_count",
+          "comparison": "equals"
+        }
+      }
+    }
+  ]
+}

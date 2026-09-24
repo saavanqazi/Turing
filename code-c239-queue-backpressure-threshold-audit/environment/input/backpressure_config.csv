@@ -1,0 +1,6 @@
+queue_id,tier,in_flight_threshold,max_drain_minutes
+Q-01,critical,1000,15
+Q-02,critical,1000,15
+Q-03,standard,5000,60
+Q-05,standard,5000,60
+Q-06,critical,1000,15
