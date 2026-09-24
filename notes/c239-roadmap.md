@@ -300,3 +300,26 @@ accepted. `tools/assemble_evaluations.py` now takes several job folders and `--e
 ### Waiting on you
 One replacement trial `glm-c239-v3-r5`; `trial_summary --trial JgT4FY8 --step 6` to confirm
 the override root cause; then Phase 4 packaging.
+
+## 6. Restart (v4) — user chose a full restart after v3
+
+v3 stood in band on three valid runs (1.0, 1.0, 0.9466 MODEL), but four of seven v3 trials
+died on infrastructure (proxy timeout ×2, proxy 500, host Docker lock), with runs taking
+8–21 min. The user chose to restart from the mined bundle.
+
+- Mechanism: rules in PLAT-31's own terms; §6 defines each once; the snapshot carries
+  look-alike dashboard columns (`in_flight` = unacked only, `bp_armed`, `eta_drain_min` from
+  the deliver rate). Evidence: the one in-band g308 battery (3 of 4 read "commissionable" off
+  the reported rate instead of its parenthetical definition), and v3's r3 hand slip.
+- Every trap two-sided; plus lowering override, window closed past midnight, weekday window,
+  retired entry, equal-to-threshold, engaged queue still checked for drain, unconfigured
+  queue in an open window, decommissioned config row.
+- 24 queues, one snapshot time, four inputs of 13–52 lines. 83 checks, all core; each single
+  misreading costs 5–22.
+- Cold ambiguity review: no two-reading defect; three optional clarity edits applied (drain
+  formula written as a quotient, "one row per queue in the snapshot", what the memo says for
+  a queue that is not draining). Cold full solve: 1.0 (83/83).
+- Docker oracle 1.0; 17 probes as expected.
+
+### Waiting on you
+`oracle-c239-v4`, then `glm-c239-v4` `-k 4 -n 2`.

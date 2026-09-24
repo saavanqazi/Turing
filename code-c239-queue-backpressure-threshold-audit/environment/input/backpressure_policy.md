@@ -45,7 +45,7 @@ applies to it, or `none`. `flagged_count` counts queues whose finding is not `no
 - *Engaged*: the broker is throttling the queue's publishers, which it reports as a publisher
   flow state of `flow` or `blocked`.
 - *Holds work*: the queue's in-flight load is above zero.
-- *Drain time*: in-flight load divided by the ack rate less the publish rate, per minute,
+- *Drain time*: in-flight load ÷ (ack rate − publish rate), with both rates per minute,
   compared exactly without rounding. A queue whose ack rate is not above its publish rate is
   not draining, and its drain time exceeds any maximum.
 - *Open batch window*: an active BATCH-7 entry for the queue whose window contains the

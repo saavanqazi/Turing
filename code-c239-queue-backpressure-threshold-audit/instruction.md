@@ -2,7 +2,7 @@
 
 After last week's backlog incident I need the broker snapshot taken at 01:50 UTC on the 17th audited against our backpressure policy, PLAT-31. The backpressure config and the BATCH-7 batch schedule are attached alongside it. Each queue in the snapshot gets exactly one finding under the policy: `NO_BACKPRESSURE_CONFIGURED`, `BACKPRESSURE_THRESHOLD_EXCEEDED`, `DRAIN_TIME_EXCEEDED` or `none`.
 
-Save `backpressure_audit.csv` with one row per queue, including a `queue_id` column and a `finding` column. Then write `backpressure_memo.md` for the platform leads explaining each finding: for a threshold or drain finding, give the figure that tripped it and the limit it was measured against, and for any queue over its threshold that still comes out `none`, say what clears it. Finally, put the policy's audit figures in `results.json`.
+Save `backpressure_audit.csv` with one row per queue in the snapshot, including a `queue_id` column and a `finding` column. Then write `backpressure_memo.md` for the platform leads explaining each finding: for a threshold or drain finding, give the figure that tripped it (or, for a queue that is not draining, say so) and the limit it was measured against, and for any queue over its threshold that still comes out `none`, say what clears it. Finally, put the policy's audit figures in `results.json`.
 
 ---
 Save your deliverables into your current working directory using exactly these filenames:
