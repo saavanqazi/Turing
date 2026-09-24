@@ -1,6 +1,6 @@
 # Task
 
-After last week's backlog incident I need every queue in the broker status export audited against our backpressure policy (PLAT-31) and the backpressure config. Each queue gets exactly one finding under the policy: `NO_BACKPRESSURE_CONFIGURED`, `BACKPRESSURE_THRESHOLD_EXCEEDED`, `DRAIN_TIME_EXCEEDED` or `none`.
+After last week's backlog incident I need every queue in the broker's status export audited against our backpressure policy (PLAT-31) as it stood when each queue was sampled. The policy leans on the service catalogue, the batch schedule and the broker event log, which are in the attachments alongside the export and the backpressure config. Each queue gets exactly one finding under the policy: `NO_BACKPRESSURE_CONFIGURED`, `BACKPRESSURE_THRESHOLD_EXCEEDED`, `DRAIN_TIME_EXCEEDED` or `none`.
 
 Save `backpressure_audit.csv` with one row per queue, including a `queue_id` column and a `finding` column. Then write `backpressure_memo.md` for the platform leads explaining each finding: for a threshold or drain finding, give the figure that tripped it and the limit it was measured against, and for any queue over its in-flight threshold that still comes out `none`, say what clears it. Finally, put the policy's audit figures in `results.json`.
 

@@ -1,0 +1,15 @@
+2026-09-16T22:10:04Z broker-1 queue=notify.push event=BACKPRESSURE_ENGAGED in_flight=5310
+2026-09-16T22:48:51Z broker-1 queue=notify.push event=BACKPRESSURE_RELEASED in_flight=1204
+2026-09-16T23:30:02Z broker-3 queue=search.index-updates event=CONSUMER_JOINED consumers=8
+2026-09-17T00:55:17Z broker-2 queue=payments.settlement-report event=CONSUMER_LEFT consumers=1
+2026-09-17T01:20:40Z broker-2 queue=identity.session-validate event=BACKPRESSURE_ENGAGED in_flight=1890
+2026-09-17T01:25:12Z broker-1 queue=payments.charge-commands event=BACKPRESSURE_ENGAGED in_flight=2950
+2026-09-17T01:31:10Z broker-1 queue=checkout.order-submit event=BACKPRESSURE_ENGAGED in_flight=2210
+2026-09-17T01:33:05Z broker-3 queue=checkout.analytics-events event=BACKPRESSURE_ENGAGED in_flight=4010
+2026-09-17T01:34:48Z broker-2 queue=wallet.cashback-accrual event=CONSUMER_LEFT consumers=2
+2026-09-17T01:38:00Z broker-1 queue=fraud.score-requests event=POLICY_RELOAD policy=PLAT-31
+2026-09-17T01:40:26Z broker-3 queue=search.autocomplete-requests event=BACKPRESSURE_ENGAGED in_flight=1480
+2026-09-17T01:44:09Z broker-2 queue=identity.session-validate event=BACKPRESSURE_RELEASED in_flight=610
+2026-09-17T01:47:55Z broker-1 queue=support.ticket-lookup event=CONSUMER_JOINED consumers=4
+2026-09-17T02:07:31Z broker-2 queue=wallet.balance-query event=BACKPRESSURE_ENGAGED in_flight=1620
+2026-09-17T02:15:44Z broker-1 queue=payments.charge-commands event=BACKPRESSURE_RELEASED in_flight=380

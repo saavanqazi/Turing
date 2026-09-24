@@ -1,7 +1,7 @@
 {
-  "flagged_count": 3,
-  "threshold_exceeded_count": 1,
-  "no_config_count": 1,
-  "drain_exceeded_count": 1,
-  "compliant_count": 3
+  "flagged_count": 19,
+  "threshold_exceeded_count": 8,
+  "no_config_count": 4,
+  "drain_exceeded_count": 7,
+  "compliant_count": 21
 }
