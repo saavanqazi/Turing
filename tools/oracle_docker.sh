@@ -14,7 +14,7 @@ set -euo pipefail
 # one if none answers and this shell may.
 if ! docker info >/dev/null 2>&1 && command -v dockerd >/dev/null && [ "$(id -u)" = 0 ]; then
     (dockerd >/tmp/dockerd.log 2>&1 &)
-    for _ in $(seq 1 30); do docker info >/dev/null 2>&1 && break; sleep 1; done
+    for _ in $(seq 1 90); do docker info >/dev/null 2>&1 && break; sleep 1; done
 fi
 
 TASK="$(cd "$1" && pwd)"

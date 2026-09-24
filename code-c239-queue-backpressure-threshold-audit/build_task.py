@@ -689,7 +689,10 @@ for r, f, why, extra in rows:
                     MEMO_SRC, det("$.text", "regex_match", near(q, pat))))
 
 spec = OrderedDict(task_id=TASK_ID, verifiers=vs)
-(ROOT / "tests" / "verifier.json").write_text(json.dumps(spec, indent=2) + "\n", encoding="utf-8")
+# tests/manifest.json is the delivery format; test_outputs.py and score both read
+# verifier.json, as the reference bundle ships. The two are written identical.
+for _name in ("verifier.json", "manifest.json"):
+    (ROOT / "tests" / _name).write_text(json.dumps(spec, indent=2) + "\n", encoding="utf-8")
 
 def failed_checks(files):
     """Pin names a submission fails, evaluated here exactly as the engine does (re.search / equals)."""
