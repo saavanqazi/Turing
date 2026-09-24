@@ -43,7 +43,11 @@ def exception_of(trial: Path):
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--task", required=True, help="task folder name, e.g. gen-g308-commission-report-reconciliation-audit")
-ap.add_argument("--difficulty", required=True, type=Path, help="job folder holding the 4 GLM rollouts")
+ap.add_argument("--difficulty", required=True, type=Path, nargs="+",
+                help="job folder(s) holding the GLM rollouts; trials are taken in the order given")
+ap.add_argument("--exclude", nargs="*", default=[],
+                help="trial names (or unique parts of them) to leave out, e.g. a run that never "
+                     "reached the verifier because of infrastructure; each exclusion is reported")
 ap.add_argument("--solvability", type=Path, help="job folder holding a reward-1.0 non-oracle run")
 ap.add_argument("--zip", action="store_true", help="also write <task>.zip beside the task folder")
 a = ap.parse_args()
@@ -58,15 +62,23 @@ for sub in ("difficulty", "solvability"):
 root.mkdir(parents=True, exist_ok=True)
 (root / ".gitkeep").unlink(missing_ok=True)      # nothing may sit loose under evaluations/
 
-ts = trials(a.difficulty)
+ts, left_out = [], []
+for job in a.difficulty:
+    for t in trials(job):
+        (left_out if any(x in t.name for x in a.exclude) else ts).append(t)
+for x in a.exclude:
+    if not any(x in t.name for t in left_out):
+        sys.exit(f"--exclude {x!r} matched no trial")
+for t in left_out:
+    print(f"excluded {t.parent.name}/{t.name}  reward {reward(t)}  ({exception_of(t) or 'no exception'})")
 if len(ts) < 4:
-    sys.exit(f"need 4 trial folders in {a.difficulty}, found {len(ts)}")
+    sys.exit(f"need 4 trial folders across {[str(j) for j in a.difficulty]}, found {len(ts)}")
 if len(ts) > 4:
     print(f"note: {len(ts)} trials present; taking the first four — four runs, not five")
 
 diff = root / "difficulty"; diff.mkdir(parents=True)
 for name in JOB_FILES:                            # as the reference ships them
-    src = a.difficulty / name
+    src = a.difficulty[0] / name
     if src.exists():
         shutil.copy2(src, diff / name)
 
@@ -75,7 +87,7 @@ for i, t in enumerate(ts[:4], 1):
     shutil.copytree(t, diff / f"r{i}")
     rewards.append(reward(t))
 
-src = a.solvability or a.difficulty
+src = a.solvability or a.difficulty[0]
 # A clean 1.0 first; a 1.0 that Harbor also marked with an exception (a run that
 # wrote its files and then hit the agent timeout) only if nothing cleaner exists.
 cands = [t for t in trials(src) if reward(t) == 1.0]

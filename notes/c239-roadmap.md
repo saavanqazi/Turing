@@ -285,6 +285,18 @@ chain queues included.
   stem required "burst"/"BATCH-7"/"batch window". The stem now also takes "window" and the
   job's own name; the same memo scores 1.0. The alt-format probe now phrases it that way.
 
+Harbor (user): oracle-c239-v3 **1.0**; glm-c239-v3:
+
+| trial | reward | class | evidence |
+|---|---|---|---|
+| 7qhShnP | 1.0 | pass | 131/131, 15.6 min |
+| 9Bxvf6e | 1.0 | pass | 131/131, 14.6 min |
+| JgT4FY8 | 0.9466 | MODEL | only `reports.priority-exports` wrong (7 checks): standard, override 3,000 *below* the 5,000 default, 3,400 in flight; the other two overrides (which raise the default) right. §3 unchanged since v1; other runs right on identical data |
+| o96bMxQ | 0.0 | INFRA | AgentTimeoutError, 5 turns in 30 min, no file written; passing runs 8–10 turns in 8–16 min. Never counted |
+
+In band on the three valid runs (2 pass, 1 MODEL); the replacement decides 2/4 vs 3/4, both
+accepted. `tools/assemble_evaluations.py` now takes several job folders and `--exclude`.
+
 ### Waiting on you
-`oracle-c239-v3`, then `glm-c239-v3` `-k 4`. If 4/4 again: stop, write the g308-style
-evidence note, and hand the decision to Turing.
+One replacement trial `glm-c239-v3-r5`; `trial_summary --trial JgT4FY8 --step 6` to confirm
+the override root cause; then Phase 4 packaging.
