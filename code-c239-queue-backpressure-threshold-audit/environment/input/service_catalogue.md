@@ -116,8 +116,8 @@ Team priority: push P2 · sms P2.
 
 ## wallet
 
-`wallet.topup-commands` carries the instruction to add funds to a customer's wallet after a
-card top-up. When a customer opens the balance screen, wallet-api holds the app's call
+`wallet.topup-commands` carries the instruction to add funds to a customer's wallet once
+their card has been charged for a top-up. When a customer opens the balance screen, wallet-api holds the app's call
 until the balance comes back on `wallet.balance-query`. `wallet.cashback-accrual` carries
 the instruction to credit earned cashback into a customer's wallet the day after a
 purchase. `wallet.statement-emails` sends the monthly wallet
