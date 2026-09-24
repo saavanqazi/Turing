@@ -1,0 +1,44 @@
+[
+  {
+    "name": "bash",
+    "arguments": {
+      "command": "cat input/backpressure_config.csv"
+    }
+  },
+  {
+    "name": "bash",
+    "arguments": {
+      "command": "cat input/backpressure_policy.md"
+    }
+  },
+  {
+    "name": "bash",
+    "arguments": {
+      "command": "cat input/queue_status.csv"
+    }
+  },
+  {
+    "name": "bash",
+    "arguments": {
+      "command": "cat > backpressure_audit.csv << 'AUDITEOF'\nqueue_id,in_flight_count,drain_minutes,finding\nQ-01,800,10,none\nQ-02,1500,10,BACKPRESSURE_THRESHOLD_EXCEEDED\nQ-03,6000,50,none\nQ-04,2000,10,NO_BACKPRESSURE_CONFIGURED\nQ-05,4500,90,DRAIN_TIME_EXCEEDED\nQ-06,1200,10,none\nAUDITEOF"
+    }
+  },
+  {
+    "name": "bash",
+    "arguments": {
+      "command": "cat > backpressure_memo.md << 'MEMOEOF'\n# Queue backpressure audit \u2014 6 queues\n\n6 queues checked against PLAT-31. 3 are compliant and 3 carry a finding.\n\n| Queue | In-flight | Drain (min) | Finding |\n|---|---|---|---|\n| Q-01 | 800 | 10 | none |\n| Q-02 | 1,500 | 10 | BACKPRESSURE_THRESHOLD_EXCEEDED |\n| Q-03 | 6,000 | 50 | none |\n| Q-04 | 2,000 | 10 | NO_BACKPRESSURE_CONFIGURED |\n| Q-05 | 4,500 | 90 | DRAIN_TIME_EXCEEDED |\n| Q-06 | 1,200 | 10 | none |\n\n## Findings\n\n- **Q-02** \u2014 `BACKPRESSURE_THRESHOLD_EXCEEDED`. 1,500 in flight against the critical threshold of 1,000, and backpressure has not engaged.\n- **Q-04** \u2014 `NO_BACKPRESSURE_CONFIGURED`. Q-04 has no entry in the backpressure config, so there is no threshold to measure its 2,000 in-flight messages against.\n- **Q-05** \u2014 `DRAIN_TIME_EXCEEDED`. Drain time of 90 minutes against the standard maximum of 60 minutes.\n\n## Over threshold but no finding\n\n- **Q-03** \u2014 `none`. 6,000 in flight is over the standard threshold of 5,000, but the queue is marked inside a documented scheduled-batch burst window, which exempts it from the threshold and drain checks while the window holds.\n- **Q-06** \u2014 `none`. 1,200 in flight is over the critical threshold of 1,000, but backpressure has already engaged, so the system responded correctly. Its drain time of 10 minutes is within the 15-minute maximum.\nMEMOEOF"
+    }
+  },
+  {
+    "name": "bash",
+    "arguments": {
+      "command": "cat > results.json << 'RESULTSEOF'\n{\n  \"flagged_count\": 3,\n  \"threshold_exceeded_count\": 1,\n  \"no_config_count\": 1,\n  \"drain_exceeded_count\": 1,\n  \"compliant_count\": 3\n}\nRESULTSEOF"
+    }
+  },
+  {
+    "name": "bash",
+    "arguments": {
+      "command": "ls -la backpressure_audit.csv backpressure_memo.md results.json"
+    }
+  }
+]

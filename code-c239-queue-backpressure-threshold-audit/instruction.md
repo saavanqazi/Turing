@@ -1,6 +1,8 @@
 # Task
 
-Audit these message queues against our backpressure policy after last week's backlog incident. For each queue, check whether it has a backpressure config at all, then its in-flight threshold and drain time — one queue's numbers are over threshold but the registry marks it inside a scheduled burst window, so check that field before flagging it. Save `backpressure_audit.csv` with one row per queue and a `finding` column (`NO_BACKPRESSURE_CONFIGURED`, `BACKPRESSURE_THRESHOLD_EXCEEDED`, `DRAIN_TIME_EXCEEDED`, or `none`). Then write `backpressure_memo.md` explaining each finding, including the burst-window queue.
+After last week's backlog incident I need every queue in the broker status export audited against our backpressure policy (PLAT-31) and the backpressure config. Each queue gets exactly one finding under the policy: `NO_BACKPRESSURE_CONFIGURED`, `BACKPRESSURE_THRESHOLD_EXCEEDED`, `DRAIN_TIME_EXCEEDED` or `none`.
+
+Save `backpressure_audit.csv` with one row per queue, including a `queue_id` column and a `finding` column. Then write `backpressure_memo.md` for the platform leads explaining each finding: for a threshold or drain finding, give the figure that tripped it and the limit it was measured against, and for any queue over its in-flight threshold that still comes out `none`, say what clears it. Finally, put the policy's audit figures in `results.json`.
 
 ---
 Save your deliverables into your current working directory using exactly these filenames:

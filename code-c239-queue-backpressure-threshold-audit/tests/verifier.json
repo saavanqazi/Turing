@@ -1,11 +1,12 @@
 {
-  "task_id": "code-C239-queue-backpressure-threshold-audit",
+  "task_id": "code-c239-queue-backpressure-threshold-audit",
   "verifiers": [
     {
       "name": "audit_exists",
       "metadata": {
-        "how_justification": "Checks backpressure_audit.csv is present as a file in the workspace.",
-        "why_justification": "Audit delivered."
+        "how_justification": "Checks backpressure_audit.csv is present as a file.",
+        "why_justification": "The audit is a named deliverable.",
+        "tag": "core"
       },
       "source": {
         "type": "file",
@@ -29,8 +30,9 @@
     {
       "name": "memo_exists",
       "metadata": {
-        "how_justification": "Checks backpressure_memo.md is present as a file in the workspace.",
-        "why_justification": "Memo delivered."
+        "how_justification": "Checks backpressure_memo.md is present as a file.",
+        "why_justification": "The memo is a named deliverable.",
+        "tag": "core"
       },
       "source": {
         "type": "file",
@@ -52,185 +54,11 @@
       }
     },
     {
-      "name": "schema_present",
-      "metadata": {
-        "how_justification": "Opens backpressure_audit.csv with csv.extract_text and applies regex_match.",
-        "why_justification": "Audit carries the requested schema."
-      },
-      "source": {
-        "type": "file",
-        "file": {
-          "type": "csv",
-          "command": "extract_text",
-          "arguments": {
-            "path": "backpressure_audit.csv"
-          }
-        }
-      },
-      "assertion": {
-        "type": "deterministic",
-        "expected": "\\bqueue_id.*finding",
-        "deterministic": {
-          "path": "$.text",
-          "comparison": "regex_match"
-        }
-      }
-    },
-    {
-      "name": "threshold_flagged",
-      "metadata": {
-        "how_justification": "Opens backpressure_audit.csv with csv.extract_text and applies regex_match.",
-        "why_justification": "Q-02 flagged over its in-flight threshold."
-      },
-      "source": {
-        "type": "file",
-        "file": {
-          "type": "csv",
-          "command": "extract_text",
-          "arguments": {
-            "path": "backpressure_audit.csv"
-          }
-        }
-      },
-      "assertion": {
-        "type": "deterministic",
-        "expected": "(?mi)^\\x22?Q\\-02\\x22?\\s*,.*BACKPRESSURE_THRESHOLD_EXCEEDED",
-        "deterministic": {
-          "path": "$.text",
-          "comparison": "regex_match"
-        }
-      }
-    },
-    {
-      "name": "no_config_flagged",
-      "metadata": {
-        "how_justification": "Opens backpressure_audit.csv with csv.extract_text and applies regex_match.",
-        "why_justification": "Q-04 flagged for no backpressure config."
-      },
-      "source": {
-        "type": "file",
-        "file": {
-          "type": "csv",
-          "command": "extract_text",
-          "arguments": {
-            "path": "backpressure_audit.csv"
-          }
-        }
-      },
-      "assertion": {
-        "type": "deterministic",
-        "expected": "(?mi)^\\x22?Q\\-04\\x22?\\s*,.*NO_BACKPRESSURE_CONFIGURED",
-        "deterministic": {
-          "path": "$.text",
-          "comparison": "regex_match"
-        }
-      }
-    },
-    {
-      "name": "drain_flagged",
-      "metadata": {
-        "how_justification": "Opens backpressure_audit.csv with csv.extract_text and applies regex_match.",
-        "why_justification": "Q-05 flagged for exceeding its drain time."
-      },
-      "source": {
-        "type": "file",
-        "file": {
-          "type": "csv",
-          "command": "extract_text",
-          "arguments": {
-            "path": "backpressure_audit.csv"
-          }
-        }
-      },
-      "assertion": {
-        "type": "deterministic",
-        "expected": "(?mi)^\\x22?Q\\-05\\x22?\\s*,.*DRAIN_TIME_EXCEEDED",
-        "deterministic": {
-          "path": "$.text",
-          "comparison": "regex_match"
-        }
-      }
-    },
-    {
-      "name": "trap_clean",
-      "metadata": {
-        "how_justification": "Opens backpressure_audit.csv with csv.extract_text and applies regex_match.",
-        "why_justification": "Q-03 inside the burst window reads none."
-      },
-      "source": {
-        "type": "file",
-        "file": {
-          "type": "csv",
-          "command": "extract_text",
-          "arguments": {
-            "path": "backpressure_audit.csv"
-          }
-        }
-      },
-      "assertion": {
-        "type": "deterministic",
-        "expected": "(?mi)^\\x22?Q\\-03\\x22?\\s*,.*none",
-        "deterministic": {
-          "path": "$.text",
-          "comparison": "regex_match"
-        }
-      }
-    },
-    {
-      "name": "memo_names_trap",
-      "metadata": {
-        "how_justification": "Opens backpressure_memo.md with md.extract_text and applies contains.",
-        "why_justification": "Memo names the burst-window queue."
-      },
-      "source": {
-        "type": "file",
-        "file": {
-          "type": "md",
-          "command": "extract_text",
-          "arguments": {
-            "path": "backpressure_memo.md"
-          }
-        }
-      },
-      "assertion": {
-        "type": "deterministic",
-        "expected": "Q-03",
-        "deterministic": {
-          "path": "$.text",
-          "comparison": "contains"
-        }
-      }
-    },
-    {
-      "name": "memo_explains_burst",
-      "metadata": {
-        "how_justification": "Opens backpressure_memo.md with md.extract_text and applies regex_match.",
-        "why_justification": "Memo ties the exemption to the scheduled burst window."
-      },
-      "source": {
-        "type": "file",
-        "file": {
-          "type": "md",
-          "command": "extract_text",
-          "arguments": {
-            "path": "backpressure_memo.md"
-          }
-        }
-      },
-      "assertion": {
-        "type": "deterministic",
-        "expected": "(?i)\\bburst\\w*\\b.*\\bwindow",
-        "deterministic": {
-          "path": "$.text",
-          "comparison": "regex_match"
-        }
-      }
-    },
-    {
       "name": "results_exists",
       "metadata": {
-        "how_justification": "Checks results.json is present as a file in the workspace.",
-        "why_justification": "Derived figures delivered."
+        "how_justification": "Checks results.json is present as a file.",
+        "why_justification": "The figures file is a named deliverable.",
+        "tag": "core"
       },
       "source": {
         "type": "file",
@@ -252,10 +80,349 @@
       }
     },
     {
+      "name": "audit_header",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and requires a header row with a queue_id cell and a finding cell, in either order.",
+        "why_justification": "The instruction asks for a queue_id and a finding column; any other columns are the solver's choice.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)\\A(?=[^\\n]*(?:^|,)[ \\t]*\\x22?queue_id\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:^|,)[ \\t]*\\x22?finding\\x22?[ \\t]*(?:,|\\r?$))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_01_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and requires a row with a Q-01 cell and a finding cell equal to none.",
+        "why_justification": "Q-01's finding under PLAT-31 is none.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-01\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:^|,)[ \\t]*\\x22?none\\x22?[ \\t]*(?:,|\\r?$))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_01_no_other_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and forbids any row with a Q-01 cell from also carrying a cell equal to NO_BACKPRESSURE_CONFIGURED, BACKPRESSURE_THRESHOLD_EXCEEDED, DRAIN_TIME_EXCEEDED.",
+        "why_justification": "Each queue carries exactly one finding (PLAT-31 \u00a75); a Q-01 row naming another finding contradicts it.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-01\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:(?:^|,)[ \\t]*\\x22?NO_BACKPRESSURE_CONFIGURED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?BACKPRESSURE_THRESHOLD_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?DRAIN_TIME_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$)))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "not_regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_02_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and requires a row with a Q-02 cell and a finding cell equal to BACKPRESSURE_THRESHOLD_EXCEEDED.",
+        "why_justification": "Q-02's finding under PLAT-31 is BACKPRESSURE_THRESHOLD_EXCEEDED.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-02\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:^|,)[ \\t]*\\x22?BACKPRESSURE_THRESHOLD_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_02_no_other_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and forbids any row with a Q-02 cell from also carrying a cell equal to NO_BACKPRESSURE_CONFIGURED, DRAIN_TIME_EXCEEDED, none.",
+        "why_justification": "Each queue carries exactly one finding (PLAT-31 \u00a75); a Q-02 row naming another finding contradicts it.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-02\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:(?:^|,)[ \\t]*\\x22?NO_BACKPRESSURE_CONFIGURED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?DRAIN_TIME_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?none\\x22?[ \\t]*(?:,|\\r?$)))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "not_regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_03_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and requires a row with a Q-03 cell and a finding cell equal to none.",
+        "why_justification": "Q-03's finding under PLAT-31 is none.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-03\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:^|,)[ \\t]*\\x22?none\\x22?[ \\t]*(?:,|\\r?$))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_03_no_other_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and forbids any row with a Q-03 cell from also carrying a cell equal to NO_BACKPRESSURE_CONFIGURED, BACKPRESSURE_THRESHOLD_EXCEEDED, DRAIN_TIME_EXCEEDED.",
+        "why_justification": "Each queue carries exactly one finding (PLAT-31 \u00a75); a Q-03 row naming another finding contradicts it.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-03\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:(?:^|,)[ \\t]*\\x22?NO_BACKPRESSURE_CONFIGURED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?BACKPRESSURE_THRESHOLD_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?DRAIN_TIME_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$)))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "not_regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_04_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and requires a row with a Q-04 cell and a finding cell equal to NO_BACKPRESSURE_CONFIGURED.",
+        "why_justification": "Q-04's finding under PLAT-31 is NO_BACKPRESSURE_CONFIGURED.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-04\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:^|,)[ \\t]*\\x22?NO_BACKPRESSURE_CONFIGURED\\x22?[ \\t]*(?:,|\\r?$))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_04_no_other_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and forbids any row with a Q-04 cell from also carrying a cell equal to BACKPRESSURE_THRESHOLD_EXCEEDED, DRAIN_TIME_EXCEEDED, none.",
+        "why_justification": "Each queue carries exactly one finding (PLAT-31 \u00a75); a Q-04 row naming another finding contradicts it.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-04\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:(?:^|,)[ \\t]*\\x22?BACKPRESSURE_THRESHOLD_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?DRAIN_TIME_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?none\\x22?[ \\t]*(?:,|\\r?$)))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "not_regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_05_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and requires a row with a Q-05 cell and a finding cell equal to DRAIN_TIME_EXCEEDED.",
+        "why_justification": "Q-05's finding under PLAT-31 is DRAIN_TIME_EXCEEDED.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-05\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:^|,)[ \\t]*\\x22?DRAIN_TIME_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_05_no_other_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and forbids any row with a Q-05 cell from also carrying a cell equal to NO_BACKPRESSURE_CONFIGURED, BACKPRESSURE_THRESHOLD_EXCEEDED, none.",
+        "why_justification": "Each queue carries exactly one finding (PLAT-31 \u00a75); a Q-05 row naming another finding contradicts it.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-05\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:(?:^|,)[ \\t]*\\x22?NO_BACKPRESSURE_CONFIGURED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?BACKPRESSURE_THRESHOLD_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?none\\x22?[ \\t]*(?:,|\\r?$)))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "not_regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_06_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and requires a row with a Q-06 cell and a finding cell equal to none.",
+        "why_justification": "Q-06's finding under PLAT-31 is none.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-06\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:^|,)[ \\t]*\\x22?none\\x22?[ \\t]*(?:,|\\r?$))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "row_q_06_no_other_finding",
+      "metadata": {
+        "how_justification": "Opens backpressure_audit.csv and forbids any row with a Q-06 cell from also carrying a cell equal to NO_BACKPRESSURE_CONFIGURED, BACKPRESSURE_THRESHOLD_EXCEEDED, DRAIN_TIME_EXCEEDED.",
+        "why_justification": "Each queue carries exactly one finding (PLAT-31 \u00a75); a Q-06 row naming another finding contradicts it.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "csv",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_audit.csv"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?mi)^(?=[^\\n]*(?:^|,)[ \\t]*\\x22?Q\\-06\\x22?[ \\t]*(?:,|\\r?$))(?=[^\\n]*(?:(?:^|,)[ \\t]*\\x22?NO_BACKPRESSURE_CONFIGURED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?BACKPRESSURE_THRESHOLD_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$)|(?:^|,)[ \\t]*\\x22?DRAIN_TIME_EXCEEDED\\x22?[ \\t]*(?:,|\\r?$)))",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "not_regex_match"
+        }
+      }
+    },
+    {
       "name": "result_flagged_count",
       "metadata": {
-        "how_justification": "Reads results.json with json.read_file and compares $.flagged_count.",
-        "why_justification": "Derived figure `flagged_count`, recomputed from the delivered artifacts."
+        "how_justification": "Reads results.json and compares $.flagged_count.",
+        "why_justification": "`flagged_count` as PLAT-31 \u00a76 defines it.",
+        "tag": "core"
       },
       "source": {
         "type": "file",
@@ -279,8 +446,9 @@
     {
       "name": "result_threshold_exceeded_count",
       "metadata": {
-        "how_justification": "Reads results.json with json.read_file and compares $.threshold_exceeded_count.",
-        "why_justification": "Derived figure `threshold_exceeded_count`, recomputed from the delivered artifacts."
+        "how_justification": "Reads results.json and compares $.threshold_exceeded_count.",
+        "why_justification": "`threshold_exceeded_count` as PLAT-31 \u00a76 defines it.",
+        "tag": "core"
       },
       "source": {
         "type": "file",
@@ -304,8 +472,9 @@
     {
       "name": "result_no_config_count",
       "metadata": {
-        "how_justification": "Reads results.json with json.read_file and compares $.no_config_count.",
-        "why_justification": "Derived figure `no_config_count`, recomputed from the delivered artifacts."
+        "how_justification": "Reads results.json and compares $.no_config_count.",
+        "why_justification": "`no_config_count` as PLAT-31 \u00a76 defines it.",
+        "tag": "core"
       },
       "source": {
         "type": "file",
@@ -329,8 +498,9 @@
     {
       "name": "result_drain_exceeded_count",
       "metadata": {
-        "how_justification": "Reads results.json with json.read_file and compares $.drain_exceeded_count.",
-        "why_justification": "Derived figure `drain_exceeded_count`, recomputed from the delivered artifacts."
+        "how_justification": "Reads results.json and compares $.drain_exceeded_count.",
+        "why_justification": "`drain_exceeded_count` as PLAT-31 \u00a76 defines it.",
+        "tag": "core"
       },
       "source": {
         "type": "file",
@@ -354,8 +524,9 @@
     {
       "name": "result_compliant_count",
       "metadata": {
-        "how_justification": "Reads results.json with json.read_file and compares $.compliant_count.",
-        "why_justification": "Derived figure `compliant_count`, recomputed from the delivered artifacts."
+        "how_justification": "Reads results.json and compares $.compliant_count.",
+        "why_justification": "`compliant_count` as PLAT-31 \u00a76 defines it.",
+        "tag": "core"
       },
       "source": {
         "type": "file",
@@ -373,6 +544,188 @@
         "deterministic": {
           "path": "$.compliant_count",
           "comparison": "equals"
+        }
+      }
+    },
+    {
+      "name": "memo_q_02_figure",
+      "metadata": {
+        "how_justification": "Opens backpressure_memo.md and requires 1,500 within 400 characters of Q-02, either order, with no other queue id in between.",
+        "why_justification": "Q-02 is flagged BACKPRESSURE_THRESHOLD_EXCEEDED at 1,500 in-flight messages against a limit of 1,000; the instruction asks the memo to state the figure and the limit.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "md",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_memo.md"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?is)(?:\\bQ\\-02\\b(?:(?!\\bQ-\\d{2}\\b).){0,400}?(?<![\\d.,])1,?500(?![\\d]|[.,]\\d)|(?<![\\d.,])1,?500(?![\\d]|[.,]\\d)(?:(?!\\bQ-\\d{2}\\b).){0,400}?\\bQ\\-02\\b)",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "memo_q_02_limit",
+      "metadata": {
+        "how_justification": "Opens backpressure_memo.md and requires 1,000 within 400 characters of Q-02, either order, with no other queue id in between.",
+        "why_justification": "Q-02 is flagged BACKPRESSURE_THRESHOLD_EXCEEDED at 1,500 in-flight messages against a limit of 1,000; the instruction asks the memo to state the figure and the limit.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "md",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_memo.md"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?is)(?:\\bQ\\-02\\b(?:(?!\\bQ-\\d{2}\\b).){0,400}?(?<![\\d.,])1,?000(?![\\d]|[.,]\\d)|(?<![\\d.,])1,?000(?![\\d]|[.,]\\d)(?:(?!\\bQ-\\d{2}\\b).){0,400}?\\bQ\\-02\\b)",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "memo_q_03_cleared",
+      "metadata": {
+        "how_justification": "Opens backpressure_memo.md and requires the stem 'burst' within 400 characters of Q-03, either order, with no other queue id in between.",
+        "why_justification": "Q-03 is over its threshold and carries no finding because it is inside a burst window; the instruction asks the memo to say what clears it.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "md",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_memo.md"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?is)(?:\\bQ\\-03\\b(?:(?!\\bQ-\\d{2}\\b).){0,400}?burst|burst(?:(?!\\bQ-\\d{2}\\b).){0,400}?\\bQ\\-03\\b)",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "memo_q_04_named",
+      "metadata": {
+        "how_justification": "Opens backpressure_memo.md and requires the token Q-04.",
+        "why_justification": "Q-04 is flagged NO_BACKPRESSURE_CONFIGURED, and the memo explains each finding.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "md",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_memo.md"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "\\bQ\\-04\\b",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "memo_q_05_figure",
+      "metadata": {
+        "how_justification": "Opens backpressure_memo.md and requires 90 within 400 characters of Q-05, either order, with no other queue id in between.",
+        "why_justification": "Q-05 is flagged DRAIN_TIME_EXCEEDED at 90 drain minutes against a limit of 60; the instruction asks the memo to state the figure and the limit.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "md",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_memo.md"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?is)(?:\\bQ\\-05\\b(?:(?!\\bQ-\\d{2}\\b).){0,400}?(?<![\\d.,])90(?![\\d]|[.,]\\d)|(?<![\\d.,])90(?![\\d]|[.,]\\d)(?:(?!\\bQ-\\d{2}\\b).){0,400}?\\bQ\\-05\\b)",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "memo_q_05_limit",
+      "metadata": {
+        "how_justification": "Opens backpressure_memo.md and requires 60 within 400 characters of Q-05, either order, with no other queue id in between.",
+        "why_justification": "Q-05 is flagged DRAIN_TIME_EXCEEDED at 90 drain minutes against a limit of 60; the instruction asks the memo to state the figure and the limit.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "md",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_memo.md"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?is)(?:\\bQ\\-05\\b(?:(?!\\bQ-\\d{2}\\b).){0,400}?(?<![\\d.,])60(?![\\d]|[.,]\\d)|(?<![\\d.,])60(?![\\d]|[.,]\\d)(?:(?!\\bQ-\\d{2}\\b).){0,400}?\\bQ\\-05\\b)",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
+        }
+      }
+    },
+    {
+      "name": "memo_q_06_cleared",
+      "metadata": {
+        "how_justification": "Opens backpressure_memo.md and requires the stem 'engag' within 400 characters of Q-06, either order, with no other queue id in between.",
+        "why_justification": "Q-06 is over its threshold and carries no finding because backpressure has engaged; the instruction asks the memo to say what clears it.",
+        "tag": "core"
+      },
+      "source": {
+        "type": "file",
+        "file": {
+          "type": "md",
+          "command": "extract_text",
+          "arguments": {
+            "path": "backpressure_memo.md"
+          }
+        }
+      },
+      "assertion": {
+        "type": "deterministic",
+        "expected": "(?is)(?:\\bQ\\-06\\b(?:(?!\\bQ-\\d{2}\\b).){0,400}?engag|engag(?:(?!\\bQ-\\d{2}\\b).){0,400}?\\bQ\\-06\\b)",
+        "deterministic": {
+          "path": "$.text",
+          "comparison": "regex_match"
         }
       }
     }
