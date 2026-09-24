@@ -4,6 +4,7 @@ checkout.order-confirm,2026-09-17T01:36:30Z,1350,1000,1300,amber,false
 checkout.abandoned-cart-emails,2026-09-17T01:37:10Z,800,40,60,green,false
 checkout.coupon-validate,2026-09-17T01:37:40Z,300,500,520,green,false
 fraud.score-requests,2026-09-17T01:38:20Z,1400,420,500,amber,false
+fraud.velocity-events,2026-09-17T01:38:40Z,2300,410,525,amber,false
 fraud.score-replies,2026-09-17T01:38:50Z,1000,880,950,amber,false
 payments.charge-commands,2026-09-17T01:39:00Z,3100,1150,1400,amber,false
 fraud.case-review,2026-09-17T01:39:30Z,1900,60,110,amber,false
@@ -14,6 +15,7 @@ payouts.transfer-instructions,2026-09-17T01:42:00Z,8000,1500,1200,red,true
 payouts.fx-rate-fetch,2026-09-17T01:42:30Z,600,20,40,green,false
 payouts.fx-quotes,2026-09-17T01:43:00Z,700,400,430,green,false
 devices.reputation-lookup,2026-09-17T01:44:00Z,800,200,250,green,false
+devices.carrier-lookup,2026-09-17T01:44:20Z,1250,600,700,amber,false
 search.synonym-reload,2026-09-17T01:44:30Z,20,0,5,green,false
 checkout.analytics-events,2026-09-17T01:45:00Z,4200,230,300,amber,false
 identity.login-otp,2026-09-17T01:45:30Z,1200,800,850,amber,false

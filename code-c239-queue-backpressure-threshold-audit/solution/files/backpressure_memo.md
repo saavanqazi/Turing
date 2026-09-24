@@ -1,6 +1,6 @@
 # Queue backpressure audit — incident night, 2026-09-17
 
-40 queues in the broker export, audited against PLAT-31. 19 are compliant and 21 carry a finding: 9 over threshold, 8 over their drain time, 4 with no backpressure config.
+42 queues in the broker export, audited against PLAT-31. 20 are compliant and 22 carry a finding: 10 over threshold, 8 over their drain time, 4 with no backpressure config.
 
 | Queue | Tier | In-flight | Finding |
 |---|---|---|---|
@@ -24,6 +24,8 @@
 | `search.autocomplete-requests` | critical | 1,600 | none |
 | `search.index-updates` | standard | 7,200 | BACKPRESSURE_THRESHOLD_EXCEEDED |
 | `devices.reputation-lookup` | critical | 800 | DRAIN_TIME_EXCEEDED |
+| `devices.carrier-lookup` | critical | 1,250 | BACKPRESSURE_THRESHOLD_EXCEEDED |
+| `fraud.velocity-events` | standard | 2,300 | none |
 | `search.synonym-reload` | — | 20 | NO_BACKPRESSURE_CONFIGURED |
 | `identity.login-otp` | standard | 1,200 | none |
 | `identity.password-reset-emails` | standard | 350 | DRAIN_TIME_EXCEEDED |
@@ -57,6 +59,7 @@
 - `payouts.fx-quotes` — `DRAIN_TIME_EXCEEDED`: its drain time is 23.3 minutes (700 in flight over a net 30/min); the critical max drain time is 15 minutes.
 - `search.index-updates` — `BACKPRESSURE_THRESHOLD_EXCEEDED`: 7,200 in flight against a threshold of 5,000 (the standard default; the queue is standard), and backpressure was not engaged when it was sampled at 01:52:00 UTC.
 - `devices.reputation-lookup` — `DRAIN_TIME_EXCEEDED`: its drain time is 16 minutes (800 in flight over a net 50/min); the critical max drain time is 15 minutes.
+- `devices.carrier-lookup` — `BACKPRESSURE_THRESHOLD_EXCEEDED`: 1,250 in flight against a threshold of 1,000 (the critical default; the queue is critical), and backpressure was not engaged when it was sampled at 01:44:20 UTC.
 - `search.synonym-reload` — `NO_BACKPRESSURE_CONFIGURED`: it has no entry in the backpressure config, so there is no threshold to measure its 20 in-flight messages against.
 - `identity.password-reset-emails` — `DRAIN_TIME_EXCEEDED`: it is not draining (acks 30/min against publishes 30/min), which exceeds any maximum; the standard max drain time is 60 minutes.
 - `identity.session-validate` — `BACKPRESSURE_THRESHOLD_EXCEEDED`: 1,300 in flight against a threshold of 1,000 (the critical default; the queue is critical), and backpressure was not engaged when it was sampled at 01:50:00 UTC.

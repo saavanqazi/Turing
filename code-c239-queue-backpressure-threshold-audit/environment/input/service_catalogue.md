@@ -5,9 +5,10 @@ service. "Team priority" is that team's own label for its queues.
 
 ## checkout-api
 
-Runs the storefront checkout. *Place order* goes out on `checkout.order-submit`, where the
+Runs checkout for the storefront and the mobile app. *Place order* goes out on `checkout.order-submit`, where the
 order service picks it up, and the shopper's browser only gets its confirmation page once
-the order service's confirmation has landed on `checkout.order-confirm`. Before it will confirm an order, checkout-api needs a
+the order service's confirmation has landed on `checkout.order-confirm` (in the app, the
+same wait sits behind the order screen). Before it will confirm an order, checkout-api needs a
 risk score, which it requests on `fraud.score-requests` and gets back on
 `fraud.score-replies`, and a stock hold from inventory (see inventory). With the
 confirmation page sent, it drops a purchase event on `checkout.analytics-events` for the
@@ -25,22 +26,27 @@ coupon-validate P2.
 Scores orders from `fraud.score-requests` and answers on `fraud.score-replies`. We rate both
 standard: most of what goes through them is the overnight rescoring of old orders. To score
 a checkout order we first post a lookup on the shopper's device to
-`devices.reputation-lookup`, and no score goes back until device-intel has answered it. Once a score has gone back, the decision
+`devices.reputation-lookup`, and no score goes back until device-intel has answered it.
+Every scoring request is also copied to `fraud.velocity-events` as it arrives, for the
+velocity model to fold in later; the score we send back does not use it. Once a score has gone back, the decision
 is appended to `fraud.audit-trail` for the compliance team. `fraud.model-retrain` carries
 training jobs for the model refresh. `fraud.case-review` feeds the analyst console: when one
 of our fraud analysts opens a flagged case, the console sits waiting for the case bundle to
 come back on this queue.
 
-Team priority: score-requests standard · score-replies standard · audit-trail P1
+Team priority: score-requests standard · score-replies standard · velocity-events P1
+("the velocity model is our best signal") · audit-trail P1
 ("regulators read it") · model-retrain P3 · case-review critical ("analysts are blocked
 without it").
 
 ## device-intel
 
 Keeps reputation data on devices. Other services post their lookups to
-`devices.reputation-lookup` and we answer them. We have no customer-facing endpoints.
+`devices.reputation-lookup` and we answer them. For a mobile device, which is every
+checkout placed from the app, we first put a carrier check on `devices.carrier-lookup` and
+only answer the lookup once the carrier check has been answered. We have no customer-facing endpoints.
 
-Team priority: reputation-lookup P3 ("internal lookups").
+Team priority: reputation-lookup P3 ("internal lookups") · carrier-lookup P3.
 
 ## payments-core
 
@@ -137,8 +143,8 @@ backpressure config.
 `wallet.topup-commands` carries the instruction to add funds to a customer's wallet once
 their card has been charged for a top-up. When a customer opens the balance screen,
 wallet-api keeps the app's call open until the balance is back on `wallet.balance-query`;
-to work that balance out, wallet-api first asks ledger for the latest snapshot and waits
-for ledger's answer.
+wallet-api answers from its own cache when it can, and on a cache miss asks ledger for the
+latest snapshot and waits for ledger's answer before it replies.
 `wallet.cashback-accrual` carries the instruction to credit earned cashback into a
 customer's wallet the day after a purchase. `wallet.statement-emails` sends the monthly
 wallet statements.

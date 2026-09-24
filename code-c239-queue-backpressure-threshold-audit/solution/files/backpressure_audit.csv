@@ -19,6 +19,8 @@ payouts.fx-quotes,critical,700,DRAIN_TIME_EXCEEDED
 search.autocomplete-requests,critical,1600,none
 search.index-updates,standard,7200,BACKPRESSURE_THRESHOLD_EXCEEDED
 devices.reputation-lookup,critical,800,DRAIN_TIME_EXCEEDED
+devices.carrier-lookup,critical,1250,BACKPRESSURE_THRESHOLD_EXCEEDED
+fraud.velocity-events,standard,2300,none
 search.synonym-reload,,20,NO_BACKPRESSURE_CONFIGURED
 identity.login-otp,standard,1200,none
 identity.password-reset-emails,standard,350,DRAIN_TIME_EXCEEDED

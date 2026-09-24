@@ -59,6 +59,8 @@ EXPORT = [
     ("search.autocomplete-requests",  "search",         "01:49:00", 1600,  450,  600, False),
     ("search.index-updates",          "search",         "01:52:00", 7200,  800,  900, True),
     ("devices.reputation-lookup",     "device-intel",   "01:44:00",  800,  200,  250, False),
+    ("devices.carrier-lookup",        "device-intel",   "01:44:20", 1250,  600,  700, False),
+    ("fraud.velocity-events",         "fraud-scoring",  "01:38:40", 2300,  410,  525, False),
     ("search.synonym-reload",         "search",         "01:44:30",   20,    0,    5, False),
     ("identity.login-otp",            "identity",       "01:45:30", 1200,  800,  850, False),
     ("identity.password-reset-emails","identity",       "01:46:00",  350,   30,   30, False),
@@ -91,7 +93,7 @@ TIER = {
     "payments.charge-commands": C, "payments.refund-commands": C, "payments.receipt-emails": S,
     "payments.settlement-report": S,
     "payouts.transfer-instructions": C, "payouts.fx-rate-fetch": S, "payouts.fx-quotes": C,
-    "search.autocomplete-requests": C, "search.index-updates": S, "devices.reputation-lookup": C,
+    "search.autocomplete-requests": C, "search.index-updates": S, "devices.reputation-lookup": C, "devices.carrier-lookup": C, "fraud.velocity-events": S,
     "identity.login-otp": S, "identity.password-reset-emails": S, "identity.session-validate": C,
     "identity.kyc-checks": S,
     "support.ticket-lookup": S, "payments.refund-status": S,
@@ -107,7 +109,7 @@ SURFACE = {
     "fraud.score-replies": S, "fraud.case-review": C, "payments.refund-commands": S,
     "payments.receipt-emails": C, "payouts.transfer-instructions": S, "search.index-updates": C,
     "identity.login-otp": C, "support.ticket-lookup": C, "reports.priority-exports": C,
-    "wallet.cashback-accrual": S, "devices.reputation-lookup": S, "ledger.balance-snapshot": S,
+    "wallet.cashback-accrual": S, "devices.reputation-lookup": S, "devices.carrier-lookup": S, "fraud.velocity-events": C, "ledger.balance-snapshot": S,
     "fraud.audit-trail": C, "inventory.reservation-events": C, "payouts.fx-rate-fetch": C,
     "payments.refund-status": C,
 }
@@ -282,9 +284,10 @@ service. "Team priority" is that team's own label for its queues.
 
 ## checkout-api
 
-Runs the storefront checkout. *Place order* goes out on `checkout.order-submit`, where the
+Runs checkout for the storefront and the mobile app. *Place order* goes out on `checkout.order-submit`, where the
 order service picks it up, and the shopper's browser only gets its confirmation page once
-the order service's confirmation has landed on `checkout.order-confirm`. Before it will confirm an order, checkout-api needs a
+the order service's confirmation has landed on `checkout.order-confirm` (in the app, the
+same wait sits behind the order screen). Before it will confirm an order, checkout-api needs a
 risk score, which it requests on `fraud.score-requests` and gets back on
 `fraud.score-replies`, and a stock hold from inventory (see inventory). With the
 confirmation page sent, it drops a purchase event on `checkout.analytics-events` for the
@@ -302,22 +305,27 @@ coupon-validate P2.
 Scores orders from `fraud.score-requests` and answers on `fraud.score-replies`. We rate both
 standard: most of what goes through them is the overnight rescoring of old orders. To score
 a checkout order we first post a lookup on the shopper's device to
-`devices.reputation-lookup`, and no score goes back until device-intel has answered it. Once a score has gone back, the decision
+`devices.reputation-lookup`, and no score goes back until device-intel has answered it.
+Every scoring request is also copied to `fraud.velocity-events` as it arrives, for the
+velocity model to fold in later; the score we send back does not use it. Once a score has gone back, the decision
 is appended to `fraud.audit-trail` for the compliance team. `fraud.model-retrain` carries
 training jobs for the model refresh. `fraud.case-review` feeds the analyst console: when one
 of our fraud analysts opens a flagged case, the console sits waiting for the case bundle to
 come back on this queue.
 
-Team priority: score-requests standard · score-replies standard · audit-trail P1
+Team priority: score-requests standard · score-replies standard · velocity-events P1
+("the velocity model is our best signal") · audit-trail P1
 ("regulators read it") · model-retrain P3 · case-review critical ("analysts are blocked
 without it").
 
 ## device-intel
 
 Keeps reputation data on devices. Other services post their lookups to
-`devices.reputation-lookup` and we answer them. We have no customer-facing endpoints.
+`devices.reputation-lookup` and we answer them. For a mobile device, which is every
+checkout placed from the app, we first put a carrier check on `devices.carrier-lookup` and
+only answer the lookup once the carrier check has been answered. We have no customer-facing endpoints.
 
-Team priority: reputation-lookup P3 ("internal lookups").
+Team priority: reputation-lookup P3 ("internal lookups") · carrier-lookup P3.
 
 ## payments-core
 
@@ -414,8 +422,8 @@ backpressure config.
 `wallet.topup-commands` carries the instruction to add funds to a customer's wallet once
 their card has been charged for a top-up. When a customer opens the balance screen,
 wallet-api keeps the app's call open until the balance is back on `wallet.balance-query`;
-to work that balance out, wallet-api first asks ledger for the latest snapshot and waits
-for ledger's answer.
+wallet-api answers from its own cache when it can, and on a cache miss asks ledger for the
+latest snapshot and waits for ledger's answer before it replies.
 `wallet.cashback-accrual` carries the instruction to credit earned cashback into a
 customer's wallet the day after a purchase. `wallet.statement-emails` sends the monthly
 wallet statements.
@@ -431,42 +439,31 @@ tier_rows = "\n".join(f"| {t} | {n:,} messages | {d} minutes |" for t, (n, d) in
 POLICY = f"""# Queue backpressure policy (PLAT-31)
 
 This decides whether a queue's in-flight load was compliant at the moment the queue was
-sampled. Where a broker dashboard disagrees — its health colour or its burst hint — this
-policy decides.
+sampled. Where a broker dashboard's own health colour disagrees, this policy decides.
 
 ## 1. Configuration required
 
 A queue with no entry in the backpressure config at all is `NO_BACKPRESSURE_CONFIGURED`.
-This is checked first, and it applies whatever else is true of the queue, a burst window
-included: there is no threshold to measure an unconfigured queue against.
+This is checked first: there is no threshold to measure an unconfigured queue against.
 
 ## 2. Tier
 
-Every configured queue has a tier, and this section decides it — not the queue's name, not
-its owning team's priority label, and not its volume. The service catalogue says what each
-queue does.
-
-A queue is **critical** when either of these holds:
+Every configured queue has a tier, decided by this section from what the service catalogue
+says the queue does. A queue is **critical** when either of these holds:
 
 - **(a) A customer's call is held on it.** A service answering a customer — a web, app or
-  API call from someone outside the company, merchants included — holds that call open while
-  a message it has put on this queue waits to be consumed, or until an answer comes back to
-  it on this queue, even if it goes on waiting on other queues as well. The hold carries
-  down a chain: when the service holding a customer's call is itself waiting on a second
-  service, and that service cannot answer until a message it has put on a queue has been
+  API call from someone outside the company, merchants included — does not answer until a
+  message it has put on this queue has been consumed, or until an answer has come back to
+  it on this queue, even if it then goes on waiting on other queues as well. The hold
+  carries down a chain: when the service holding a customer's call is waiting on a second
+  service, and that service does not answer until a message it has put on a queue has been
   consumed or an answer has come back to it on a queue, the customer's call is held on that
   queue too, however many services lie in between. It is enough that some of the queue's
-  traffic is held this way. A queue a service publishes to only after it has answered does
-  not count, and neither does a queue where the one kept waiting is a member of staff or a
-  scheduled job rather than a customer. Waiting that happens after the call has been
-  answered — for an email or a text to arrive, say — is not a held call.
+  traffic is held this way.
 - **(b) It moves money.** A message on it instructs a movement of funds: a charge, a
-  refund, a payout, a credit to or debit from a wallet, or a settlement transfer. A message
-  that reports, reconciles, summarises or notifies about a movement that has already been
-  made does not count.
+  refund, a payout, a credit to or debit from a wallet, or a settlement transfer.
 
-A queue that meets either (a) or (b) is critical; the exclusions under (a) do not narrow
-(b). Every other queue is **standard**.
+Every other queue is **standard**.
 
 ## 3. Limits
 
@@ -481,37 +478,32 @@ tier's.
 ## 4. In-flight threshold
 
 A configured queue whose in-flight count is more than its threshold is
-`BACKPRESSURE_THRESHOLD_EXCEEDED` (a count equal to the threshold is within it) — **unless**
-backpressure was engaged for that queue at the moment it was sampled, in which case the
-system responded correctly and there is no threshold finding. The broker event log is the
-record: a queue is engaged at a moment when the latest `BACKPRESSURE_ENGAGED` or
+`BACKPRESSURE_THRESHOLD_EXCEEDED`, unless backpressure was engaged for that queue at the
+moment it was sampled, in which case there is no threshold finding. The broker event log is
+the record: a queue is engaged at a moment when the latest `BACKPRESSURE_ENGAGED` or
 `BACKPRESSURE_RELEASED` event for it at or before that moment is `BACKPRESSURE_ENGAGED`.
-Engagement answers this section only; it does not clear section 5.
 
 ## 5. Drain time
 
 A queue's drain time is its in-flight count divided by its net drain rate, the ack rate
 less the publish rate, both per minute. A queue whose ack rate is not above its publish rate
 is not draining, and its drain time exceeds any maximum. Drain time is compared with the
-maximum exactly, without rounding. A configured queue whose drain time
-is more than its max drain time is `DRAIN_TIME_EXCEEDED`.
+maximum exactly, without rounding. A configured queue whose drain time is more than its max
+drain time is `DRAIN_TIME_EXCEEDED`.
 
 ## 6. Scheduled burst windows
 
-A configured queue is exempt from sections 4 and 5 while a burst window documented for that
-queue in the batch schedule (BATCH-7) holds at the moment it was sampled. A window holds
-from its opening time up to, but not including, its closing time. Only an active BATCH-7
-entry documents a window: a retired entry documents none, and the broker export's
-`dashboard_burst_hint` documents nothing. A window exempts only the queue it names. No
-window exempts a queue from section 1.
+A configured queue is exempt from sections 4 and 5 while a burst window documented for it
+in the batch schedule (BATCH-7) holds at the moment it was sampled. A window holds from its
+opening time up to, but not including, its closing time. Only an active BATCH-7 entry
+documents a window.
 
 ## 7. One finding per queue
 
 Each queue in the broker export carries exactly one finding: the first of sections 1, 4
 and 5 that applies to it, with the exemptions in sections 4 and 6 taken into account, or
-`none` when none does. The finding names are
-`NO_BACKPRESSURE_CONFIGURED`, `BACKPRESSURE_THRESHOLD_EXCEEDED`, `DRAIN_TIME_EXCEEDED` and
-`none`.
+`none` when none does. The finding names are `NO_BACKPRESSURE_CONFIGURED`,
+`BACKPRESSURE_THRESHOLD_EXCEEDED`, `DRAIN_TIME_EXCEEDED` and `none`.
 
 ## 8. Audit figures
 
@@ -660,7 +652,9 @@ def num(n):
     """n with or without a thousands comma, optionally .0, not part of a longer number."""
     return r"(?<![\d.,])" + f"{n:,}".replace(",", ",?") + r"(?:\.0+)?(?![\d]|[.,]\d)"
 
-REASON = {"burst": r"(?:burst|BATCH-7|batch window)", "engaged": r"engag"}
+# What clears it, as a stem, not a phrase: a burst-window exemption is named by
+# "burst", "window", "BATCH-7" or the window's own job name; engagement by "engag".
+REASON = {"burst": r"(?:burst|window|BATCH-7|{job})", "engaged": r"engag"}
 for r, f, why, extra in rows:
     q = r[0]
     if why == "no_config":
@@ -685,13 +679,14 @@ for r, f, why, extra in rows:
                     f"for the limit.",
                     MEMO_SRC, det("$.text", "regex_match", near(q, num(dmax)))))
     elif over_threshold_none(r, f, why):
+        pat = REASON[why].replace("{job}", re.escape(extra) if why == "burst" else "")
         vs.append(V(f"memo_{key(q)}_cleared",
-                    f"Opens backpressure_memo.md and requires {REASON[why]!r} within 400 characters of {q}, either "
+                    f"Opens backpressure_memo.md and requires {pat!r} within 400 characters of {q}, either "
                     f"order, with no other queue id in between.",
                     f"{q} is over its threshold and comes out none because "
                     f"{'a BATCH-7 burst window held' if why == 'burst' else 'backpressure was engaged'}; the "
                     f"instruction asks the memo to say what clears it.",
-                    MEMO_SRC, det("$.text", "regex_match", near(q, REASON[why]))))
+                    MEMO_SRC, det("$.text", "regex_match", near(q, pat))))
 
 spec = OrderedDict(task_id=TASK_ID, verifiers=vs)
 (ROOT / "tests" / "verifier.json").write_text(json.dumps(spec, indent=2) + "\n", encoding="utf-8")
@@ -786,7 +781,7 @@ if "--probes" in sys.argv:
         elif why == "drain":
             lines.append(f"Allowed {dmax} min to drain; it does not: {q} is {f}.")
         elif why == "burst":
-            lines.append(f"Scheduled Burst Window ({extra}) was open: {q} is exempt, none.")
+            lines.append(f"Sampled inside the {extra} slot, so {q} is exempt: none.")
         elif why == "engaged":
             lines.append(f"Backpressure had engaged, so {q} is none.")
         lines.append("")

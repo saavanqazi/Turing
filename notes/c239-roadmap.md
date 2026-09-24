@@ -263,5 +263,28 @@ own words, so classification was keyword matching.
 - Fairness: cold tier read 36/36 (4 small wording gaps → closed); cold full solve **1.0**
   (125/125). Docker oracle 1.0; 13 probes as expected.
 
+Harbor (user): oracle-c239-v2 **1.0**; glm-c239-v2 **4/4** at 1.0 (125/125 each,
+15.7–21.0 min). The hand-coded critical set in the trajectories is exactly the gold's 16,
+chain queues included.
+
+### Phase 2 v3 — built, awaiting battery (last lever before the evidence note)
+- The policy stopped pointing at its own traps. Removed: "not the name, not the label, not
+  the volume"; "published after it has answered does not count"; "staff or scheduled job";
+  "waiting for an email or a text is not a held call"; "reports … do not count"; "(a)'s
+  exclusions do not narrow (b)"; "equal is within"; "engagement answers this section only";
+  "a retired entry documents none, the dashboard hint documents nothing"; "a window exempts
+  only the queue it names". Every rule still decides uniquely from its definition.
+- §2(a) causal again ("does not answer until … has been consumed"), which allows: a
+  three-hop chain (`devices.carrier-lookup`), a mid-request write nobody waits on
+  (`fraud.velocity-events`), and a hold only on a cache miss (`ledger.balance-snapshot`).
+- 42 queues, 131 checks. Figures: flagged 22 · threshold 10 · no-config 4 · drain 8 ·
+  compliant 20.
+- Cold tier read 38/38 with the gold (one soft link → closed: app checkouts are mobile).
+- **Verifier bug found and fixed:** the cold full solve had every finding right and scored
+  0.985 — two burst-window explanations named the window by its job name, and the reason
+  stem required "burst"/"BATCH-7"/"batch window". The stem now also takes "window" and the
+  job's own name; the same memo scores 1.0. The alt-format probe now phrases it that way.
+
 ### Waiting on you
-`oracle-c239-v2`, then `glm-c239-v2` `-k 4`, then `trial_summary.py`.
+`oracle-c239-v3`, then `glm-c239-v3` `-k 4`. If 4/4 again: stop, write the g308-style
+evidence note, and hand the decision to Turing.
