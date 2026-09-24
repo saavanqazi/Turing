@@ -213,3 +213,26 @@ Verifier-only change → re-grade existing runs. Instruction/data change → new
 - **Difficulty masquerading as ambiguity** — every 0/4 with identical failing checks is
   treated as a defect first.
 - **Memo checks drifting into wording** — facts only (ids, limits), proximity not phrasing.
+
+## 5. Progress log
+
+### Phase 0 — done (commit a71d23a)
+- Mined bundle committed unmodified. Vendored `rl_world_verifiers/` is byte-identical to g308's.
+- Oracle (Docker pre-flight, `tools/oracle_docker.sh`): **1.0, 15/15**.
+- Mined grader probed:
+  - every code on every row, stub memo "Q-03 burst window" → **1.0** (exploit)
+  - correct findings, `finding` column first, memo says "window for the scheduled batch
+    burst" → **0.0**, 6 checks failed (over-strict)
+
+### Phase 1 — done (commit 522304e)
+- Same six queues and answers; input CSVs, gold CSV and results byte-identical to mined.
+- Policy §1–§6 close A2–A7; instruction closes A1, L1, L2.
+- 28 verifiers, all `core`; graded reward; digest-pinned base image; golden trajectory added.
+- Oracle **1.0, 28/28**, two fresh containers.
+- `tools/c239_probes.py`: gold and a differently-formatted correct answer (finding first,
+  quoted, CRLF, BOM, no thousands commas, reordered memo) → 1.0. Three CSV exploits,
+  stub memo, a missed engagement, a missed burst window, a memo without figures → 0.75–0.86.
+
+### Waiting on you
+1. `harbor run -p code-c239-queue-backpressure-threshold-audit -a oracle …` → expect 1.0.
+2. Optional: a Phase-1 GLM battery (expect 4/4) as the README's "before hardening" line.
