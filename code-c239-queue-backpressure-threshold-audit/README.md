@@ -154,12 +154,14 @@ It got the other two overrides right, and the other runs got this one right on i
 data. This is an attention slip under a rule it stated, not an ambiguity. It costs
 7 checks: the queue's two row checks, three figures and two memo checks.
 
-**Two further v3 trials did not count.** Neither reached the verifier, both failures were
-on the model-proxy side, and neither is in the bundle:
+**Three further v3 trials did not count.** None reached the verifier, none failed inside
+the task container, and none is in the bundle:
 
 - one `AgentTimeoutError` after only 5 model turns in 30 minutes, against 8 to 10 turns
-  in 8 to 16 minutes for completed runs;
-- one `InternalServerError` from the LiteLLM proxy.
+  in 8 to 16 minutes for completed runs (model-proxy latency);
+- one `InternalServerError` from the LiteLLM proxy after 22 minutes;
+- one `RuntimeError` 12 seconds in, during the image build: the Docker CLI on the host
+  could not read its own context metadata because another process held the file open.
 
 ## Evaluation structure
 

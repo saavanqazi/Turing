@@ -93,8 +93,10 @@ v3 results:
   states the override rule, it got the other two overrides right, and the other runs got
   this one right on identical data.
 - r4 `<r4>`.
-- Two further trials never reached the verifier and are excluded: one AgentTimeoutError
-  after 5 turns in 30 min, and one LiteLLM InternalServerError. Both are proxy-side.
+- Three further trials never reached the verifier and are excluded, none of them failing
+  inside the task container: one AgentTimeoutError after 5 turns in 30 min (proxy
+  latency); one LiteLLM InternalServerError at 22 min; one RuntimeError 12 s in, when
+  the Docker CLI on the host found its context metadata file locked by another process.
 
 Evidence: `evaluations/difficulty/r1..r4/verifier/reward.txt`.
 
