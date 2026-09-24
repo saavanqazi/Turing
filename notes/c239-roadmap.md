@@ -233,6 +233,19 @@ Verifier-only change → re-grade existing runs. Instruction/data change → new
   quoted, CRLF, BOM, no thousands commas, reordered memo) → 1.0. Three CSV exploits,
   stub memo, a missed engagement, a missed burst window, a memo without figures → 0.75–0.86.
 
+Harbor (user, Windows): oracle-c239-p1 **1.0**; glm-c239-p1 **4/4** at 1.0 (28/28 each,
+1.5–2.5 min, every run one read + one script). This is the "before hardening" line.
+
+### Phase 2 v1 — built (commits 5791634, 9d642ad), awaiting battery
+- 40 queues, 11 services, 122 checks (all core). Tier from `service_catalogue.md` under
+  PLAT-31 §2; drain derived from rates; engagement from `broker_events.log`; windows from
+  `batch_schedule.md` (BATCH-7) at each `sampled_at`; 3 overrides; 4 unconfigured.
+- Figures: flagged 19 · threshold 8 · no-config 4 · drain 7 · compliant 21.
+- `build_task.py --price`: every single misreading costs 4–21 checks; 18 of 36 configured
+  queues change finding when their tier flips.
+- Fairness: cold tier read #1 36/36 (8 wording gaps → closed); cold full solve **1.0**
+  (122/122, independent memo); cold tier read #2 36/36 (1 soft spot → closed).
+- Docker oracle 1.0; 13 probes as expected.
+
 ### Waiting on you
-1. `harbor run -p code-c239-queue-backpressure-threshold-audit -a oracle …` → expect 1.0.
-2. Optional: a Phase-1 GLM battery (expect 4/4) as the README's "before hardening" line.
+`oracle-c239-v1` (expect 1.0), then `glm-c239-v1` `-k 4`, then `trial_summary.py`.
