@@ -50,17 +50,15 @@ ap.add_argument("--exclude", nargs="*", default=[],
                      "reached the verifier because of infrastructure; each exclusion is reported")
 ap.add_argument("--solvability", type=Path, help="job folder holding a reward-1.0 non-oracle run")
 ap.add_argument("--zip", action="store_true", help="also write <task>.zip beside the task folder")
+ap.add_argument("--allow-unscored", action="store_true",
+                help="assemble even if one of the four trials never reached the verifier "
+                     "(normally refused: such a run is infrastructure, not a result)")
 a = ap.parse_args()
 
 TASK = REPO / a.task
 if not (TASK / "task.toml").exists():
     sys.exit(f"no task.toml under {TASK} — is --task right?")
 
-root = TASK / "evaluations"
-for sub in ("difficulty", "solvability"):
-    shutil.rmtree(root / sub, ignore_errors=True)
-root.mkdir(parents=True, exist_ok=True)
-(root / ".gitkeep").unlink(missing_ok=True)      # nothing may sit loose under evaluations/
 
 ts, left_out = [], []
 for job in a.difficulty:
@@ -73,9 +71,21 @@ for t in left_out:
     print(f"excluded {t.parent.name}/{t.name}  reward {reward(t)}  ({exception_of(t) or 'no exception'})")
 if len(ts) < 4:
     sys.exit(f"need 4 trial folders across {[str(j) for j in a.difficulty]}, found {len(ts)}")
+unscored = [t for t in ts[:4] if reward(t) is None]
+if unscored and not a.allow_unscored:
+    for t in unscored:
+        print(f"REFUSED: {t.parent.name}/{t.name} never reached the verifier "
+              f"({exception_of(t) or 'no reward file'}).")
+    sys.exit("Nothing written. Re-run a replacement trial and pass its job folder instead, "
+             "or --exclude this one; --allow-unscored overrides.")
 if len(ts) > 4:
     print(f"note: {len(ts)} trials present; taking the first four — four runs, not five")
 
+root = TASK / "evaluations"
+for sub in ("difficulty", "solvability"):
+    shutil.rmtree(root / sub, ignore_errors=True)
+root.mkdir(parents=True, exist_ok=True)
+(root / ".gitkeep").unlink(missing_ok=True)      # nothing may sit loose under evaluations/
 diff = root / "difficulty"; diff.mkdir(parents=True)
 for name in JOB_FILES:                            # as the reference ships them
     src = a.difficulty[0] / name
